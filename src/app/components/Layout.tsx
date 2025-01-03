@@ -11,7 +11,7 @@ export default function Layout({ children }: Props) {
       <header>
         {/* ヘッダー */}
         <nav>
-          <Link href="/">ホーム</Link>
+          <Link href="/home">ホーム</Link>
           <Link href="/auth/login">ログイン</Link>
           <Link href="/auth/register">サインイン</Link>
         </nav>
