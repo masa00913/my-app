@@ -30,6 +30,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     passwordHash: hashedPassword,
                 },
             });
+
+            // Walletエントリを作成
+            await prisma.wallet.create({
+                data: {
+                    userId: newUser.id,
+                    balance: 0, // 初期残高を0に設定
+                },
+            });
+
             res.status(200).json(newUser);
         } catch (error) {
             console.error("ユーザー作成エラー:", error);

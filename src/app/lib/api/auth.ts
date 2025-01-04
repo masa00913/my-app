@@ -21,7 +21,7 @@ export const registerUser = async (username: string, email: string, passwordHash
     }
 };
 
-export async function loginUser(email: string, password: string): Promise<void> {
+export async function loginUser(email: string, password: string): Promise<User> {
     // ログイン処理を実装
     // 例: APIリクエストを送信して、認証を行う
     const response = await fetch('/api/login', {
@@ -35,4 +35,6 @@ export async function loginUser(email: string, password: string): Promise<void> 
     if (!response.ok) {
       throw new Error('ログインに失敗しました。');
     }
+    const { userData } = await response.json();
+    return userData;
   }

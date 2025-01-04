@@ -13,6 +13,8 @@ export default function LoginForm() {
     e.preventDefault();
     setError(null);
     try{
+      const userData = await loginUser(email, password); // ログイン時にユーザー情報を取得
+      localStorage.setItem('user', JSON.stringify(userData)); // localStorageにユーザー情報を保存 
       await loginUser(email, password);
       alert('ログイン成功！');
       router.push('/home'); // ログイン成功時にトップページに遷移

@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient} from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken'; // JWTを使用する場合
+import { User } from '@/types/user';
 
 const prisma = new PrismaClient();
 
@@ -28,10 +28,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return res.status(401).json({ error: 'メールアドレスまたはパスワードが正しくありません。' });
             }
 
-            // JWTを発行（必要に応じて）
-            const token = jwt.sign({ userId: user.id }, 'YOUR_SECRET_KEY', { expiresIn: '1h' }); // YOUR_SECRET_KEYは必ず変更
+            const wallet = await prisma.wallet.findUnique({
+                where: { userId: user.id },
+            })
 
-            res.status(200).json({ token }); // トークンを返す
+            const userData: User = { id: user.id.toString(), name: user.username, email: user.email, balance: wallet?.balance ?? 0 };
+
+            res.status(200).json({ userData }); // トークンを返す
         } catch (error) {
             console.error("ログインエラー:", error);
             res.status(500).json({ error: 'ログインに失敗しました。' });

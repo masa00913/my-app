@@ -1,12 +1,26 @@
-// ホーム画面のコンポーネント
+// app/home/page.tsx
+'use client';
 import Home from './components/Home';
-import styles from './styles.module.css';
+import { useEffect, useState } from 'react';
+import { User } from '@/types/user'; // User型のインポート
 
 export default function HomePage() {
-  return (
-    <div className={styles.container}>
-      <h1>ホーム</h1>
-      <Home name="ユーザー名" />
-    </div>
-  );
+  const [userData, setUserData] = useState<User | null>(null); // 型を明示的に定義
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        setUserData(JSON.parse(storedUser)); // ユーザー情報を取得
+      } catch (error) {
+        console.error('Failed to parse user data:', error);
+      }
+    }
+  }, []);
+
+  if (!userData) {
+    return <div>Loading...</div>; // ローディング表示
+  }
+
+  return <Home name={userData.name} balance={userData.balance} />;
 }
