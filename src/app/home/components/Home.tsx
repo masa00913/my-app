@@ -4,10 +4,12 @@ interface Props {
 }
 
 import { useState } from 'react';
+import { createTransaction } from '@/app/lib/api/transaction';
 
 export default function Home({ name, balance }: Props) {
-  const [sendUser, setSendUser] = useState('');
+  const [recipient, setRecipient] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [amount, setAmount] = useState<number>(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,8 +17,11 @@ export default function Home({ name, balance }: Props) {
 
     try {
       // ここで通貨交換の処理を実装
-      console.log(`ユーザー ${name} が ${sendUser} に通貨を送信しようとしています`);
-      // ... APIリクエストなど ...
+      console.log(`ユーザー ${name} が ${recipient} に通貨を送信しようとしています`);
+
+      // トランザクション作成のAPIリクエストを送信
+      await createTransaction(name, recipient, amount);
+      alert('交換成功！');
     } catch (err: unknown) {
       let errorMessage = '交換に失敗しました。';
       if (err instanceof Error) {
@@ -32,11 +37,17 @@ export default function Home({ name, balance }: Props) {
       <p>現在の通貨: {balance}</p>
       <form onSubmit={handleSubmit}>
         <input
-          type="senduser"
+          type="recipient"
           placeholder="送る対象"
-          value={sendUser}
-          onChange={(e) => setSendUser(e.target.value)}
+          value={recipient}
+          onChange={(e) => setRecipient(e.target.value)}
         />
+        <input type="amount"
+        placeholder='送る金額'
+        value={amount}
+        onChange={(e) => setAmount(Number(e.target.value))} 
+        />
+
         <button type="submit">交換</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
