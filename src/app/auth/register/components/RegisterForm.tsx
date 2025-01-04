@@ -19,11 +19,11 @@ export default function RegisterForm() {
       setEmail('');
       setPasswordHash('');
     } catch (err: unknown) { // 型をunknownに変更
+      let errorMessage = '登録に失敗しました。'; // デフォルトのエラーメッセージ
       if (err instanceof Error) {
-        setError(err.message || '登録に失敗しました。');
-      } else {
-        setError('登録に失敗しました。');
+        errorMessage = err.message; // より具体的なエラーメッセージを設定
       }
+      setError(errorMessage); // エラーメッセージをセット
     }
   };
 
