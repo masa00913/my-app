@@ -1,12 +1,12 @@
-// ログインフォームのコンポーネント
 "use client";
 import { useState } from 'react';
+
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // ログイン処理
     console.log('ログイン:', email, password);

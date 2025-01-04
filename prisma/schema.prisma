@@ -1,0 +1,39 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // または "mysql" など
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int          @id @default(autoincrement())
+  username     String       @unique
+  email        String       @unique
+  passwordHash String
+  createdAt    DateTime     @default(now())
+  Wallet       Wallet?
+  transactionsSent     Transaction[] @relation("SenderTransactions")
+  transactionsReceived Transaction[] @relation("RecipientTransactions")
+}
+
+model Wallet {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  balance   Int      @default(0)
+  updatedAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  fromUserId  Int
+  toUserId    Int
+  amount      Int
+  status      String   @default("completed")
+  createdAt   DateTime @default(now())
+  fromUser    User     @relation("SenderTransactions", fields: [fromUserId], references: [id])
+  toUser      User     @relation("RecipientTransactions", fields: [toUserId], references: [id])
+}
