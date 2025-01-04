@@ -21,22 +21,18 @@ export const registerUser = async (username: string, email: string, passwordHash
     }
 };
 
-export const loginUser = async (email: string, passwordHash: string): Promise<{ token: string }> => { //ログインAPIの例
-    try {
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password: passwordHash }),
-        });
-
-        await handleApiError(response);
-
-        const data = await response.json() as { token: string };
-        return data;
-    } catch (error) {
-        console.error('ログイン失敗:', error);
-        throw error;
+export async function loginUser(email: string, password: string): Promise<void> {
+    // ログイン処理を実装
+    // 例: APIリクエストを送信して、認証を行う
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+  
+    if (!response.ok) {
+      throw new Error('ログインに失敗しました。');
     }
-};
+  }
