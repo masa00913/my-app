@@ -1,0 +1,195 @@
+/* ホームページのスタイル */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+
+    background: #A855F7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+.header {
+  width: 100%;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.header-title {
+  font-size: 17px;
+  font-weight: normal;
+}
+
+.main-content {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.payment-container {
+  background: white;
+  border-radius: 24px;
+  padding: 24px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.barcode {
+  width: 100%;
+  height: 70px;
+  background-image: repeating-linear-gradient(90deg, #A855F7 0px, #A855F7 3px, transparent 3px, transparent 8px);
+  margin-bottom: 24px;
+}
+
+.qr-code {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 24px;
+  background: #A855F7;
+}
+
+.amount-section {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.amount-label {
+  font-size: 13px;
+  color: #666;
+}
+
+.amount-value {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.balance-section {
+  margin-bottom: 12px;
+}
+
+.balance-item {
+  background: #F8F9FA;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.balance-left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.balance-icon {
+  width: 32px;
+  height: 32px;
+  background: #A855F7;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.balance-icon.point::after {
+  content: "M";
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.balance-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.balance-name {
+  font-size: 14px;
+  color: #333;
+}
+
+.balance-value {
+  font-size: 14px;
+  color: #333;
+}
+
+.arrow {
+  color: #999;
+}
+
+.points-use {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 0 4px;
+}
+
+.points-use-left {
+  color: #666;
+}
+
+.points-use-right {
+  color: #A855F7;
+}
+
+.footer {
+  width: 100%;
+  padding: 20px;
+  margin-top: auto;
+  margin-bottom: 20px;
+}
+
+.scan-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  width: 100%;
+  max-width: 380px;
+  padding: 16px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.scan-icon {
+  width: 20px;
+  height: 16px;
+  border: 1.5px solid white;
+  border-radius: 2px;
+  position: relative;
+}
