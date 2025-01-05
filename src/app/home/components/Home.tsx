@@ -38,7 +38,7 @@ export default function Home({ name, balance }: Props) {
 
   return (
     <div>
-      <p>こんにちは、{name}さん！</p>
+      {/* <p>こんにちは、{name}さん！</p>
       <p>現在の通貨: {balance}</p>
       <form onSubmit={handleSubmit}>
         <input
@@ -55,7 +55,12 @@ export default function Home({ name, balance }: Props) {
 
         <button type="submit" disabled={isSending}>交換</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-      </form>
+      </form> */}
+
+      <button onClick={() => window.location.href = '/send/send_list'}>送る</button>
+      <button onClick={() => window.location.href = '/pay/pay_QRdisplay'}>支払う</button>
+      <button onClick={() => window.location.href = '/pay/pay_QRread'}>スキャン</button>
+      {error && <p>{error}</p>}
     </div>
   );
 }
