@@ -22,6 +22,7 @@ export default function Home({ name, balance }: Props) {
       // トランザクション作成のAPIリクエストを送信
       await createTransaction(name, recipient, amount);
       alert('交換成功！');
+      window.location.reload(); // ページを更新
     } catch (err: unknown) {
       let errorMessage = '交換に失敗しました。';
       if (err instanceof Error) {

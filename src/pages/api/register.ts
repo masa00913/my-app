@@ -5,6 +5,8 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+
+
     if (req.method === 'POST') {
         const { name, email, password } = req.body;
 
@@ -35,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await prisma.wallet.create({
                 data: {
                     userId: newUser.id,
-                    balance: 0, // 初期残高を0に設定
+                    balance: 100, // 初期残高を0に設定
                 },
             });
 
