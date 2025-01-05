@@ -10,10 +10,12 @@ export default function Home({ name, balance }: Props) {
   const [recipient, setRecipient] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [amount, setAmount] = useState<number>(0);
+  const [isSending, setIsSending] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null); // エラーをリセット
+    setIsSending(true); // 送信中に設定
 
     try {
       // ここで通貨交換の処理を実装
@@ -29,6 +31,8 @@ export default function Home({ name, balance }: Props) {
         errorMessage = err.message;
       }
       setError(errorMessage);
+    }finally{
+      setIsSending(false);
     }
   };
 
@@ -49,7 +53,7 @@ export default function Home({ name, balance }: Props) {
         onChange={(e) => setAmount(Number(e.target.value))} 
         />
 
-        <button type="submit">交換</button>
+        <button type="submit" disabled={isSending}>交換</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 import { loginUser } from '@/app/lib/api';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
@@ -8,10 +8,12 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
     try{
       const userData = await loginUser(email, password); // ログイン時にユーザー情報を取得
       localStorage.setItem('user', JSON.stringify(userData)); // localStorageにユーザー情報を保存 
@@ -24,6 +26,8 @@ export default function LoginForm() {
         errorMessage = err.message;
       }
       setError(errorMessage);
+    }finally{
+      setIsLoading(false);
     }
   };
 
@@ -31,7 +35,7 @@ export default function LoginForm() {
     <form onSubmit={handleSubmit}>
       <input type="email" placeholder="メールアドレス" value={email} onChange={e => setEmail(e.target.value)} />
       <input type="password" placeholder="パスワード" value={password} onChange={e => setPassword(e.target.value)} />
-      <button type="submit">ログイン</button>
+      <button type="submit" disabled={isLoading}>ログイン</button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </form>
   );
