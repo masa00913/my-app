@@ -19,4 +19,7 @@ export const createTransaction = async (fromUser: string, toUser: string, amount
     console.error('トランザクション作成失敗:', error);
     throw error;
   }
+
+  
 };
+

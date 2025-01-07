@@ -1,13 +1,30 @@
 // app/home/page.tsx
 'use client';
 import SendList from './components/SendList';
+import { useEffect,useState } from 'react';
 import styles from './styles.module.css';
+import { User } from '@/types/user'; // User型のインポート
 
 export default function SendListPage() {
+  const [userData, setUserData] = useState<User | null>(null); // 型を明示的に定義
+  
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+
+    if (storedUser) {
+      try {
+        setUserData(JSON.parse(storedUser)); // ユーザー情報を取得
+        console.log(userData?.name);
+      } catch (error) {
+        console.error('Failed to parse user data:', error);
+      }
+    }
+  }, []);
+   
   return (
     <div className={styles.container}>
       <h1>送金一覧</h1>
-      <SendList />
+      <SendList userName={userData?.name || ''}/>
     </div>
   );
 }
