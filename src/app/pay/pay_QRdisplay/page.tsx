@@ -13,18 +13,18 @@ export default function PayQRDisplayPage() {
         const storedUser = localStorage.getItem('user');
         // setRecipientName(localStorage.getItem('recipientName'));
         if (storedUser) {
-        try {
-            setUserData(JSON.parse(storedUser)); // ユーザー情報を取得
-        } catch (error) {
-            console.error('Failed to parse user data:', error);
-        }
+            try {
+                setUserData(JSON.parse(storedUser)); // ユーザー情報を取得
+            } catch (error) {
+                console.error('Failed to parse user data:', error);
+            }
         }
     }, []);
 
     return (
         <div className={styles.container}>
             {/* <h1>QRコードの表示</h1> */}
-            <PayQRDisplay balance={userData?.balance ?? 0}/>
+            {userData && <PayQRDisplay userName={userData.name} balance={userData.balance ?? 0}/>}
         </div>
     );
 }

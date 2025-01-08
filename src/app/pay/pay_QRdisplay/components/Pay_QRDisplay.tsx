@@ -3,18 +3,21 @@ import {QRCodeCanvas} from 'qrcode.react';
 import styles from '../styles.module.css';
 
 interface Props {
+  userName: string;
   balance: number;
 }
 
-export default function PayQRDisplay({ balance }: Props) {
+export default function PayQRDisplay({ userName , balance }: Props) {
   // ユニークなコードを生成する関数（例：タイムスタンプベース）
   const [qrCodeValue, setQrCodeValue] = useState<string>(''); // 初期値は空文字列
+  const [timeLeft, setTimeLeft] = useState<number>(5 * 60); // 初期値は5分（300秒）
   const intervalRef = useRef<number | null>(null); // intervalId を保持するための ref
+  const countdownRef = useRef<number | null>(null); // countdown intervalId を保持するための ref
 
   // ユニークなコードを生成する関数（例：タイムスタンプベース）
   const generateUniqueCode = useCallback(() => {
-    return `payment_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
-  }, []);
+    return `payment_${Date.now()}_${userName}_${Math.random().toString(36).substring(2, 15)}`;
+  }, [userName]);
 
   useEffect(() => {
     // クライアントサイドでのみ実行
@@ -25,11 +28,20 @@ export default function PayQRDisplay({ balance }: Props) {
     intervalRef.current = window.setInterval(() => {
       const newCode = generateUniqueCode();
       setQrCodeValue(newCode);
+      setTimeLeft(5 * 60); // QRコード更新時に残り時間をリセット
     }, 5 * 60 * 1000); // 5分
+
+    countdownRef.current = window.setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000); // 1秒ごとに残り時間を更新
 
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current); // コンポーネントのアンマウント時にクリア
+      }
+
+      if (countdownRef.current) {
+        clearInterval(countdownRef.current); // コンポーネントのアンマウント時にクリア
       }
     };
   }, [generateUniqueCode]);
@@ -57,6 +69,9 @@ export default function PayQRDisplay({ balance }: Props) {
           <div className={styles.qr_code}>
             {qrCodeValue && <QRCodeCanvas value={qrCodeValue} size={128} level="H" />}
           </div>
+          <div className={styles.time_left}>
+            残り時間: {Math.floor(timeLeft / 60)}分{timeLeft % 60}秒
+          </div>
           <button className={styles.refresh_button} onClick={handleRefresh}>
             更新
             </button>
@@ -64,6 +79,7 @@ export default function PayQRDisplay({ balance }: Props) {
             <div className={styles.amount_label}>利用可能額</div>
             <div className={styles.amount_value}>{balance}pt</div>
           </div>
+          
 
           <div className={styles.balance_section}>
             <div className={styles.balance_item}>
