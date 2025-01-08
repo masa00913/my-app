@@ -5,6 +5,8 @@ interface Props {
 
 // import { useState } from 'react';
 // import { createTransaction } from '@/app/lib/api/transaction';
+import { getClieentIp } from "@/app/lib/api/ipaddress";
+import { useEffect, useState } from 'react';
 
 export default function Home({ name, balance }: Props) {
   // const [recipient, setRecipient] = useState('');
@@ -36,11 +38,19 @@ export default function Home({ name, balance }: Props) {
   //   }
   // };
 
+  const [ip, setIp] = useState('');
+
+  useEffect(() => {
+    getClieentIp()
+      .then((data) => setIp(data.clientIp))
+      .catch((err) => console.error(err));
+  }, []);
+
   return (
     <div>
       <p>こんにちは、{name}さん！</p>
       <p>現在の通貨: {balance}</p>
-
+      <p>IPアドレス: {ip}</p>
 
       <button onClick={() => window.location.href = '/send/send_list'}>送る</button>
       <button onClick={() => window.location.href = '/pay/pay_QRdisplay'}>支払う</button>
