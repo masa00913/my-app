@@ -16,7 +16,7 @@ export default async function handler(
   if (!qrCodeData) {
     return res.status(400).json({ success: false, message: 'QRコードデータがありません' });
   }
-
+  console.log('tryに入る');
   try {
     // ここで QRコードデータ (`qrCodeData`) を検証し、
     // データベースなどを参照してポイント交換処理を行う
@@ -37,6 +37,7 @@ export default async function handler(
       return res.status(404).json({ error: 'ユーザーが見つかりません。' });
     }
 
+    console.log('成功');
     // 成功レスポンス
     return res.status(200).json({
       success: true,
