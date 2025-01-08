@@ -13,8 +13,7 @@ export default function SendListPage() {
 
     if (storedUser) {
       try {
-        const parsedUser = JSON.parse(storedUser);
-        setUserData(JSON.parse(parsedUser)); // ユーザー情報を取得
+        setUserData(JSON.parse(storedUser)); // ユーザー情報を取得
         console.log(userData?.name + "呼び出しあり");
       } catch (error) {
         console.error('Failed to parse user data:', error);
