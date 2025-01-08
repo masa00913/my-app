@@ -43,10 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           return res.status(400).json({ error: '残高が不足しています。' });
         }
 
-        await prisma.wallet.update({
-          where: { userId: sender.id },
-          data: { balance: senderWallet.balance - amount },
-        });
+        
       }else{
           return res.status(404).json({ error: '送信者のウォレットが見つかりません。' });
       }
@@ -56,14 +53,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const recipientWallet = await prisma.wallet.findUnique({
         where: { userId: recipient.id },
       });
-      if (recipientWallet) {
-        await prisma.wallet.update({
-          where: { userId: recipient.id },
-          data: { balance: recipientWallet.balance + amount },
-        });
-      } else {
+      
+      if (!recipientWallet) {
         return res.status(404).json({ error: '受信者のウォレットが見つかりません。' });
       }
+
+      await prisma.wallet.update({
+        where: { userId: sender.id },
+        data: { balance: senderWallet.balance - amount },
+      });
+
+      await prisma.wallet.update({
+        where: { userId: recipient.id },
+        data: { balance: recipientWallet.balance + amount },
+      });
 
 
       res.status(200).json(transaction);

@@ -1,6 +1,7 @@
 // コード2
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
+import { use } from 'react';
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -22,15 +23,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       // 取引相手の名前を取得
-      const transactions = await prisma.transaction.findMany({
+      const sendTransactions = await prisma.transaction.findMany({
         where: { fromUserId: user.id },
         include: { toUser: true },
       });
 
-      const partnerNames = transactions.map(transaction => transaction.toUser.username);
-      console.log('[/api/sendList] partnerNames:', partnerNames); // 取引相手の名前をログ出力
+      const sendTransactionDetails = sendTransactions.map(transaction => ({
+        recipient: transaction.toUser.username,
+        amount: transaction.amount,
+        createdAt : transaction.createdAt,
+        status : transaction.status,
+        })
+      );
 
-      return res.status(200).json({ partnerNames });
+      console.log('[/api/sendList] transactionDetails:', sendTransactionDetails); // 取引相手の名前をログ出力
+
+
+      const receiveTransactions = await prisma.transaction.findMany({
+        where : { toUserId:user.id},
+        include : {fromUser:true},
+      })
+
+      const receiveTransactionDetails = receiveTransactions.map(transaction => ({
+        sender: transaction.fromUser.username,
+        amount: transaction.amount,
+        createdAt : transaction.createdAt,
+        status : transaction.status,
+        })
+      );
+
+      return res.status(200).json({ sendTransactionDetails, receiveTransactionDetails });
     } catch (error) {
       console.error('[/api/sendList] エラー発生:', error); // エラー内容をログ出力
       return res.status(500).json({ error: 'Internal server error' });

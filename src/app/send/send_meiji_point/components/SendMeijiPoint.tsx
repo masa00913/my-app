@@ -38,6 +38,7 @@ export default function SendMeijiPoint({ name, balance,recipientName }: Props) {
   return (
     <div>
       <p>こんにちは、{name}さん！</p>
+      <p>{recipientName} に通貨を送信しようとしています</p>
       <p>現在の通貨: {balance}</p>
       <form onSubmit={handleSubmit}>
         <input type="amount"

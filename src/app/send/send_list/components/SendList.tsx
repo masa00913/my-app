@@ -5,7 +5,7 @@ interface Props{
 import { useEffect,useState } from 'react';
 import {useRouter} from 'next/navigation';
 import { checkUserExists } from '@/app/lib/api/send';
-import { getPastTransactions } from '@/app/lib/api/sendList';
+import { getPastSendTransactions } from '@/app/lib/api/sendList';
 
 export default function SendList({userName} : Props) {
   const [error, setError] = useState<string | null>(null);
@@ -20,8 +20,9 @@ export default function SendList({userName} : Props) {
       console.log(userName);
       const fetchPastTransactions = async () => {
         try {
-          const transactions = await getPastTransactions(userName);
-          const uniqueTransactions = [...new Set(transactions)];
+          const transactions: { recipient: string }[] = await getPastSendTransactions(userName);
+          const uniqueTransactions = [...new Set(transactions.map((transaction: { recipient: string }) => transaction.recipient))];
+          console.log(transactions);
           setPastRecipients(uniqueTransactions);
         } catch (err) {
           console.error('Failed to fetch past transactions', err);
@@ -40,7 +41,7 @@ export default function SendList({userName} : Props) {
       const userExists = await checkUserExists(recipient);
       if (userExists) {
         localStorage.setItem('recipientName', recipient);
-        router.push('/send/send_meiji_point');
+        router.push('/send/individual_transaction');
       } else {
         setError('ユーザーが見つかりませんでした。');
       }
@@ -62,7 +63,7 @@ export default function SendList({userName} : Props) {
       const userExists = await checkUserExists(recipient);
       if (userExists) {
         localStorage.setItem('recipientName', recipient);
-        router.push('/send/send_meiji_point');
+        router.push('/send/individual_transaction');
       } else {
         setError('ユーザーが見つかりませんでした。');
       }
