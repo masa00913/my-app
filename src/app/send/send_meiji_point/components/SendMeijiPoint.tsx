@@ -59,7 +59,7 @@ export default function SendMeijiPoint({ name,recipientName }: Props) {
       {error && <p>{error}</p>}
 
       <div className={styles.header_container}>
-      <button className={styles.back_arrow}>＜</button>
+      <button className={styles.back_arrow} onClick={() => window.location.href = '/send/individual_transaction'}>＜</button>
       <div className={styles.user_section}>
         <div className={styles.user_avatar}></div>
         <div className={styles.user_text}>
@@ -73,13 +73,6 @@ export default function SendMeijiPoint({ name,recipientName }: Props) {
 
     
     <form onSubmit={handleSubmit}>
-      {/* <input type="amount"
-      placeholder='送る金額'
-      value={amount}
-      onChange={(e) => setAmount(Number(e.target.value))} 
-      /> */}
-
-      {/* <button type="submit" disabled={isSending}>交換</button> */}
       <button type="submit" className={styles.next_button} disabled={isSending}>送る</button>
       </form>
     <div className={styles.keypad}>

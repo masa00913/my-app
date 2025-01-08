@@ -23,7 +23,6 @@ export default function SendListPage() {
    
   return (
     <div className={styles.container}>
-      <h1>送金一覧</h1>
       <SendList userName={userData?.name || ''}/>
     </div>
   );

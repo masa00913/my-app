@@ -1,7 +1,159 @@
 /* ホームページのスタイル */
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+background-color: #f9f9f9;
+}
+
+.container_in {
+max-width: 400px;
+margin: 0 auto;
+background: #fff;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+display: flex;
+align-items: center;
+padding: 10px 20px;
+background-color: #fff;
+border-bottom: 1px solid #eaeaea;
+}
+
+.user_icon {
+width: 40px;
+height: 40px;
+background-color: #f5c64d;
+border-radius: 50%;
+}
+
+.user_name {
+margin-left: 10px;
+font-size: 16px;
+font-weight: bold;
+}
+
+.history {
+padding: 20px;
+/* display: flex;  削除 */
+/* flex-direction: column; 削除 */
+}
+
+.date_label {
+margin: 10px 0;
+font-size: 14px;
+color: #888;
+}
+
+.transaction_unit_receive {
+/* display: flex; 追加 */
+justify-content: flex-start; /* 内容を左寄せ */
+margin-bottom: 10px;
+width: 60%; /* 修正: 親要素の幅いっぱいに広げる */
+margin: 0 auto 0 0;
+}
+
+.transaction_unit_send {
+   /* display: flex; 追加 */
+  justify-content: flex-end; /* 内容を右寄せ */
+  margin-bottom: 10px;
+  width: 60%; /* 修正: 親要素の幅いっぱいに広げる */
+  margin: 0 0 0 auto;
+}
+
+.transaction_receive {
+background-color: #9C6CFE;
+padding: 15px;
+border-radius: 10px;
+/* display: inline-block; 追加: 内容に合わせて幅を調整 */
+}
+
+.transaction_send {
+background-color: #FF8B8B;
+padding: 15px;
+border-radius: 10px;
+/* display: inline-block; 追加: 内容に合わせて幅を調整 */
+}
+
+.amount {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.label {
+font-size: 14px;
+color: #fff;
+padding: 5px 10px;
+border-radius: 5px;
+}
+
+.value {
+font-size: 20px;
+font-weight: bold;
+color: #fff;
+}
+
+.details_link {
+display: block;
+margin-top: 5px;
+font-size: 12px;
+color: #fff;
+text-decoration: none;
+}
+
+.status {
+margin-top: 0px;
+margin-left: 20px;
+display: flex;
+align-items: center;
+}
+
+.status_text {
+font-size: 12px;
+color: #757575;
+}
+
+.footer {
+display: flex;
+align-items: center;
+padding: 10px;
+border-top: 1px solid #eaeaea;
+background-color: #fff;
+}
+
+.send_button,
+.request_button {
+padding: 10px 20px;
+font-size: 14px;
+margin-right: 10px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.send_button {
+background-color: #ff8b8b;
+color: #fff;
+}
+
+.request_button {
+background-color: #8bc34a;
+color: #fff;
+}
+
+.message_input {
+flex-grow: 1;
+padding: 10px;
+font-size: 14px;
+border: 1px solid #eaeaea;
+border-radius: 5px;
+}

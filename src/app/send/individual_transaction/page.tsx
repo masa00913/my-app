@@ -26,7 +26,7 @@ export default function IndividualTransactionHistoryPage() {
     <div className={styles.container}>
       <h1>個人間の取引履歴</h1>
       <IndividualTransactionHistory userName={userData?.name || ''} recipient={recipientName || ''}/>
-      <button onClick={() => window.location.href = '/send/send_meiji_point'}>送る</button>
+
     </div>
   );
 }

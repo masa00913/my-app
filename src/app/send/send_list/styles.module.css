@@ -1,7 +1,265 @@
 /* ホームページのスタイル */
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+.body {
+  font-family: sans-serif;
+  margin: 0;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.container_in {
+  /* width: 375px; iPhone SE size, adjust as needed */
+  background-color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Make container full viewport height */
+}
+
+/* Header */
+.header {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 10;
+}
+
+.header_left {
+  display: flex;
+  align-items: center;
+}
+
+.back_button {
+  border: none;
+  background: none;
+  font-size: 20px;
+  color: #555;
+  margin-right: 10px;
+  padding: 0;
+  cursor: pointer; /* Change cursor shape */
+}
+
+.back_button:hover {
+  transform: scale(1.1); /* Scale up the button on hover */
+}
+
+.header_title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.header_right {
+  display: flex;
+  gap: 10px;
+}
+
+.header_icon_button {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  border: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Search Bar */
+.search_bar_container {
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 51px; /* Adjust based on header height */
+  background-color: #fff;
+  z-index: 9;
+}
+
+.search_bar {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.search_icon {
+  margin-right: 8px;
+  color: #888;
+}
+
+.search_input {
+  border: none;
+  background: none;
+  flex-grow: 1;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+}
+
+.search_input::placeholder {
+  color: #aaa;
+}
+
+/* Segmented Control */
+.segmented_control {
+  display: flex;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 103px; /* Adjust based on header and search bar height */
+  background-color: #fff;
+  z-index: 8;
+}
+
+.segment_button {
+  flex-grow: 1;
+  padding: 8px 0;
+  border: 1px solid #ddd;
+  background-color: #eee;
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  cursor: pointer;
+}
+
+.segment_button:first-child {
+  border-radius: 10px 0 0 10px;
+  border-right: none;
+}
+
+.segment_button:last-child {
+  border-radius: 0 10px 10px 0;
+  border-left: none;
+}
+
+.segment_button.active {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+/* Individual Items */
+.content {
+  overflow-y: auto;
+  flex-grow: 1;
+  padding-top: 10px; /* Spacing below the segmented control */
+}
+
+.individual_item {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer; /* Change cursor shape */
+}
+
+.individual_item:hover {
+  background-color: #f0f0f0; /* Change background color on hover */
+}
+
+.individual_left {
+  display: flex;
+  align-items: flex-start;
+}
+
+.profile_icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: #fff;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  overflow: hidden;
+}
+
+.profile_icon_color_1 { background-color: #E3C059; }
+.profile_icon_color_2 { background-color: #C58BF2; }
+.profile_icon_color_3 { background-color: #76CFE9; }
+.profile_icon_color_4 { background-color: #A2E4B8; }
+.profile_icon_color_5 { background-color: #63B5F6; }
+.profile_icon_color_6 { background-color: #F87070; }
+.profile_icon_color_7 { background-color: #888888; }
+
+.profile_icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item_details {
+  flex-grow: 1;
+}
+
+.item_name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.item_log {
+  font-size: 12px;
+  color: #777;
+}
+
+.individual_right {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Bottom Buttons */
+.bottom_buttons {
+  display: flex;
+  padding: 15px;
+  border-top: 1px solid #eee;
+  position: sticky;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 10;
+  gap: 10px;
+}
+
+.bottom_button {
+  flex-grow: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.send_button {
+  background-color: #ff6666;
+}
+
+.request_button {
+  background-color: #58d6a8;
+}
+
+.bottom_button img {
+  height: 16px;
+}
