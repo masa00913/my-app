@@ -33,6 +33,7 @@ model Transaction {
   toUserId    Int
   amount      Int
   status      String   @default("completed")
+  attribute   String   @default("transaction")
   createdAt   DateTime @default(now())
   fromUser    User     @relation("SenderTransactions", fields: [fromUserId], references: [id])
   toUser      User     @relation("RecipientTransactions", fields: [toUserId], references: [id])
