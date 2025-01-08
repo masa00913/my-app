@@ -13,13 +13,14 @@ export default function SendListPage() {
 
     if (storedUser) {
       try {
-        setUserData(JSON.parse(storedUser)); // ユーザー情報を取得
-        console.log(userData?.name);
+        const parsedUser = JSON.parse(storedUser);
+        setUserData(JSON.parse(parsedUser)); // ユーザー情報を取得
+        console.log(userData?.name + "呼び出しあり");
       } catch (error) {
         console.error('Failed to parse user data:', error);
       }
     }
-  }, [userData]);
+  }, []);
    
   return (
     <div className={styles.container}>

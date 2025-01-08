@@ -5,3 +5,227 @@
     align-items: center;
     padding: 20px;
   }
+
+  .app_container {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    width: 375px; /* iPhone SE (3rd gen) width */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px auto;
+    background-color: #fff;
+  }
+  
+  .app_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+  }
+  
+  .header_left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .meijipay_logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+  }
+  
+  .meijipay_text {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .logout_button {
+    background: none;
+    border: none;
+    color: #7e3af2;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .balance_card {
+    background-color: #f8f8f8;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px;
+  }
+  
+  .balance_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .balance_title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .rank_text {
+    font-size: 12px;
+    color: #999;
+  }
+  
+  .balance_amount {
+    font-size: 36px;
+    font-weight: bold;
+  }
+  
+  .yen_text {
+    font-size: 18px;
+    margin-left: 2px;
+  }
+  
+  .action_buttons {
+    display: flex;
+    justify-content: space-around;
+    background-color: #7e3af2;
+    padding: 15px 0;
+    margin: 0 10px;
+    border-radius: 8px;
+  }
+  
+  .action_button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  .action_icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 5px;
+    filter: invert(1); /* Ensure the placeholder text is visible on the purple background */
+  }
+  
+  .stamp_rally_card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px;
+  }
+  
+  .card_title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .stamp_container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .stamp_item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stamp_image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .stamp_label {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .frequent_friends_card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px;
+  }
+  
+  .friends_container {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .friend_item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .friend_avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #bea6e9; /* Placeholder color */
+    margin-bottom: 5px;
+  }
+  
+  .friend_name {
+    font-size: 12px;
+  }
+  
+  .bottom_navigation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+  }
+  
+  .nav_item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #999;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  .nav_item.active {
+    color: #7e3af2;
+  }
+  
+  .nav_icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 3px;
+    filter: grayscale(1); /* Make inactive icons grayscale */
+    opacity: 0.7;
+  }
+  
+  .nav_item.active .nav_icon {
+    filter: none; /* Remove grayscale for active icon */
+    opacity: 1;
+  }
+  
+  .nav_item.active:nth-child(3) .nav_icon {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0;
+  }
+  
+  .pay_icon_container {
+      width: 40px;
+      height: 40px;
+      background-color: #7e3af2;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .pay_icon {
+    filter: invert(1); /* Invert the color to make the text white on purple background */
+  }

@@ -18,7 +18,7 @@ export default function SendList({userName} : Props) {
   useEffect(() => {
     // 過去の取引データを取得
     if(userName != ''){
-      console.log(userName);
+      console.log(userName + "呼び出し");
       const fetchPastTransactions = async () => {
         try {
           const transactions: { recipient: string }[] = await getPastSendTransactions(userName);
