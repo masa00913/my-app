@@ -3,6 +3,7 @@
 import SendMeijiPoint from './components/SendMeijiPoint';
 import { useEffect, useState } from 'react';
 import { User } from '@/types/user'; // User型のインポート
+import styles from './styles.module.css';
 
 export default function SendMeijiPointPage() {
   const [userData, setUserData] = useState<User | null>(null); // 型を明示的に定義
@@ -24,5 +25,9 @@ export default function SendMeijiPointPage() {
       return <div>Loading...</div>; // ローディング表示
     }
   
-    return <SendMeijiPoint name={userData.name} balance={userData.balance} recipientName={recipientName || ''}/>;
+    return (
+      <div className={styles.container}>
+          <SendMeijiPoint name={userData.name} balance={userData.balance} recipientName={recipientName || ''}/>
+      </div>
+    );
 }
