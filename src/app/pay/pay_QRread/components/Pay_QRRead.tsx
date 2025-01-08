@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Scanner, IDetectedBarcode} from '@yudiel/react-qr-scanner';
 import { useRouter } from 'next/navigation';
-import styles from './styles.module.css';
+// import styles from './styles.module.css';
 
 interface ExchangeResponse {
   success: boolean;
