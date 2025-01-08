@@ -107,24 +107,24 @@ export default function Home({ name, balance }: Props) {
         </div>
       </div>
 
-      <div className={styles.frequent_friends_card}>
-        <h2 className={styles.card_title}>よく取り引きする友達</h2>
-        <div className={styles.friends_container}>
-          <div className={styles.friend_item}>
-            <div className={styles.friend_avatar}></div>
-            <span className={styles.friend_name}>渡邊</span>
+      <div className={styles.meiji_campus_card}>
+        <h2 className={styles.card_title}>明治大学キャンパス</h2>
+        <div className={styles.campus_container}>
+          <div className={styles.campus_item}>
+            <div className={styles.campus_avatar}></div>
+            <span className={styles.campus_name}>中野</span>
           </div>
-          <div className={styles.friend_item}>
-            <div className={styles.friend_avatar}></div>
-            <span className={styles.friend_name}>青木</span>
+          <div className={styles.campus_item}>
+            <div className={styles.campus_avatar}></div>
+            <span className={styles.campus_name}>生田</span>
           </div>
-          <div className={styles.friend_item}>
-            <div className={styles.friend_avatar}></div>
-            <span className={styles.friend_name}>赤城</span>
+          <div className={styles.campus_item}>
+            <div className={styles.campus_avatar}></div>
+            <span className={styles.campus_name}>駿河台</span>
           </div>
-          <div className={styles.friend_item}>
-            <div className={styles.friend_avatar}></div>
-            <span className={styles.friend_name}>和田</span>
+          <div className={styles.campus_item}>
+            <div className={styles.campus_avatar}></div>
+            <span className={styles.campus_name}>和泉</span>
           </div>
         </div>
       </div>

@@ -145,25 +145,25 @@
     margin-top: 5px;
   }
   
-  .frequent_friends_card {
+  .meiji_campus_card {
     border: 1px solid #eee;
     border-radius: 8px;
     padding: 15px;
     margin: 10px;
   }
   
-  .friends_container {
+  .campus_container {
     display: flex;
     justify-content: space-around;
   }
   
-  .friend_item {
+  .campus_item {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   
-  .friend_avatar {
+  .campus_avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -171,7 +171,7 @@
     margin-bottom: 5px;
   }
   
-  .friend_name {
+  .campus_name {
     font-size: 12px;
   }
   
