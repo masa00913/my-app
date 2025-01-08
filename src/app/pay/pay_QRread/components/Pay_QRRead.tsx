@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Scanner, IDetectedBarcode} from '@yudiel/react-qr-scanner';
 import { useRouter } from 'next/navigation';
+import styles from './styles.module.css';
 
 interface ExchangeResponse {
   success: boolean;
@@ -92,8 +93,9 @@ export default function PayQRRead({userName}: Props) {
 
   return (
     <div>
+      <button onClick={() => window.location.href = '/home'}>×</button>
       <h1>QRコードを読み込んでポイント交換</h1>
-
+      
       <div style={{ width: '300px' }}>
         <Scanner
           onScan={handleScan}

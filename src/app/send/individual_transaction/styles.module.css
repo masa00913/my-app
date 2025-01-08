@@ -27,6 +27,15 @@ padding: 10px 20px;
 background-color: #fff;
 border-bottom: 1px solid #eaeaea;
 }
+.back_button {
+  border: none;
+  background: none;
+  font-size: 20px;
+  color: #555;
+  margin-right: 10px;
+  padding: 0;
+  cursor: pointer; /* Change cursor shape */
+}
 
 .user_icon {
 width: 40px;
@@ -34,6 +43,7 @@ height: 40px;
 background-color: #f5c64d;
 border-radius: 50%;
 }
+
 
 .user_name {
 margin-left: 10px;

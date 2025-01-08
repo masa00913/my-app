@@ -8,8 +8,7 @@ interface Props {
 export default function Layout({ children }: Props) {
   return (
     <div>
-      <header>
-        {/* ヘッダー */}
+      {/* <header>
         <nav>
           <Link href="/home">ホーム</Link>
           <Link href="/auth">認証画面</Link>
@@ -21,7 +20,7 @@ export default function Layout({ children }: Props) {
           <Link href="/send/send_list">取引相手一覧</Link>
           <Link href="/send/send_meiji_point">個人間の取引実行</Link>
         </nav>
-      </header>
+      </header> */}
       <main>
         {children}
       </main>

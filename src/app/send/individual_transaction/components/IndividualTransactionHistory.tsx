@@ -64,7 +64,10 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
       {error && <p>{error}</p>}
       
       <div className={styles.container_in}>
+        
       <header className={styles.header}>
+      <button className={styles.back_button} onClick={() => window.location.href = '/home'}>&lt;</button>
+
         <div className={styles.user_icon}></div>
         <div className={styles.user_name}>{recipient}</div>
       </header>

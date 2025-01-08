@@ -55,7 +55,7 @@ export default function PayQRDisplay({ userName , balance }: Props) {
   return (
     <div className={styles.body}>
       <div className={styles.header}>
-        <button className={styles.close_button}>×</button>
+        <button className={styles.close_button} onClick={() => window.location.href = '/home'}>×</button>
         <div className={styles.header_title}>支払い</div>
         <div style={{ width: '40px' }}></div>
       </div>
