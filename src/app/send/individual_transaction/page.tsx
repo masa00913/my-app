@@ -24,7 +24,6 @@ export default function IndividualTransactionHistoryPage() {
   
   return (
     <div className={styles.container}>
-      <h1>個人間の取引履歴</h1>
       <IndividualTransactionHistory userName={userData?.name || ''} recipient={recipientName || ''}/>
 
     </div>

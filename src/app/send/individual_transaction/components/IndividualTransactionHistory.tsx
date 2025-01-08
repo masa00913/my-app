@@ -42,7 +42,7 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
   
         fetchPastTransactions();
       }
-    }, [recipient]);
+    }, [recipient,userName]);
 
   // const handleSubmit = async (e: React.FormEvent) => {
   //   e.preventDefault();

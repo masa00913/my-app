@@ -15,13 +15,13 @@
   align-items: center;
   }
   
-  .container, .body, .header, .close_button, .header_title, .main_content, .payment_container, .barcode, .qr_code, .amount_section, .amount_label, .amount_value, .balance_section, .balance_item, .balance_left, .balance_icon, .balance_info, .balance_name, .balance_value, .arrow, .points_use, .points_use_left, .points_use_right, .footer, .scan_button, .scan_icon {
+  /* .container, .body, .header, .close_button, .header_title, .main_content, .payment_container, .barcode, .qr_code, .amount_section, .amount_label, .amount_value, .balance_section, .balance_item, .balance_left, .balance_icon, .balance_info, .balance_name, .balance_value, .arrow, .points_use, .points_use_left, .points_use_right, .footer, .scan_button, .scan_icon {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-tap-highlight-color: transparent;
-  }
+  } */
 
 .body {
   background: #A855F7;
