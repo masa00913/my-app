@@ -8,9 +8,9 @@ import styles from '../styles.module.css';
 
 export default function IndividualTransactionHistory({userName,recipient}: Props) {
   const [error, setError] = useState<string | null>(null);
-  const [sendTransactionInfo, setSendTransactionInfo] = useState<{ recipient: string, amount: string, createdAt: string, status: string }[]>([]);
+  // const [sendTransactionInfo, setSendTransactionInfo] = useState<{ recipient: string, amount: string, createdAt: string, status: string }[]>([]);
 
-  const [receiveTransactionInfo, setReceiveTransactionInfo] = useState<{ sender: string, amount: string, createdAt: string, status: string }[]>([]);
+  // const [receiveTransactionInfo, setReceiveTransactionInfo] = useState<{ sender: string, amount: string, createdAt: string, status: string }[]>([]);
   const [combinedTransactions, setCombinedTransactions] = useState<{ recipient: string, amount: string, createdAt: string, status: string, type: string }[]>([]);
   useEffect(() => {
       // 過去の取引データを取得
@@ -32,8 +32,8 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
             combinedTransactions.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
             
             setCombinedTransactions(combinedTransactions);
-            setSendTransactionInfo(combinedTransactions.filter(transaction => transaction.type === 'send'));
-            setReceiveTransactionInfo(combinedTransactions.filter(transaction => transaction.type === 'receive'));
+            // setSendTransactionInfo(combinedTransactions.filter(transaction => transaction.type === 'send'));
+            // setReceiveTransactionInfo(combinedTransactions.filter(transaction => transaction.type === 'receive'));
           } catch (err) {
             console.error('Failed to fetch past transactions', err);
             setError('Failed to fetch past transactions');

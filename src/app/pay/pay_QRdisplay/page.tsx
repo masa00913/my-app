@@ -7,11 +7,11 @@ import { User } from '@/types/user';
 
 export default function PayQRDisplayPage() {
     const [userData, setUserData] = useState<User | null>(null); // 型を明示的に定義
-    const [recipientName, setRecipientName] = useState<string | null>(null); // 型を明示的に定義
+    // const [recipientName, setRecipientName] = useState<string | null>(null); // 型を明示的に定義
     
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
-        setRecipientName(localStorage.getItem('recipientName'));
+        // setRecipientName(localStorage.getItem('recipientName'));
         if (storedUser) {
         try {
             setUserData(JSON.parse(storedUser)); // ユーザー情報を取得
