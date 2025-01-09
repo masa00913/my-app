@@ -2,7 +2,7 @@ interface Props {
   userName: string;
   recipient: string;
 }
-import { useEffect,useState } from 'react';
+import { useEffect,useState, useRef } from 'react';
 import { getPastSendTransactions,getPastReceiveTransactions } from '@/app/lib/api/sendList';
 import styles from '../styles.module.css';
 
@@ -12,6 +12,8 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
 
   // const [receiveTransactionInfo, setReceiveTransactionInfo] = useState<{ sender: string, amount: string, createdAt: string, status: string }[]>([]);
   const [combinedTransactions, setCombinedTransactions] = useState<{ recipient: string, amount: string, createdAt: string, status: string, type: string }[]>([]);
+  const historyRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
       // 過去の取引データを取得
       if(userName != ''){
@@ -42,6 +44,11 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
       }
     }, [recipient,userName]);
 
+  useEffect(() => {
+    if (historyRef.current) {
+      historyRef.current.scrollTop = historyRef.current.scrollHeight;
+    }
+  }, [combinedTransactions]);
 
   return (
     <div className={styles.body}>
@@ -55,7 +62,7 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
         <div className={styles.user_icon}></div>
         <div className={styles.user_name}>{recipient}</div>
       </header>
-      <div className={styles.history}>
+      <div className={styles.history} ref={historyRef}>
       {combinedTransactions.map((transaction, index) => (
         <div key={index} className={transaction.type === 'send' ? styles.transaction_unit_send : styles.transaction_unit_receive}>
           <div className={styles.date_label}>{transaction.createdAt}</div>

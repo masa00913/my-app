@@ -95,7 +95,7 @@ export default function QRRead({userName}: Props) {
     <div className={styles.body}>
       <div className={styles.container_inner}>
         <div className={styles.header}>
-          <button className={styles.close_button} onClick={() => window.location.href = '/home'} />
+          <button className={styles.close_button} onClick={() => window.location.href = '/send/send_list'} />
           <span className={styles.title}>スキャン</span>
         </div>
         <div className={styles.scanner_container}>

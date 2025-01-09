@@ -6,6 +6,7 @@ import { useEffect,useState } from 'react';
 import {useRouter} from 'next/navigation';
 import { checkUserExists } from '@/app/lib/api/send';
 import {getPastSendTransactions,getPastReceiveTransactions } from '@/app/lib/api/sendList';
+import Image from 'next/image';
 import styles from '../styles.module.css'
 
 export default function SendList({userName} : Props) {
@@ -101,10 +102,10 @@ export default function SendList({userName} : Props) {
             </div>
             <div className={styles.header_right}>
             <button className={styles.header_icon_button} onClick={() => window.location.href = '/my_code/QR_display'}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M32 32C14.3 32 0 46.3 0 64V448c0 17.7 14.3 32 32 32H64c17.7 0 32-14.3 32-32V384H448v64c0 17.7 14.3 32 32 32h32c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32H448V128H64V32zM64 96H448V416H64V96zm352 320h32v32c0 0 0 0 0 0H416c0 0 0 0 0 0V416zM416 96H480V64c0 0 0 0 0 0h-32c0 0 0 0 0 0V96z"/></svg>
+              <Image src="/send/qrcode.png" alt="qrCode" width={25} height={25}className={styles.header_icon}/>
             </button>
             <button className={styles.header_icon_button} onClick={() => window.location.href = '/my_code/QR_read'}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M96 32V64c0 17.7 14.3 32 32 32H320c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H128c-17.7 0-32 14.3-32 32zM64 128V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V128H352v64c0 17.7-14.3 32-32 32H128c-17.7 0-32-14.3-32-32V128H64z"/></svg>
+              <Image src="/send/scan.png" alt="qrCode" width={25} height={25} className={styles.header_icon}/>
             </button>
             </div>
         </div>
