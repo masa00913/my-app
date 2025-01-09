@@ -9,7 +9,6 @@ import { getClieentIp } from "@/app/lib/api/ipaddress";
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from '../styles.module.css';
-
 export default function Home({ name, balance }: Props) {
   // const [recipient, setRecipient] = useState('');
   // const [error, setError] = useState<string | null>(null);
@@ -40,6 +39,11 @@ export default function Home({ name, balance }: Props) {
   //   }
   // };
 
+  // const storedUser = localStorage.getItem('user') as User | null;
+  // if (!name && storedUser) {
+  //   name = storedUser.name;
+  //   console.log("name再確認" + name);
+  // }
   const [ip, setIp] = useState('');
 
   useEffect(() => {
@@ -58,7 +62,7 @@ export default function Home({ name, balance }: Props) {
           <Image src="https://placehold.jp/30x30/ddd/fff?text=M" alt="MeijiPay Logo" width={30} height={30} className={styles.meijipay_logo} />
           <span className={styles.meijipay_text}>MeijiPay</span>
         </div>
-        <button className={styles.logout_button}>{name}</button>
+        <div className={styles.logout_button}>{name}</div>
       </header>
 
       <div className={styles.balance_card}>

@@ -16,6 +16,7 @@ export default function LoginForm() {
     setIsLoading(true);
     try{
       const userData = await loginUser(email, password); // ログイン時にユーザー情報を取得
+      console.log(JSON.stringify(userData));
       localStorage.setItem('user', JSON.stringify(userData)); // localStorageにユーザー情報を保存 
       await loginUser(email, password);
       alert('ログイン成功！');

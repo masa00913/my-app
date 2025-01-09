@@ -15,9 +15,10 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
   const historyRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
+    console.log("indi" + userName);
       // 過去の取引データを取得
       if(userName != ''){
-        console.log(userName);
+        
         const fetchPastTransactions = async () => {
           try {
             const sendTransactions = await getPastSendTransactions(userName);

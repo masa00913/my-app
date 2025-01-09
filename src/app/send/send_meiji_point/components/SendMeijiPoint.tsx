@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { createTransaction } from '@/app/lib/api/transaction';
 import styles from '../styles.module.css';
 import { useRouter } from 'next/navigation';
+import { getUserData } from '@/app/lib/api/getUserData';
 
 export default function SendMeijiPoint({ name,recipientName }: Props) {
   const [error, setError] = useState<string | null>(null);
@@ -26,6 +27,8 @@ export default function SendMeijiPoint({ name,recipientName }: Props) {
       // トランザクション作成のAPIリクエストを送信
       await createTransaction(name, recipientName, amount);
       alert('交換成功！');
+      
+      localStorage.setItem('user', JSON.stringify(getUserData));
       router.push('/send/individual_transaction');
     } catch (err: unknown) {
       let errorMessage = '交換に失敗しました。';
@@ -69,7 +72,7 @@ export default function SendMeijiPoint({ name,recipientName }: Props) {
       </div>
     </div>
 
-    <div className={styles.amount_display}>{amount}円</div>
+    <div className={styles.amount_display}>{amount}pt</div>
 
     
     <form onSubmit={handleSubmit}>
