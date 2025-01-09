@@ -11,9 +11,6 @@ import styles from '../styles.module.css'
 export default function SendList({userName} : Props) {
   const [error, setError] = useState<string | null>(null);
   const [recipient, setRecipient] = useState('');
-  const [isSearching, setIsSearching] = useState(false);
-  const [pastRecipients, setPastRecipients] = useState<string[]>([]);
-  const [combinedTransactions, setCombinedTransactions] = useState<{ recipient: string, amount: string, createdAt: string, status: string, type: string }[]>([]);
   const [recipientsWithLatest, setRecipientsWithLatest] = useState<{ recipient: string, latestDate: string }[]>([]);
   const router = useRouter();
 
@@ -55,8 +52,7 @@ export default function SendList({userName} : Props) {
           console.log(combinedTransactions);
 
           combinedTransactions.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-          
-            setCombinedTransactions(combinedTransactions);
+
             const uniqueRecipients = [...new Set(combinedTransactions.map(transaction => transaction.type === 'send' ? transaction.recipient : transaction.sender))];
             const latestTransactions = uniqueRecipients.map(recipient => {
             const recipientTransactions = combinedTransactions.filter(transaction => (transaction.type === 'send' ? transaction.recipient : transaction.sender) === recipient);
@@ -79,7 +75,6 @@ export default function SendList({userName} : Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null); // エラーをリセット
-    setIsSearching(true);
     try {
       const userExists = await checkUserExists(recipient);
       if (userExists) {
@@ -94,14 +89,11 @@ export default function SendList({userName} : Props) {
         errorMessage = err.message;
       }
       setError(errorMessage);
-    }finally{
-      setIsSearching(false);
     }
   };
 
   const ClickRecipient = async (recipient: string) => {
     setError(null); // エラーをリセット
-    setIsSearching(true);
     try {
       const userExists = await checkUserExists(recipient);
       if (userExists) {
@@ -116,8 +108,6 @@ export default function SendList({userName} : Props) {
         errorMessage = err.message;
       }
       setError(errorMessage);
-    }finally{
-      setIsSearching(false);
     }
   };
 
