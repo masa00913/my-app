@@ -1,0 +1,101 @@
+
+
+  .container {
+    background-color: #69F0AE;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .body{
+    width: 400px;
+  }
+  
+  .header_container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .back_icon {
+    cursor: pointer;
+  }
+  
+  .header_title {
+    color: white;
+    font-size: 18px;
+    margin-left: 10px;
+    font-weight: bold;
+  }
+  
+  .instruction_container {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 16px;
+  }
+  
+  .qr_code_container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .qr_code_placeholder {
+    width: 200px;
+    height: 200px;
+    background-color: black;
+  }
+  
+  .user_name {
+    margin-top: 20px;
+    font-size: 16px;
+  }
+  
+  .share_link_button {
+    background-color: #64B5F6;
+    color: white;
+    border: white;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .copy_link_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    cursor: pointer;
+  }
+  
+  .copy_icon {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #BDBDBD;
+    border-radius: 3px;
+    margin-right: 10px;
+  }
+  
+  .copy_link_text {
+    color: #ffffff;
+    font-size: 16px;
+  }

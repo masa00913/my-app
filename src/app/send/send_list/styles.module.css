@@ -13,16 +13,18 @@
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
+  width: 400px;
 }
 
 .container_in {
   /* width: 375px; iPhone SE size, adjust as needed */
   background-color: #fff;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
   display: flex;
   flex-direction: column;
   height: 100vh; /* Make container full viewport height */
+  width: 100%; /* Make container full viewport width */
 }
 
 /* Header */
@@ -78,6 +80,7 @@
   align-items: center;
   font-size: 16px;
   color: #333;
+  cursor: pointer;
 }
 
 /* Search Bar */

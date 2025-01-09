@@ -44,7 +44,7 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
 
 
   return (
-    <div>
+    <div className={styles.body}>
       {error && <p>{error}</p>}
       
       <div className={styles.container_in}>

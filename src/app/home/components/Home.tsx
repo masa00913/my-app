@@ -54,6 +54,7 @@ export default function Home({ name, balance }: Props) {
       <div className={styles.app_container}>
       <header className={styles.app_header}>
         <div className={styles.header_left}>
+          
           <Image src="https://placehold.jp/30x30/ddd/fff?text=M" alt="MeijiPay Logo" width={30} height={30} className={styles.meijipay_logo} />
           <span className={styles.meijipay_text}>MeijiPay</span>
         </div>
@@ -72,23 +73,23 @@ export default function Home({ name, balance }: Props) {
 
       <div className={styles.action_buttons}>
         <div className={styles.action_button} onClick={() => window.location.href = '/pay/pay_QRread'}>
-          <Image src="https://placehold.jp/30x30/7e3af2/fff?text=%E3%82%B9%E3%82%AD%E3%83%A3%E3%83%B3" alt="Scan" width={30} height={30} className={styles.action_icon} />
+          <Image src="/home/scan.png" alt="Scan Icon" width={30} height={30} className={styles.action_icon} />
           <span className={styles.action_label}>スキャン</span>
         </div>
         <div className={styles.action_button} onClick={() => window.location.href = '/send/send_list'}>
-          <Image src="https://placehold.jp/30x30/7e3af2/fff?text=%E9%80%81%E3%82%8B" alt="Send" width={30} height={30} className={styles.action_icon} />
+          <Image src="/home/send.png" alt="Scan Icon" width={30} height={30} className={styles.action_icon} />
           <span className={styles.action_label}>送る</span>
         </div>
         <div className={styles.action_button}>
-          <Image src="https://placehold.jp/30x30/7e3af2/fff?text=%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88" alt="Points" width={30} height={30} className={styles.action_icon} />
+          <Image src="/home/points.png" alt="Scan Icon" width={30} height={30} className={styles.action_icon} />
           <span className={styles.action_label}>ポイント</span>
         </div>
         <div className={styles.action_button}>
-          <Image src="https://placehold.jp/30x30/7e3af2/fff?text=%E5%8F%96%E5%BC%95%E5%B1%A5%E6%AD%B4" alt="History" width={30} height={30} className={styles.action_icon} />
+          <Image src="/home/transaction-history.png" alt="Scan Icon" width={30} height={30} className={styles.action_icon} />
           <span className={styles.action_label}>取引履歴</span>
         </div>
         <div className={styles.action_button}>
-          <Image src="https://placehold.jp/30x30/7e3af2/fff?text=%E3%83%81%E3%83%A3%E3%83%BC%E3%82%B8" alt="Charge" width={30} height={30} className={styles.action_icon} />
+          <Image src="/home/charge.png" alt="Scan Icon" width={30} height={30} className={styles.action_icon} />
           <span className={styles.action_label}>チャージ</span>
         </div>
       </div>
@@ -131,25 +132,25 @@ export default function Home({ name, balance }: Props) {
 
       <nav className={styles.bottom_navigation}>
         <div className={styles.nav_item}>
-          <Image src="https://placehold.jp/30x30/7e3af2/fff?text=%E3%83%9B%E3%83%BC%E3%83%A0" alt="Home" width={30} height={30} className={styles.nav_icon} />
+          <Image src="/home/home.png" alt="Scan Icon" width={30} height={30} className={styles.nav_icon} />
           <span className={styles.nav_label}>ホーム</span>
         </div>
         <div className={styles.nav_item}>
-          <Image src="https://placehold.jp/30x30/ddd/fff?text=%E8%BF%91%E3%81%8F%E3%81%AE%E5%8F%8B%E9%81%94" alt="Nearby Friends" width={30} height={30} className={styles.nav_icon} />
+          <Image src="/home/add-friend.png" alt="Scan Icon" width={30} height={30} className={styles.nav_icon} />
           <span className={styles.nav_label}>近くの友達</span>
         </div>
         <div className={`${styles.nav_item} ${styles.active}`} onClick={() => window.location.href = '/pay/pay_QRdisplay'}>
           <div className={styles.pay_icon_container}>
-            <Image src="https://placehold.jp/40x40/fff/7e3af2?text=%E6%94%AF%E6%89%95%E3%81%86" alt="Pay" width={40} height={40} className={styles.pay_icon} />
+            {/* <Image src="home/pay.png" alt="Scan Icon" width={30} height={30} className={styles.pay_icon} /> */}
           </div>
           <span className={styles.nav_label}>支払う</span>
         </div>
         <div className={styles.nav_item}>
-          <Image src="https://placehold.jp/30x30/ddd/fff?text=%E3%82%A6%E3%82%A9%E3%83%AC%E3%83%83%E3%83%88" alt="Wallet" width={30} height={30} className={styles.nav_icon} />
+          <Image src="/home/wallet.png" alt="Scan Icon" width={30} height={30} className={styles.nav_icon} />
           <span className={styles.nav_label}>ウォレット</span>
         </div>
         <div className={styles.nav_item}>
-          <Image src="https://placehold.jp/30x30/ddd/fff?text=%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88" alt="Account" width={30} height={30} className={styles.nav_icon} />
+            <Image src="/home/account.png" alt="Scan Icon" width={30} height={30} className={styles.nav_icon} />
           <span className={styles.nav_label}>アカウント</span>
         </div>
       </nav>

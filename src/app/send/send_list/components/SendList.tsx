@@ -21,26 +21,6 @@ export default function SendList({userName} : Props) {
       console.log(userName + "呼び出し");
       const fetchPastTransactions = async () => {
         try {
-          // const transactions: { recipient: string }[] = await getPastSendTransactions(userName);
-          // const uniqueTransactions = [...new Set(transactions.map((transaction: { recipient: string }) => transaction.recipient))];
-          // console.log(transactions);
-          // setPastRecipients(uniqueTransactions);
-
-          // const transactions2 = await getPastSendTransactions(userName);
-          // const grouped = transactions2.reduce((acc: Record<string, { recipient: string; createdAt: string }[]>, curr: { recipient: string; createdAt: string }) => {
-          // if (!acc[curr.recipient]) acc[curr.recipient] = [];
-          // acc[curr.recipient].push(curr);
-          // return acc;
-          // }, {} as Record<string, { recipient: string; createdAt: string }[]>);
-
-          // const recipientsWithLatest = Object.entries(grouped as Record<string, { recipient: string; createdAt: string }[]>).map(([recipient, txs]: [string, { recipient: string; createdAt: string }[]]) => {
-          // txs.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-          // return { recipient, latestDate: txs[0].createdAt };
-          // });
-
-          // console.log(recipientsWithLatest);
-          // setRecipientsWithLatest(recipientsWithLatest);
-
           const sendTransactions = await getPastSendTransactions(userName);
 
           const receiveTransactions = await getPastReceiveTransactions(userName);
@@ -112,8 +92,6 @@ export default function SendList({userName} : Props) {
   };
 
   return (
-    <div>
-
       <div className={styles.body}>
         <div className={styles.container_in}>
         <div className={styles.header}>
@@ -122,11 +100,11 @@ export default function SendList({userName} : Props) {
             <span className={styles.header_title}>送る・受け取る</span>
             </div>
             <div className={styles.header_right}>
-            <button className={styles.header_icon_button}>
-            {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M32 32C14.3 32 0 46.3 0 64V448c0 17.7 14.3 32 32 32H64c17.7 0 32-14.3 32-32V384H448v64c0 17.7 14.3 32 32 32h32c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32H448V128H64V32zM64 96H448V416H64V96zm352 320h32v32c0 0 0 0 0 0H416c0 0 0 0 0 0V416zM416 96H480V64c0 0 0 0 0 0h-32c0 0 0 0 0 0V96z"/></svg> */}
+            <button className={styles.header_icon_button} onClick={() => window.location.href = '/my_code/QR_display'}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M32 32C14.3 32 0 46.3 0 64V448c0 17.7 14.3 32 32 32H64c17.7 0 32-14.3 32-32V384H448v64c0 17.7 14.3 32 32 32h32c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32H448V128H64V32zM64 96H448V416H64V96zm352 320h32v32c0 0 0 0 0 0H416c0 0 0 0 0 0V416zM416 96H480V64c0 0 0 0 0 0h-32c0 0 0 0 0 0V96z"/></svg>
             </button>
-            <button className={styles.header_icon_button}>
-            {/* <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M96 32V64c0 17.7 14.3 32 32 32H320c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H128c-17.7 0-32 14.3-32 32zM64 128V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V128H352v64c0 17.7-14.3 32-32 32H128c-17.7 0-32-14.3-32-32V128H64z"/></svg> */}
+            <button className={styles.header_icon_button} onClick={() => window.location.href = '/my_code/QR_read'}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M96 32V64c0 17.7 14.3 32 32 32H320c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H128c-17.7 0-32 14.3-32 32zM64 128V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V128H352v64c0 17.7-14.3 32-32 32H128c-17.7 0-32-14.3-32-32V128H64z"/></svg>
             </button>
             </div>
         </div>
@@ -184,7 +162,6 @@ export default function SendList({userName} : Props) {
             </button>
         </div>
         </div>
-    </div>
     </div>
   );
 }

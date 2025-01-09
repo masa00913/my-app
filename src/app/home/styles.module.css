@@ -10,11 +10,11 @@
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
-    width: 375px; /* iPhone SE (3rd gen) width */
-    border: 1px solid #ccc;
+    width: 400px; /* iPhone SE (3rd gen) width */
+    border: none;
     border-radius: 8px;
     overflow: hidden;
-    margin: 20px auto;
+    margin: 0px auto;
     background-color: #fff;
   }
   
@@ -103,10 +103,10 @@
   }
   
   .action_icon {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     margin-bottom: 5px;
-    filter: invert(1); /* Ensure the placeholder text is visible on the purple background */
+    /* filter: invert(1); Ensure the placeholder text is visible on the purple background */
   }
   
   .stamp_rally_card {
@@ -197,11 +197,11 @@
   }
   
   .nav_icon {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     margin-bottom: 3px;
-    filter: grayscale(1); /* Make inactive icons grayscale */
-    opacity: 0.7;
+    /* filter: grayscale(1); Make inactive icons grayscale */
+    opacity: 1;
   }
   
   .nav_item.active .nav_icon {

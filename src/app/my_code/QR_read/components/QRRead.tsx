@@ -14,7 +14,7 @@ interface Props{
 }
 
 
-export default function PayQRRead({userName}: Props) {
+export default function QRRead({userName}: Props) {
   const [error, setError] = useState<string | null>(null);
   const [isExchanging, setIsExchanging] = useState(false);
   const [exchangeResult, setExchangeResult] = useState<ExchangeResponse | null>(null);
@@ -96,7 +96,7 @@ export default function PayQRRead({userName}: Props) {
       <div className={styles.container_inner}>
         <div className={styles.header}>
           <button className={styles.close_button} onClick={() => window.location.href = '/home'} />
-          <span className={styles.title}>支払い</span>
+          <span className={styles.title}>スキャン</span>
         </div>
         <div className={styles.scanner_container}>
           <Scanner
@@ -133,16 +133,13 @@ export default function PayQRRead({userName}: Props) {
         )}
 
           <div className={styles.bottom_bar}>
-            <button className={styles.barcode_button} onClick={() =>  window.location.href = '/pay/pay_QRdisplay'}>
+            <button className={styles.barcode_button} onClick={() =>  window.location.href = '/my_code/QR_display'}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" clipRule="evenodd" d="M3 5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5ZM5 5H7V7H5V5ZM5 9H7V11H5V9ZM5 13H7V15H5V13ZM5 17H7V19H5V17ZM17 17H19V19H17V17ZM9 5H11V11H9V5ZM13 5H15V11H13V5ZM17 5H19V11H17V5ZM9 13H15V19H9V13Z" fill="#6750A4"/>
               </svg>
-              <span className={styles.barcode_text}>QRコードを表示する</span>
+              <span className={styles.barcode_text}>マイコードを表示する</span>
             </button>
           </div>
-
-
-        
       </div>
     </div>
   );
