@@ -19,7 +19,6 @@ export default function PayQRReadPage() {
   },[]);
   return (
     <div className={styles.container}>
-      <h1>QRコードの読み込み</h1>
       <PayQRRead userName={userName}/>
     </div>
   );

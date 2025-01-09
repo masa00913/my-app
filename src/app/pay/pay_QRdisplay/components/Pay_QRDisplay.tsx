@@ -50,59 +50,53 @@ export default function PayQRDisplay({ userName , balance }: Props) {
   const handleRefresh = () => {
     const newCode = generateUniqueCode();
     setQrCodeValue(newCode);
+    setTimeLeft(5 * 60); // QRコード更新時に残り時間をリセット
   };
 
   return (
     <div className={styles.body}>
-      <div className={styles.header}>
-        <button className={styles.close_button} onClick={() => window.location.href = '/home'}>×</button>
-        <div className={styles.header_title}>支払い</div>
-        <div style={{ width: '40px' }}></div>
-      </div>
-
-      <div className={styles.main_content}>
-        <div className={styles.payment_container}>
-            {/* <div className={styles.barcode}>
-            簡単なバーコード表示の例（実際のスキャンには対応していません）
-            <div>{barcodeValue}</div>
-          </div> */}
-          <div className={styles.qr_code}>
-            {qrCodeValue && <QRCodeCanvas value={qrCodeValue} size={128} level="H" />}
-          </div>
-          <div className={styles.time_left}>
-            残り時間: {Math.floor(timeLeft / 60)}分{timeLeft % 60}秒
-          </div>
-          <button className={styles.refresh_button} onClick={handleRefresh}>
-            更新
-            </button>
-          <div className={styles.amount_section}>
-            <div className={styles.amount_label}>利用可能額</div>
-            <div className={styles.amount_value}>{balance}pt</div>
-          </div>
-          
-
-          <div className={styles.balance_section}>
-            <div className={styles.balance_item}>
-              <div className={styles.balance_left}>
-                <div className={`${styles.balance_icon} ${styles.wallet}`}></div>
-                <div className={styles.balance_info}>
-                  <div className={styles.balance_name}>MeijiPay残高</div>
-                  <div className={styles.balance_value}>{balance}pt</div>
-                </div>
+      <div className={styles.container_inner}>
+        <div className={styles.header}>
+          <button className={styles.close_button} onClick={() => window.location.href = '/home'} />
+          <span className={styles.title}>支払い</span>
+        </div>
+        <div className={styles.content_area}>
+            <div className={styles.payment_container}>
+              <div className={styles.qr_code}>
+                {qrCodeValue && <QRCodeCanvas value={qrCodeValue} size={128} level="H" />}
               </div>
-              <div className={styles.arrow}>＞</div>
+                <div className={styles.time_left}>
+                残り時間: {String(Math.floor(timeLeft / 60)).padStart(2, '0')}:{String(timeLeft % 60).padStart(2, '0')}
+                </div>
+              <button className={styles.refresh_button} onClick={handleRefresh}>
+                更新
+              </button>
             </div>
+          <div className={styles.available_amount_area}>
+        <span className={styles.available_text}>利用可能額</span>
+        <span className={styles.amount}>{balance}pt</span>
+          </div>
+          <div className={styles.point_info_area}>
+        <div className={styles.meijipay_point}>
+          <div className={styles.point_left}>
+            <div className={styles.point_icon} />
+            <span className={styles.point_name}>MeijiPayポイント</span>
+            <span className={styles.point_value}>{balance}pt</span>
+          </div>
+          <button className={styles.arrow_button} />
+        </div>
+        <div className={styles.use_all_points}>
+          <span className={styles.use_text}>すべてのポイントを使う</span>
+          <button className={styles.change_button}>変更 ＞</button>
+        </div>
           </div>
         </div>
-      </div>
-
-      <div className={styles.footer}>
         <button className={styles.scan_button} onClick={() => window.location.href = '/pay/pay_QRread'}>
-          <span className={styles.scan_icon}></span>
-          スキャンして支払う
+          <div className={styles.scan_icon} />
+          <span>スキャンして支払う</span>
         </button>
-        
       </div>
     </div>
+
   );
 }

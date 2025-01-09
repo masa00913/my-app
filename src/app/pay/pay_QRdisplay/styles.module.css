@@ -1,208 +1,273 @@
 /* ホームページのスタイル */
 .container {
-  padding: 20px;
-
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  -webkit-tap-highlight-color: transparent;
-
-  background: #A855F7;
-  min-height: 100vh;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   align-items: center;
+  padding: 20px;
+}
+  
+  .body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #dfaeff; /* 背景色 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .container_inner {
+    background-color: #fff;
+    border-radius: 16px;
+    width: 375px; /* 画像から推測 */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    position: relative;
+  }
+
+  .close_button {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .close_button::before,
+  .close_button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 2px;
+    background-color: #888;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .close_button::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  .title {
+    font-size: 17px;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .content_area {
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .barcode_area {
+    width: 343px;
+    height: 72px;
+    background-color: #d08cf0; /* バーコードの色 */
+    margin-top: 24px;
+    /* ここにバーコードのスタイルを記述 (例: background-image, linear-gradient など) */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .barcode_area::before {
+    content: '';
+    height: 48px;
+    border-left: 4px solid white;
+  }
+  .barcode_area:nth-child(2n)::before {
+    height: 32px;
+  }
+
+  .payment_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* QRコード、残り時間、更新ボタンを中央揃え */
+    gap: 16px; /* 要素間の間隔 */
+    margin-top: 20px; /* 必要に応じて調整 */
   }
   
-  /* .container, .body, .header, .close_button, .header_title, .main_content, .payment_container, .barcode, .qr_code, .amount_section, .amount_label, .amount_value, .balance_section, .balance_item, .balance_left, .balance_icon, .balance_info, .balance_name, .balance_value, .arrow, .points_use, .points_use_left, .points_use_right, .footer, .scan_button, .scan_icon {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  -webkit-tap-highlight-color: transparent;
-  } */
+  .qr_code {
+    /* QRコードのスタイル */
+    border: 1px solid #ccc; /* 必要に応じて枠線を追加 */
+    padding: 8px; /* 必要に応じて内側の余白を追加 */
+  }
+  
+  .time_left {
+    font-size: 14px;
+    color: #555; /* または適切な色 */
+  }
+  
+  .refresh_button {
+    background-color: #f0f0f0; /* ボタンの背景色 */
+    border: 1px solid #ccc; /* ボタンの枠線 */
+    border-radius: 8px; /* 角の丸み */
+    padding: 8px 16px; /* ボタン内の余白 */
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .refresh_button:hover {
+    background-color: #e0e0e0; /* ホバー時の背景色 */
+  }
 
-.body {
-  background: #A855F7;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .qrcode_area {
+    width: 120px;
+    height: 120px;
+    background-color: #d08cf0; /* QRコードの色 */
+    margin-top: 16px;
+    /* ここにQRコードのスタイルを記述 (例: background-image) */
+  }
 
-.header {
-  width: 100%;
-  padding: 16px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: white;
-}
+  .available_amount_area {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    margin-top: 24px;
+    font-size: 12px;
+    color: #888;
+  }
 
-.close_button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
-  padding: 8px;
-  cursor: pointer;
-}
+  .amount {
+    font-size: 14px;
+    color: #333;
+  }
 
-.header_title {
-  font-size: 17px;
-  font-weight: normal;
-}
+  .point_info_area {
+    margin-top: 8px;
+    width: 100%;
+  }
 
-.main_content {
-  width: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 20px;
-}
+  .meijipay_point {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+  }
 
-.payment_container {
-  background: white;
-  border-radius: 24px;
-  padding: 24px;
-  width: 100%;
-  max-width: 380px;
-}
+  .point_left {
+    display: flex;
+    align-items: center;
+  }
 
-.barcode {
-  width: 100%;
-  height: 70px;
-  background-image: repeating-linear-gradient(90deg, #A855F7 0px, #A855F7 3px, transparent 3px, transparent 8px);
-  margin-bottom: 24px;
-}
+  .point_icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #d08cf0; /* アイコンの背景色 */
+    margin-right: 8px;
+    /* ここにアイコンのスタイルを記述 (例: background-image) */
+  }
 
-.qr_code {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 24px;
-  background: #A855F7;
-}
+  .point_name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-right: 8px;
+  }
 
-.amount_section {
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  .point_value {
+    font-size: 12px;
+    color: #888;
+  }
 
-.amount_label {
-  font-size: 13px;
-  color: #666;
-}
+  .arrow_button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: none;
+    position: relative;
+    cursor: pointer;
+  }
 
-.amount_value {
-  font-size: 15px;
-  font-weight: 500;
-}
+  .arrow_button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-left: 6px solid #888;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    transform: translate(-50%, -50%);
+  }
 
-.balance_section {
-  margin-bottom: 12px;
-}
+  .use_all_points {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin-top: 8px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+  }
 
-.balance_item {
-  background: #F8F9FA;
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
+  .change_button {
+    border: none;
+    background: none;
+    color: #5e3acc;
+    font-size: 12px;
+    cursor: pointer;
+  }
 
-.balance_left {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
+  .scan_button {
+    background-color: #fff;
+    border: 1px solid #d08cf0;
+    border-radius: 24px;
+    padding: 12px 16px;
+    margin: 24px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5e3acc;
+    font-weight: bold;
+    cursor: pointer;
+  }
 
-.balance_icon {
-  width: 32px;
-  height: 32px;
-  background: #A855F7;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-}
+  .scan_icon {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #5e3acc;
+    border-radius: 4px;
+    position: relative;
+    margin-right: 8px;
+  }
 
-.balance_icon.point::after {
-  content: "M";
-  font-size: 20px;
-  font-weight: bold;
-}
+  .scan_icon::before,
+  .scan_icon::after {
+    content: '';
+    position: absolute;
+    background-color: #5e3acc;
+  }
 
-.balance_info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+  .scan_icon::before {
+    top: -4px;
+    left: -4px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
 
-.balance_name {
-  font-size: 14px;
-  color: #333;
-}
-
-.balance_value {
-  font-size: 14px;
-  color: #333;
-}
-
-.arrow {
-  color: #999;
-}
-
-.points_use {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  padding: 0 4px;
-}
-
-.points_use_left {
-  color: #666;
-}
-
-.points_use_right {
-  color: #A855F7;
-}
-
-.footer {
-  width: 100%;
-  padding: 20px;
-  margin-top: auto;
-  margin-bottom: 20px;
-}
-
-.scan_button {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  color: white;
-  width: 100%;
-  max-width: 380px;
-  padding: 16px;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 0 auto;
-  cursor: pointer;
-}
-
-.scan_icon {
-  width: 20px;
-  height: 16px;
-  border: 1.5px solid white;
-  border-radius: 2px;
-  position: relative;
-}
+  .scan_icon::after {
+    bottom: -4px;
+    right: -4px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }

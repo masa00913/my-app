@@ -32,8 +32,6 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
             combinedTransactions.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
             
             setCombinedTransactions(combinedTransactions);
-            // setSendTransactionInfo(combinedTransactions.filter(transaction => transaction.type === 'send'));
-            // setReceiveTransactionInfo(combinedTransactions.filter(transaction => transaction.type === 'receive'));
           } catch (err) {
             console.error('Failed to fetch past transactions', err);
             setError('Failed to fetch past transactions');
@@ -44,20 +42,6 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
       }
     }, [recipient,userName]);
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setError(null); // エラーをリセット
-
-  //   try {
-  //   } catch (err: unknown) {
-  //     let errorMessage = '交換に失敗しました。';
-  //     if (err instanceof Error) {
-  //       errorMessage = err.message;
-  //     }
-  //     setError(errorMessage);
-  //   }finally{
-  //   }
-  // };
 
   return (
     <div>
@@ -66,7 +50,7 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
       <div className={styles.container_in}>
         
       <header className={styles.header}>
-      <button className={styles.back_button} onClick={() => window.location.href = '/home'}>&lt;</button>
+      <button className={styles.back_button} onClick={() => window.location.href = '/send/send_list'}>&lt;</button>
 
         <div className={styles.user_icon}></div>
         <div className={styles.user_name}>{recipient}</div>

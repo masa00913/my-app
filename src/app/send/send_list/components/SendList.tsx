@@ -5,7 +5,7 @@ interface Props{
 import { useEffect,useState } from 'react';
 import {useRouter} from 'next/navigation';
 import { checkUserExists } from '@/app/lib/api/send';
-import { getPastSendTransactions } from '@/app/lib/api/sendList';
+import {getPastSendTransactions,getPastReceiveTransactions } from '@/app/lib/api/sendList';
 import styles from '../styles.module.css'
 
 export default function SendList({userName} : Props) {
@@ -13,7 +13,10 @@ export default function SendList({userName} : Props) {
   const [recipient, setRecipient] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [pastRecipients, setPastRecipients] = useState<string[]>([]);
+  const [combinedTransactions, setCombinedTransactions] = useState<{ recipient: string, amount: string, createdAt: string, status: string, type: string }[]>([]);
+  const [recipientsWithLatest, setRecipientsWithLatest] = useState<{ recipient: string, latestDate: string }[]>([]);
   const router = useRouter();
+
 
   useEffect(() => {
     // 過去の取引データを取得
@@ -21,10 +24,49 @@ export default function SendList({userName} : Props) {
       console.log(userName + "呼び出し");
       const fetchPastTransactions = async () => {
         try {
-          const transactions: { recipient: string }[] = await getPastSendTransactions(userName);
-          const uniqueTransactions = [...new Set(transactions.map((transaction: { recipient: string }) => transaction.recipient))];
-          console.log(transactions);
-          setPastRecipients(uniqueTransactions);
+          // const transactions: { recipient: string }[] = await getPastSendTransactions(userName);
+          // const uniqueTransactions = [...new Set(transactions.map((transaction: { recipient: string }) => transaction.recipient))];
+          // console.log(transactions);
+          // setPastRecipients(uniqueTransactions);
+
+          // const transactions2 = await getPastSendTransactions(userName);
+          // const grouped = transactions2.reduce((acc: Record<string, { recipient: string; createdAt: string }[]>, curr: { recipient: string; createdAt: string }) => {
+          // if (!acc[curr.recipient]) acc[curr.recipient] = [];
+          // acc[curr.recipient].push(curr);
+          // return acc;
+          // }, {} as Record<string, { recipient: string; createdAt: string }[]>);
+
+          // const recipientsWithLatest = Object.entries(grouped as Record<string, { recipient: string; createdAt: string }[]>).map(([recipient, txs]: [string, { recipient: string; createdAt: string }[]]) => {
+          // txs.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+          // return { recipient, latestDate: txs[0].createdAt };
+          // });
+
+          // console.log(recipientsWithLatest);
+          // setRecipientsWithLatest(recipientsWithLatest);
+
+          const sendTransactions = await getPastSendTransactions(userName);
+
+          const receiveTransactions = await getPastReceiveTransactions(userName);
+          const combinedTransactions = [
+            ...sendTransactions.map((transaction: { recipient: string, amount: string, createdAt: string, status: string }) => ({ ...transaction, type: 'send' })),
+            ...receiveTransactions.map((transaction: { sender: string, amount: string, createdAt: string, status: string }) => ({ ...transaction, type: 'receive' }))
+          ];
+
+          console.log(combinedTransactions);
+
+          combinedTransactions.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+          
+            setCombinedTransactions(combinedTransactions);
+            const uniqueRecipients = [...new Set(combinedTransactions.map(transaction => transaction.type === 'send' ? transaction.recipient : transaction.sender))];
+            const latestTransactions = uniqueRecipients.map(recipient => {
+            const recipientTransactions = combinedTransactions.filter(transaction => (transaction.type === 'send' ? transaction.recipient : transaction.sender) === recipient);
+            recipientTransactions.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+            return { recipient, latestDate: recipientTransactions[0].createdAt };
+            });
+          console.log(uniqueRecipients);
+          console.log(latestTransactions);
+          setRecipientsWithLatest(latestTransactions);
+
         } catch (err) {
           console.error('Failed to fetch past transactions', err);
         }
@@ -104,19 +146,20 @@ export default function SendList({userName} : Props) {
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={styles.search_icon} viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
             </svg>
-            <form onSubmit={handleSubmit}>
+            <form className={styles.search_bar_text} onSubmit={handleSubmit}>
               <input
-                type="text"
-                value={recipient}
-                onChange={(e) => setRecipient(e.target.value)}
-                placeholder="MeijiPay ID・名前"
-                className={styles.search_input}
+              type="text"
+              value={recipient}
+              onChange={(e) => setRecipient(e.target.value)}
+              placeholder="MeijiPay ID・名前"
+              className={styles.search_input}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                handleSubmit(e);
+                }
+              }}
               />
-              <button type="submit" disabled={isSearching}>
-                探す
-              </button>
               {error && <p>{error}</p>}
-              
             </form>
             </div>
         </div>
@@ -128,16 +171,16 @@ export default function SendList({userName} : Props) {
         </div>
 
         <div className={styles.content}>
-            {pastRecipients.map((recipient, index) => (
-            <div key={index} className={styles.individual_item} onClick={() => ClickRecipient(recipient)}>
+            {recipientsWithLatest.map((recipientInfo, index) => (
+            <div key={index} className={styles.individual_item} onClick={() => ClickRecipient(recipientInfo.recipient)}>
             <div className={styles.individual_left}>
-            <div className={`${styles.profile_icon} ${styles[`profile_icon_color_${(index % 7) + 1}`]}`}>{recipient.charAt(0)}</div>
+            <div className={`${styles.profile_icon} ${styles[`profile_icon_color_${(index % 7) + 1}`]}`}>{recipientInfo.recipient.charAt(0)}</div>
             <div className={styles.item_details}>
-              <div className={styles.item_name}>{recipient}</div>
+              <div className={styles.item_name}>{recipientInfo.recipient}</div>
               <div className={styles.item_log}>受け取り依頼を送りました</div>
             </div>
             </div>
-            <div className={styles.individual_right}>2025/01/01</div>
+            <div className={styles.individual_right}>{recipientInfo.latestDate}</div>
             </div>
             ))}
         </div>
