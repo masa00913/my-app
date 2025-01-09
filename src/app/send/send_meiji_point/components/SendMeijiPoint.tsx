@@ -26,9 +26,12 @@ export default function SendMeijiPoint({ name,recipientName }: Props) {
 
       // トランザクション作成のAPIリクエストを送信
       await createTransaction(name, recipientName, amount);
+      console.log(getUserData(name));
+      const userData =  await getUserData(name);
+      localStorage.setItem('user', JSON.stringify(userData));
       alert('交換成功！');
       
-      localStorage.setItem('user', JSON.stringify(getUserData));
+      
       router.push('/send/individual_transaction');
     } catch (err: unknown) {
       let errorMessage = '交換に失敗しました。';

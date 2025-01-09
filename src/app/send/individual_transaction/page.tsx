@@ -26,10 +26,8 @@ export default function IndividualTransactionHistoryPage() {
   if (!userData) {
     return <div>Loading...</div>;
   }
-  console.log("さいよみこみ" + userData.name);
   return (
     <div className={styles.container}>
-      <div>{userData.name}</div>
       <IndividualTransactionHistory userName={userData.name} recipient={recipientName || ''} />
     </div>
   );
