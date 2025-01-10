@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
 
             const userData: User = { id: user.id.toString(), name: user.username, email: user.email, balance: wallet.balance};
-
+            console.log(userData + "api");
             res.status(200).json({ userData }); // トークンを返す
         } catch (error) {
             console.error("ログインエラー:", error);

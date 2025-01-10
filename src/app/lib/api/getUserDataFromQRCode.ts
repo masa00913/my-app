@@ -2,7 +2,7 @@ import { User } from "@/types/user";
 import { handleApiError } from "./utils";
 
 export async function getUserDataFromQRCode(codeText: string): Promise<User> {
-    const response = await fetch('/api/getUserDataFromQRData', {
+    const response = await fetch('/api/getUserDataFromQRCode', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
