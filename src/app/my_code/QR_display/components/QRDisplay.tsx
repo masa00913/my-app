@@ -1,47 +1,56 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {QRCodeCanvas} from 'qrcode.react';
 import styles from '../styles.module.css';
+import { setQRCode } from '@/app/lib/api/setQRCode';
 
 interface Props {
   userName: string;
-  balance: number;
+  userId: number;
 }
 
-export default function QRDisplay({ userName}: Props) {
+export default function QRDisplay({ userName,userId}: Props) {
   // ユニークなコードを生成する関数（例：タイムスタンプベース）
   const [qrCodeValue, setQrCodeValue] = useState<string>(''); // 初期値は空文字列
   const intervalRef = useRef<number | null>(null); // intervalId を保持するための ref
   const countdownRef = useRef<number | null>(null); // countdown intervalId を保持するための ref
 
   // ユニークなコードを生成する関数（例：タイムスタンプベース）
-  const generateUniqueCode = useCallback(() => {
-    return `payment_${Date.now()}_${userName}_${Math.random().toString(36).substring(2, 15)}`;
-  }, [userName]);
-
-  useEffect(() => {
-    // クライアントサイドでのみ実行
-    const initialCode = generateUniqueCode();
-    setQrCodeValue(initialCode);
-
-    // 5分ごとにQRコードとバーコードを更新する処理
-    intervalRef.current = window.setInterval(() => {
-      const newCode = generateUniqueCode();
-      setQrCodeValue(newCode);
-    }, 5 * 60 * 1000); // 5分
-
-    countdownRef.current = window.setInterval(() => {
-    }, 1000); // 1秒ごとに残り時間を更新
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current); // コンポーネントのアンマウント時にクリア
+    const generateUniqueCode = useCallback(() => {
+      const codeText = `payment_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+      setQRCode(codeText, userId);
+      return codeText;
+    }, [userId]);
+  
+    const initialCodeGenerated = useRef(false);
+  
+    useEffect(() => {
+      if (!initialCodeGenerated.current) {
+        const initialCode = generateUniqueCode();
+        setQrCodeValue(initialCode);
+        initialCodeGenerated.current = true;
       }
+  
+      // 5分ごとにQRコードとバーコードを更新する処理
+      intervalRef.current = window.setInterval(() => {
+        const newCode = generateUniqueCode();
+        setQrCodeValue(newCode);
+      }, 5 * 60 * 1000); // 5分
+  
+      countdownRef.current = window.setInterval(() => {
+      }, 1000); // 1秒ごとに残り時間を更新
+  
+      return () => {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current); // コンポーネントのアンマウント時にクリア
+        }
+  
+        if (countdownRef.current) {
+          clearInterval(countdownRef.current); // コンポーネントのアンマウント時にクリア
+        }
+      };
+    }, [generateUniqueCode]);
 
-      if (countdownRef.current) {
-        clearInterval(countdownRef.current); // コンポーネントのアンマウント時にクリア
-      }
-    };
-  }, [generateUniqueCode]);
+  
 
   return (
     <div className={styles.body}>

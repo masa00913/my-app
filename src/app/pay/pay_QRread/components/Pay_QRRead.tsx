@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Scanner, IDetectedBarcode} from '@yudiel/react-qr-scanner';
 import { useRouter } from 'next/navigation';
 import styles from '../styles.module.css';
+import { getUserDataFromQRCode } from '@/app/lib/api/getUserDataFromQRCode';
+import { User } from '@/types/user';
+
 
 interface ExchangeResponse {
   success: boolean;
@@ -23,28 +26,29 @@ export default function PayQRRead({userName}: Props) {
   const router = useRouter();
   
 
-  // const handleError = useCallback((error: any) => {
-  //   console.error(error);
-  //   setError('QRコードの読み取りに失敗しました。');
-  // }, []);
-
-  
-
   const handleScan = (results: IDetectedBarcode[]) => {
     if (results.length > 0) {
       const rawValue = results[0].rawValue;
       const parts = rawValue.split('_');
-      if (parts.length === 4 && parts[0] === 'payment') {
+      if (parts.length === 3 && parts[0] === 'payment') {
         const timestamp = parseInt(parts[1], 10);
-        const scannedUserName = parts[2];
         const currentTime = Date.now();
-
+        
         if (currentTime - timestamp <= 5 * 60 * 1000) { // 5分以内
-          setRecipientName(scannedUserName);
           setScanResult({
             format: results[0].format,
             rawValue: rawValue,
           });
+
+          getUserDataFromQRCode(rawValue).then((userData: User) => {
+            if(userData){
+              setRecipientName(userData.name); // Assuming you want to set the recipient's name
+            }
+          }).catch((error) => {
+            setError('ユーザーデータの取得に失敗しました。' + error);
+          });
+
+
         } else {
           setError('QRコードの有効期限が切れています。');
         }
@@ -65,22 +69,22 @@ export default function PayQRRead({userName}: Props) {
     setError(null);
 
     try {
-      // ここでバックエンドのAPIを呼び出してポイント交換を行う
-      // scanResult には読み取られたQRコードのデータが入っています
-      const responseQR = await fetch('/api/transactionQRCode', { // 例: /api/trasactionQRCode エンドポイント
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ qrCodeData: scanResult, fromUser: userName, toUser: recipientName}),
-      });
+      // // ここでバックエンドのAPIを呼び出してポイント交換を行う
+      // // scanResult には読み取られたQRコードのデータが入っています
+      // const responseQR = await fetch('/api/transaction', { // 例: /api/trasactionQRCode エンドポイント
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ qrCodeData: scanResult, fromUser: userName, toUser: recipientName}),
+      // });
 
-      if(!responseQR.ok){
-        setError('ポイント交換に失敗しました。');
-        throw new Error('ユーザーの探索に失敗');
-      }
+      // if(!responseQR.ok){
+      //   setError('ポイント交換に失敗しました。');
+      //   throw new Error('ユーザーの探索に失敗');
+      // }
 
-
+      console.log(userName);
       localStorage.setItem('recipientName', recipientName);
       router.push('/send/send_meiji_point');
     } catch (err) {

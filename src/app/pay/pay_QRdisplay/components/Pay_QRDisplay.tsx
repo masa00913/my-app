@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {QRCodeCanvas} from 'qrcode.react';
 import styles from '../styles.module.css';
+import { setQRCode } from '@/app/lib/api/setQRCode';
 
 interface Props {
   userName: string;
+  userId: number;
   balance: number;
 }
 
-export default function PayQRDisplay({ userName , balance }: Props) {
+export default function PayQRDisplay({ userName , userId,balance }: Props) {
   // ユニークなコードを生成する関数（例：タイムスタンプベース）
   const [qrCodeValue, setQrCodeValue] = useState<string>(''); // 初期値は空文字列
   const [timeLeft, setTimeLeft] = useState<number>(5 * 60); // 初期値は5分（300秒）
@@ -16,13 +18,20 @@ export default function PayQRDisplay({ userName , balance }: Props) {
 
   // ユニークなコードを生成する関数（例：タイムスタンプベース）
   const generateUniqueCode = useCallback(() => {
-    return `payment_${Date.now()}_${userName}_${Math.random().toString(36).substring(2, 15)}`;
-  }, [userName]);
+    const codeText = `payment_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+    setQRCode(codeText, userId);
+    
+    return codeText;
+  }, [userId]);
+
+  const initialCodeGenerated = useRef(false);
 
   useEffect(() => {
-    // クライアントサイドでのみ実行
-    const initialCode = generateUniqueCode();
-    setQrCodeValue(initialCode);
+    if (!initialCodeGenerated.current) {
+      const initialCode = generateUniqueCode();
+      setQrCodeValue(initialCode);
+      initialCodeGenerated.current = true;
+    }
 
     // 5分ごとにQRコードとバーコードを更新する処理
     intervalRef.current = window.setInterval(() => {
@@ -50,6 +59,7 @@ export default function PayQRDisplay({ userName , balance }: Props) {
   const handleRefresh = () => {
     const newCode = generateUniqueCode();
     setQrCodeValue(newCode);
+    console.log(userName);
     setTimeLeft(5 * 60); // QRコード更新時に残り時間をリセット
   };
 

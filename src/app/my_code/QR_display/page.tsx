@@ -24,7 +24,7 @@ export default function PayQRDisplayPage() {
     return (
         <div className={styles.container}>
             {/* <h1>QRコードの表示</h1> */}
-            {userData && <QRDisplay userName={userData.name} balance={userData.balance ?? 0}/>}
+            {userData && <QRDisplay userName={userData.name} userId={Number(userData.id) ?? 0}/>}
         </div>
     );
 }
