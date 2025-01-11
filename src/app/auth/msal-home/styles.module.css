@@ -10,7 +10,7 @@
     padding: .5rem 1rem !important;
 }
 
-td {
+.td {
     word-break: break-word;
     max-width: 20rem;
 }

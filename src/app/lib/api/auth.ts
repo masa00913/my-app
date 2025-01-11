@@ -38,3 +38,21 @@ export async function loginUser(email: string, password: string): Promise<User> 
     const { userData } = await response.json();
     return userData;
   }
+
+  export async function loginUserMsal(email: string, username: string): Promise<User> {
+    // ログイン処理を実装
+    // 例: APIリクエストを送信して、認証を行う
+    const response = await fetch('/api/loginMsal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, username }),
+    });
+  
+    if (!response.ok) {
+      throw new Error('ログインに失敗しました。');
+    }
+    const { userData } = await response.json();
+    return userData;
+  }
