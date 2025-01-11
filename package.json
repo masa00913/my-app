@@ -8,7 +8,23 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "keywords": [
+    "javascript",
+    "msal",
+    "authorization code",
+    "authentication",
+    "microsoft",
+    "ms-identity",
+    "single-page app"
+  ],
+  "author": "derisen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Azure-Samples/ms-identity-javascript-tutorial/issues"
+  },
+  "homepage": "https://github.com/Azure-Samples/ms-identity-javascript-tutorial#readme",
   "dependencies": {
+    "@azure/msal-browser": "^2.37.0",
     "@prisma/client": "^6.1.0",
     "@vercel/kv": "^3.0.0",
     "@yudiel/react-qr-scanner": "^2.1.0",
@@ -34,5 +50,8 @@
     "prisma": "^6.1.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "overrides": {
+    "semver": "^7.5.3"
   }
 }
