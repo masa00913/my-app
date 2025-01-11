@@ -31,21 +31,21 @@ export default function QRDisplay({ userName,userId}: Props) {
       }
   
       // 5分ごとにQRコードとバーコードを更新する処理
-      intervalRef.current = window.setInterval(() => {
-        const newCode = generateUniqueCode();
-        setQrCodeValue(newCode);
-      }, 5 * 60 * 1000); // 5分
+      // intervalRef.current = window.setInterval(() => {
+      //   const newCode = generateUniqueCode();
+      //   setQrCodeValue(newCode);
+      // }, 5 * 60 * 1000); // 5分
   
-      countdownRef.current = window.setInterval(() => {
-      }, 1000); // 1秒ごとに残り時間を更新
-  
+      const intervalId = intervalRef.current;
+      const countdownId = countdownRef.current;
+
       return () => {
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current); // コンポーネントのアンマウント時にクリア
+        if (intervalId) {
+          clearInterval(intervalId); // コンポーネントのアンマウント時にクリア
         }
   
-        if (countdownRef.current) {
-          clearInterval(countdownRef.current); // コンポーネントのアンマウント時にクリア
+        if (countdownId) {
+          clearInterval(countdownId); // コンポーネントのアンマウント時にクリア
         }
       };
     }, [generateUniqueCode]);

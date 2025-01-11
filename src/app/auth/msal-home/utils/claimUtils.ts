@@ -4,7 +4,7 @@
  * @returns claimsObject
  */
 interface Claims {
-    [key: string]: any;
+    [key: string]: string | number;
 }
 
 interface ClaimsObject {
@@ -12,7 +12,7 @@ interface ClaimsObject {
 }
 
 const createClaimsTable = (claims: Claims): ClaimsObject => {
-    let claimsObj: ClaimsObject = {};
+    const claimsObj: ClaimsObject = {};
     let index = 0;
 
     Object.keys(claims).forEach((key) => {
@@ -220,7 +220,7 @@ const createClaimsTable = (claims: Claims): ClaimsObject => {
  * @param {Object} claimsObject
  */
 const populateClaim = (claim: string, value: string | number, description: string, index: number, claimsObject: ClaimsObject) => {
-    let claimsArray: [string, string, string] = [claim, value.toString(), description];
+    const claimsArray: [string, string, string] = [claim, value.toString(), description];
     claimsObject[index] = claimsArray;
 };
 
@@ -230,7 +230,7 @@ const populateClaim = (claim: string, value: string | number, description: strin
  * @returns
  */
 const changeDateFormat = (date: number): string => {
-    let dateObj = new Date(date * 1000);
+    const dateObj = new Date(date * 1000);
     return `${date} - [${dateObj.toString()}]`;
 };
 

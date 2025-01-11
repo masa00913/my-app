@@ -1,14 +1,14 @@
-let signInButton: HTMLElement | null = null;
-let signOutButton: HTMLElement | null = null;
-let titleDiv: HTMLElement | null = null;
+// let signInButton: HTMLElement | null = null;
+// let signOutButton: HTMLElement | null = null;
+// let titleDiv: HTMLElement | null = null;
 let welcomeDiv: HTMLElement | null = null;
 let tableDiv: HTMLElement | null = null;
 let tableBody: HTMLTableElement | null = null;
 
 if (typeof window !== 'undefined') {
-    signInButton = document.getElementById('signIn');
-    signOutButton = document.getElementById('signOut');
-    titleDiv = document.getElementById('title-div');
+    // signInButton = document.getElementById('signIn');
+    // signOutButton = document.getElementById('signOut');
+    // titleDiv = document.getElementById('title-div');
     welcomeDiv = document.getElementById('welcome-div');
     tableDiv = document.getElementById('table-div');
     tableBody = document.getElementById('table-body-div') as HTMLTableElement;
@@ -22,10 +22,10 @@ function welcomeUser(username: string): void {
 }
 
 interface IdTokenClaims {
-    [key: string]: any;
+    [key: string]: string;
 }
 
-function createClaimsTable(idTokenClaims: any): IdTokenClaims {
+function createClaimsTable(idTokenClaims: { [key: string]: string }): IdTokenClaims {
     const claimsTable: IdTokenClaims = {};
     Object.keys(idTokenClaims).forEach((key) => {
         claimsTable[key] = idTokenClaims[key];
@@ -33,10 +33,10 @@ function createClaimsTable(idTokenClaims: any): IdTokenClaims {
     return claimsTable;
 }
 
-function updateTable(account: { idTokenClaims?: any }): void {
+function updateTable(account: { idTokenClaims?: { [key: string]: unknown } }): void {
     if (!account.idTokenClaims || !tableBody) return;
 
-    const claimsTable = createClaimsTable(account.idTokenClaims);
+    const claimsTable = createClaimsTable(account.idTokenClaims as { [key: string]: string });
     tableBody.innerHTML = '';
 
     Object.keys(claimsTable).forEach((key) => {

@@ -6,7 +6,7 @@ export default function FirstPage() {
     const router = useRouter();
 
     const handleClick = () => {
-      router.push('/auth');
+      router.push('/auth/msal-home');
     };
   
     return (
