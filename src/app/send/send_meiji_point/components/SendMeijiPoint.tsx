@@ -25,7 +25,7 @@ export default function SendMeijiPoint({ name,recipientName }: Props) {
       console.log(`ユーザー ${name} が ${recipientName} に通貨を送信しようとしています`);
 
       // トランザクション作成のAPIリクエストを送信
-      await createTransaction(name, recipientName, amount);
+      await createTransaction(name, recipientName, amount, "transaction");
       console.log(getUserData(name));
       const userData =  await getUserData(name);
       localStorage.setItem('user', JSON.stringify(userData));

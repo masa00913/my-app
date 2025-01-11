@@ -4,7 +4,7 @@ interface Props {
 }
 
 // import { useState } from 'react';
-// import { createTransaction } from '@/app/lib/api/transaction';
+import { createTransaction } from '@/app/lib/api/transaction';
 import { getClieentIp } from "@/app/lib/api/ipaddress";
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -44,11 +44,31 @@ export default function Home({ name, balance }: Props) {
   //   name = storedUser.name;
   //   console.log("name再確認" + name);
   // }
-  const [ip, setIp] = useState('');
-
+  const [currentBalance, setCurrentBalance] = useState(balance);
   useEffect(() => {
-    getClieentIp()
-      .then((data) => setIp(data.clientIp))
+    getClieentIp(name)
+      .then((data) => {
+        if(data.isLoginBonus){
+          createTransaction('MeijiPay', name, 10, "loginBonus")
+            .then(() => {
+              setCurrentBalance(currentBalance + 10);
+              alert('ログインポイントを付与しました');
+            });
+        }
+        else{
+          console.log('ログインポイントは付与済みです');
+        }
+        if(data.isMindBonus){
+          createTransaction('MeijiPay', name, 20, "mindBonus")
+            .then(() => {
+              setCurrentBalance(currentBalance + 20);
+              alert('登校ポイントを付与しました');
+            });
+        }
+        else{
+          console.log('登校ポイントは付与済みまたはMIND圏外です');
+        }
+      })
       .catch((err) => console.error(err));
   }, []);
 
@@ -71,7 +91,7 @@ export default function Home({ name, balance }: Props) {
           <span className={styles.rank_text}>シルバーランク</span>
         </div>
         <div className={styles.balance_amount}>
-          {balance}<span className={styles.yen_text}>pt</span>
+          {currentBalance}<span className={styles.yen_text}>pt</span>
         </div>
       </div>
 
@@ -159,8 +179,6 @@ export default function Home({ name, balance }: Props) {
         </div>
       </nav>
     </div>
-
-      <p>IPアドレス: {ip}</p>
     </div>
     
   );

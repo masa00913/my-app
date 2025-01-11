@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const { fromUser, toUser, amount } = req.body;
+    const { fromUser, toUser, amount ,attribute} = req.body;
 
     if (!fromUser || !toUser || !amount) {
       return res.status(400).json({ error: 'すべてのフィールドを入力してください。' });
@@ -29,6 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           fromUserId: sender.id,
           toUserId: recipient.id,
           amount: amount,
+          attribute: attribute,
         },
       });
 
@@ -39,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       
 
       if(senderWallet){
-        if(senderWallet?.balance < amount){
+        if(senderWallet?.id != 0 &&senderWallet?.balance < amount){
           return res.status(400).json({ error: '残高が不足しています。' });
         }
 
