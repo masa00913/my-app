@@ -182,7 +182,7 @@
     justify-content: space-around;
     align-items: center;
     padding: 10px 0;
-    border-top: 1px solid #eee;
+    /* border-top: 1px solid #eee; */
   }
   
   .nav_item {
@@ -219,8 +219,8 @@
   }
   
   .pay_icon_container {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       background-color: #7e3af2;
       border-radius: 50%;
       display: flex;

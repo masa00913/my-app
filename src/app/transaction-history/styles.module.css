@@ -50,9 +50,9 @@ border-radius: 50%;
 
 
 .user_name {
-margin-left: 10px;
-font-size: 16px;
-font-weight: bold;
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: semi-bold;
 }
 
 .history {
@@ -83,7 +83,7 @@ color: #888;
 justify-content: flex-start; /* 内容を左寄せ */
 margin-bottom: 10px;
 width: 60%; /* 修正: 親要素の幅いっぱいに広げる */
-margin: 0 auto 0 0;
+margin: 0 0 0 auto;
 }
 
 .transaction_unit_send {
@@ -151,34 +151,33 @@ color: #757575;
   position: sticky;
   bottom: 0;
   background-color: #fff;
-  /* border-top: 1px solid #eaeaea; */
+  border-top: 1px solid #eaeaea;
 }
 
 .send_button,
 .request_button {
-  padding: 10px 20px;
-  font-size: 14px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+padding: 10px 20px;
+font-size: 14px;
+margin-right: 10px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
 }
+
 .send_button {
-  background-color: #ff8b8b;
-  color: #fff;
-  margin: 0 0 0 auto;
-  display: block;
+background-color: #ff8b8b;
+color: #fff;
 }
 
 .request_button {
-  background-color: #8bc34a;
-  color: #fff;
+background-color: #8bc34a;
+color: #fff;
 }
 
 .message_input {
-  flex-grow: 1;
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #eaeaea;
-  border-radius: 5px;
+flex-grow: 1;
+padding: 10px;
+font-size: 14px;
+border: 1px solid #eaeaea;
+border-radius: 5px;
 }

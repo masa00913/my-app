@@ -60,6 +60,17 @@ export default function SendMeijiPoint({ name,recipientName }: Props) {
     });
   };
 
+  const handleChargeClick = () => {
+    setAmount((prevAmount) => {
+      const newAmount = Math.floor(prevAmount * 1.1);
+      return newAmount;
+    });
+  }
+
+  const handleACClick = () => {
+    setAmount(0);
+  }
+
   return (
     <div className={styles.comp}>
       {error && <p>{error}</p>}
@@ -86,17 +97,17 @@ export default function SendMeijiPoint({ name,recipientName }: Props) {
         <button className={styles.key} onClick={() => handleNumberClick(1)}>1</button>
         <button className={styles.key} onClick={() => handleNumberClick(2)}>2</button>
         <button className={styles.key} onClick={() => handleNumberClick(3)}>3</button>
-        <button className={`${styles.key} ${styles.function} ${styles.calculator}`}>cal</button>
+        <button className={`${styles.key} ${styles.function} ${styles.calculator}`} ></button>
         
         <button className={styles.key} onClick={() => handleNumberClick(4)}>4</button>
         <button className={styles.key} onClick={() => handleNumberClick(5)}>5</button>
         <button className={styles.key} onClick={() => handleNumberClick(6)}>6</button>
-        <button className={`${styles.key} ${styles.function}`}>AC</button>
+        <button className={`${styles.key} ${styles.function}`} onClick={() => handleACClick()}>AC</button>
         
         <button className={styles.key} onClick={() => handleNumberClick(7)}>7</button>
         <button className={styles.key} onClick={() => handleNumberClick(8)}>8</button>
         <button className={styles.key} onClick={() => handleNumberClick(9)}>9</button>
-        <button className={`${styles.key} ${styles.function}`}>+税</button>
+        <button className={`${styles.key} ${styles.function}`} onClick={() => handleChargeClick()}>+税</button>
         
         <button className={styles.key} onClick={() => handleNumberClick('00')}>00</button>
         <button className={`${styles.key} ${styles.zero}`} onClick={() => handleNumberClick(0)}>0</button>

@@ -70,7 +70,7 @@ export default function Home({ name, balance }: Props) {
         }
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [name]);
 
   return (
     <div>
@@ -104,18 +104,18 @@ export default function Home({ name, balance }: Props) {
           <Image src="/home/send.png" alt="Scan Icon" width={30} height={30} className={styles.action_icon} />
           <span className={styles.action_label}>送る</span>
         </div>
-        <div className={styles.action_button}>
+        {/* <div className={styles.action_button}>
           <Image src="/home/points.png" alt="Scan Icon" width={30} height={30} className={styles.action_icon} />
           <span className={styles.action_label}>ポイント</span>
-        </div>
-        <div className={styles.action_button}>
+        </div> */}
+        <div className={styles.action_button} onClick={() => window.location.href = '/transaction-history'}>
           <Image src="/home/transaction-history.png" alt="Scan Icon" width={30} height={30} className={styles.action_icon} />
           <span className={styles.action_label}>取引履歴</span>
         </div>
-        <div className={styles.action_button}>
+        {/* <div className={styles.action_button}>
           <Image src="/home/charge.png" alt="Scan Icon" width={30} height={30} className={styles.action_icon} />
           <span className={styles.action_label}>チャージ</span>
-        </div>
+        </div> */}
       </div>
 
       <div className={styles.stamp_rally_card}>
@@ -155,28 +155,28 @@ export default function Home({ name, balance }: Props) {
       </div>
 
       <nav className={styles.bottom_navigation}>
-        <div className={styles.nav_item}>
+        {/* <div className={styles.nav_item}>
           <Image src="/home/home.png" alt="Scan Icon" width={30} height={30} className={styles.nav_icon} />
           <span className={styles.nav_label}>ホーム</span>
         </div>
         <div className={styles.nav_item}>
           <Image src="/home/add-friend.png" alt="Scan Icon" width={30} height={30} className={styles.nav_icon} />
           <span className={styles.nav_label}>近くの友達</span>
-        </div>
+        </div> */}
         <div className={`${styles.nav_item} ${styles.active}`} onClick={() => window.location.href = '/pay/pay_QRdisplay'}>
           <div className={styles.pay_icon_container}>
             {/* <Image src="home/pay.png" alt="Scan Icon" width={30} height={30} className={styles.pay_icon} /> */}
           </div>
           <span className={styles.nav_label}>支払う</span>
         </div>
-        <div className={styles.nav_item}>
+        {/* <div className={styles.nav_item}>
           <Image src="/home/wallet.png" alt="Scan Icon" width={30} height={30} className={styles.nav_icon} />
           <span className={styles.nav_label}>ウォレット</span>
         </div>
         <div className={styles.nav_item}>
             <Image src="/home/account.png" alt="Scan Icon" width={30} height={30} className={styles.nav_icon} />
           <span className={styles.nav_label}>アカウント</span>
-        </div>
+        </div> */}
       </nav>
     </div>
     </div>

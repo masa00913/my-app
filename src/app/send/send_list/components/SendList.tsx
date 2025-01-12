@@ -133,11 +133,11 @@ export default function SendList({userName} : Props) {
             </div>
         </div>
 
-        <div className={styles.segmented_control}>
+        {/* <div className={styles.segmented_control}>
             <div className={`${styles.segment_button} ${styles.active}`}>履歴</div>
             <div className={styles.segment_button}>連絡先</div>
             <div className={styles.segment_button}>グループ</div>
-        </div>
+        </div> */}
 
         <div className={styles.content}>
             {recipientsWithLatest.map((recipientInfo, index) => (
@@ -154,14 +154,14 @@ export default function SendList({userName} : Props) {
             ))}
         </div>
 
-        <div className={styles.bottom_buttons}>
+        {/* <div className={styles.bottom_buttons}>
             <button className={`${styles.bottom_button} ${styles.send_button}`}>
             送る
             </button>
             <button className={`${styles.bottom_button} ${styles.request_button}`}>
             請求
             </button>
-        </div>
+        </div> */}
         </div>
     </div>
   );

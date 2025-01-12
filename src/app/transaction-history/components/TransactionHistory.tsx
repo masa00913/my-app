@@ -1,12 +1,11 @@
 interface Props {
   userName: string;
-  recipient: string;
 }
 import { useEffect,useState, useRef } from 'react';
 import { getPastSendTransactions,getPastReceiveTransactions } from '@/app/lib/api/sendList';
 import styles from '../styles.module.css';
 
-export default function IndividualTransactionHistory({userName,recipient}: Props) {
+export default function TransactionHistory({userName}: Props) {
   const [error, setError] = useState<string | null>(null);
   // const [sendTransactionInfo, setSendTransactionInfo] = useState<{ recipient: string, amount: string, createdAt: string, status: string }[]>([]);
 
@@ -22,14 +21,12 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
         const fetchPastTransactions = async () => {
           try {
             const sendTransactions = await getPastSendTransactions(userName);
-            const filteredSendTransactions = sendTransactions.filter((transaction: { recipient: string }) => transaction.recipient === recipient);
 
             const receiveTransactions = await getPastReceiveTransactions(userName);
-            const filteredReceiveTransactions = receiveTransactions.filter((transaction: { sender: string }) => transaction.sender === recipient);
 
             const combinedTransactions = [
-              ...filteredSendTransactions.map((transaction: { recipient: string, amount: string, createdAt: string, status: string }) => ({ ...transaction, type: 'send' })),
-              ...filteredReceiveTransactions.map((transaction: { sender: string, amount: string, createdAt: string, status: string }) => ({ ...transaction, type: 'receive' }))
+              ...sendTransactions.map((transaction: { recipient: string, amount: string, createdAt: string, status: string }) => ({ ...transaction, type: 'send' })),
+              ...receiveTransactions.map((transaction: { sender: string, amount: string, createdAt: string, status: string }) => ({ ...transaction, type: 'receive' }))
             ];
 
             combinedTransactions.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
@@ -43,7 +40,7 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
   
         fetchPastTransactions();
       }
-    }, [recipient,userName]);
+    }, [userName]);
 
   useEffect(() => {
     if (historyRef.current) {
@@ -58,10 +55,10 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
       <div className={styles.container_in}>
         
       <header className={styles.header}>
-      <button className={styles.back_button} onClick={() => window.location.href = '/send/send_list'}>&lt;</button>
+      <button className={styles.back_button} onClick={() => window.location.href = '/home'}>&lt;</button>
 
         <div className={styles.user_icon}></div>
-        <div className={styles.user_name}>{recipient}</div>
+        <div className={styles.user_name}>{userName}</div>
       </header>
       <div className={styles.history} ref={historyRef}>
       {combinedTransactions.map((transaction, index) => (
@@ -80,11 +77,11 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
         </div>
       ))}
       </div>
-      <footer className={styles.footer}>
+      {/* <footer className={styles.footer}>
         <button className={styles.send_button} onClick={() => window.location.href = '/send/send_meiji_point'}>送る</button>
-        {/* <button className={styles.request_button}>請求</button> */}
-        {/* <input type="text" placeholder="メッセージを入力" className={styles.message_input}></input> */}
-      </footer>
+        <button className={styles.request_button}>請求</button>
+        <input type="text" placeholder="メッセージを入力" className={styles.message_input}></input>
+      </footer> */}
     </div>
     </div>
   );
