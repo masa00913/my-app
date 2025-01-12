@@ -41,7 +41,7 @@ export default function TransactionHistory({userName,userId}: Props) {
       }else{
         alert('ユーザー名が取得できませんでした');
       }
-    }, [userName]);
+    }, [userId,userName]);
 
   useEffect(() => {
     if (historyRef.current) {

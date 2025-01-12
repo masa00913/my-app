@@ -9,7 +9,7 @@ interface Props {
   balance: number;
 }
 
-export default function PayQRDisplay({ userName , userId,balance }: Props) {
+export default function PayQRDisplay({ userId,balance }: Props) {
   // ユニークなコードを生成する関数（例：タイムスタンプベース）
   const [qrCodeValue, setQrCodeValue] = useState<string>(''); // 初期値は空文字列
   const [timeLeft, setTimeLeft] = useState<number>(5 * 60); // 初期値は5分（300秒）

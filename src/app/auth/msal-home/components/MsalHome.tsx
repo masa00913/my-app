@@ -67,6 +67,7 @@ export default function MsalHomeForm() {
           .then((res) => res.json())
           .then(async (data) => {
             if (preferredUsername && name) {
+              console.log('data:', data);
               const userData = await loginUserMsal(preferredUsername, name);
               localStorage.setItem('user', JSON.stringify(userData)); // localStorageにユーザー情報を保存 
               router.push('/home');

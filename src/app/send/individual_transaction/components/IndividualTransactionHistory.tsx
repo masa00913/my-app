@@ -7,7 +7,7 @@ import { useEffect,useState, useRef } from 'react';
 import { getPastSendTransactions,getPastReceiveTransactions } from '@/app/lib/api/sendList';
 import styles from '../styles.module.css';
 
-export default function IndividualTransactionHistory({userName,recipient,userId}: Props) {
+export default function IndividualTransactionHistory({recipient,userId}: Props) {
   // const [sendTransactionInfo, setSendTransactionInfo] = useState<{ recipient: string, amount: string, createdAt: string, status: string }[]>([]);
 
   // const [receiveTransactionInfo, setReceiveTransactionInfo] = useState<{ sender: string, amount: string, createdAt: string, status: string }[]>([]);
@@ -16,7 +16,6 @@ export default function IndividualTransactionHistory({userName,recipient,userId}
   
   useEffect(() => {
       // 過去の取引データを取得
-      if(userName != ''){
         
         const fetchPastTransactions = async () => {
           try {
@@ -42,8 +41,8 @@ export default function IndividualTransactionHistory({userName,recipient,userId}
         };
   
         fetchPastTransactions();
-      }
-    }, [recipient,userName]);
+      
+    }, [recipient,userId]);
 
   useEffect(() => {
     if (historyRef.current) {

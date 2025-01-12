@@ -72,9 +72,9 @@ export default function Home({ userId, name, balance }: Props) {
       const board = await registerBoard(userId, postContent);
       setPosts(prevPosts => [...(prevPosts || []), board]);
       setPostContent('');
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
-      alert('投稿に失敗しました: ' + error.message);
+      alert('投稿に失敗しました: ' + error);
     }
   };
 
