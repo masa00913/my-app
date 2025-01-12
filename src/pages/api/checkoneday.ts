@@ -8,14 +8,14 @@ const TIMEZONE = 'Asia/Tokyo'; // JST
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
-        const { userName, isMind } = req.body;
+        const { userId, isMind } = req.body;
         let isLoginBonus: boolean | undefined = undefined;
         let isMindBonus: boolean | undefined = undefined;
 
         try {
             // userNameと一致するユーザーをデータベースから取得
             const user = await prisma.user.findUnique({
-                where: { username: userName },
+                where: { id: parseInt(userId, 10) },
             });
       
             if (!user) {

@@ -12,7 +12,6 @@ export default function HomePage() {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       try {
-        console.log("さいよみこみ" + storedUser);
         setUserData(JSON.parse(storedUser)); // ユーザー情報を取得
 
       } catch (error) {
@@ -24,10 +23,9 @@ export default function HomePage() {
 
   // 2. userData が更新されたあとに API 呼び出しを行う
   useEffect(() => {
-    console.log(userData + "ユーザーデータの確認");
     if (!userData) return;
   
-    getUserData(userData.name)
+    getUserData(userData.id)
       .then((data) => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {

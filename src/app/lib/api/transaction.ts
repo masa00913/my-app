@@ -1,14 +1,14 @@
 // src/lib/api/transaction.ts
 import { handleApiError } from './utils';
 
-export const createTransaction = async (fromUser: string, toUser: string, amount: number, attribute: string) => {
+export const createTransaction = async (fromUserId: number, toUserId: number, amount: number, attribute: string) => {
   try {
     const response = await fetch('/api/transaction', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ fromUser, toUser, amount , attribute}),
+      body: JSON.stringify({ fromUserId, toUserId, amount , attribute}),
     });
 
     await handleApiError(response);

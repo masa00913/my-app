@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 where: { userId: user.id },
             })
 
-            const userData: User = { id: user.id.toString(), name: user.username, email: user.email, balance: wallet?.balance ?? 0 };
+            const userData: User = { id: user.id, name: user.username, email: user.email, balance: wallet?.balance ?? 0 };
 
             res.status(200).json({ userData }); // トークンを返す
         } catch (error) {

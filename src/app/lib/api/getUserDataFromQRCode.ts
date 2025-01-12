@@ -15,6 +15,5 @@ export async function getUserDataFromQRCode(codeText: string): Promise<User> {
         throw new Error('ユーザーデータの取得に失敗しました。');
     }
     const {userData} = await response.json();
-    console.log(JSON.stringify(userData));
     return userData;
 }

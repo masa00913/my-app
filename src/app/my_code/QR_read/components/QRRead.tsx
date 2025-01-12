@@ -17,93 +17,69 @@ interface Props{
 
 
 export default function QRRead({userName}: Props) {
-  const [error, setError] = useState<string | null>(null);
   const [isExchanging, setIsExchanging] = useState(false);
   const [exchangeResult, setExchangeResult] = useState<ExchangeResponse | null>(null);
   const [scanResult, setScanResult] = useState({ format: '', rawValue: '' });
-  const [recipientName, setRecipientName] = useState<string>(''); // ユーザーIDを保持するステート
-  const router = useRouter();
-  
-
-  // const handleError = useCallback((error: any) => {
-  //   console.error(error);
-  //   setError('QRコードの読み取りに失敗しました。');
-  // }, []);
-
-  
+  // const [recipientName, setRecipientName] = useState<string>(''); // ユーザーIDを保持するステート
+  const [recipient,setRecipient] = useState<User>();
+  const router = useRouter();  
 
   const handleScan = (results: IDetectedBarcode[]) => {
     if (results.length > 0) {
       const rawValue = results[0].rawValue;
       const parts = rawValue.split('_');
       if (parts.length === 3 && parts[0] === 'payment') {
-        const timestamp = parseInt(parts[1], 10);
+        setScanResult({
+          format: results[0].format,
+          rawValue: rawValue,
+        });
 
-        const currentTime = Date.now();
-
-        if (currentTime - timestamp <= 5 * 60 * 1000) { // 5分以内
-          setScanResult({
-            format: results[0].format,
-            rawValue: rawValue,
-          });
-
-          
-          getUserDataFromQRCode(rawValue).then((userData: User) => {
-            if(userData){
-              setRecipientName(userData.name); // Assuming you want to set the recipient's name
-            }
-            console.log(userName);
-          }).catch((error) => {
-            setError('ユーザーデータの取得に失敗しました。' + error);
-          });
-          
-          
-        } else {
-          setError('QRコードの有効期限が切れています。');
-        }
+        getUserDataFromQRCode(rawValue).then((userData: User) => {
+          if(!userData){
+            throw new Error('ユーザーデータの取得に失敗しました。');
+          }
+          if(userData.name == userName){
+            throw new Error('自分自身には送信できません。');
+          }else{
+            setRecipient(userData); // Assuming you want to set the recipient's name
+          }
+          console.log("QRCodeで読み取った名前"+userName);
+        }).catch((error) => {
+          alert('ユーザーデータの取得に失敗しました。' + error);
+        });
       } else {
-        setError('無効なQRコードです。');
+        alert('無効なQRコードです。');
       }
     }
   };
-
+  
   const handleExchange = async () => {
     if (!scanResult) {
-      setError('QRコードが読み取られていません。');
+      alert('QRコードが読み取られていません。');
       return;
     }
-
+  
     setIsExchanging(true);
     setExchangeResult(null);
-    setError(null);
-
+  
     try {
-      // // ここでバックエンドのAPIを呼び出してポイント交換を行う
-      // // scanResult には読み取られたQRコードのデータが入っています
-      // const responseQR = await fetch('/api/transactionQRCode', { // 例: /api/trasactionQRCode エンドポイント
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ qrCodeData: scanResult, fromUser: userName, toUser: recipientName}),
-      // });
-
-      // if(!responseQR.ok){
-      //   setError('ポイント交換に失敗しました。');
-      //   throw new Error('ユーザーの探索に失敗');
-      // }
-
-
-      localStorage.setItem('recipientName', recipientName);
-      router.push('/send/send_meiji_point');
+      if(recipient){
+        if(recipient.name == userName){
+          throw new Error('自分自身には送信できません。');
+        }else{
+          localStorage.setItem('recipient', JSON.stringify(recipient));
+          router.push('/send/send_meiji_point');
+        }
+      }else{
+        throw new Error('ユーザーが見つかりませんでした。');
+      }
     } catch (err) {
       console.error(err);
-      setError('ポイント交換中にエラーが発生しました。');
+      alert('ポイント交換中にエラーが発生しました。');
     } finally {
       setIsExchanging(false);
     }
   };
-
   return (
     <div className={styles.body}>
       <div className={styles.container_inner}>
@@ -123,13 +99,13 @@ export default function QRRead({userName}: Props) {
           />
         </div>
 
-        {error && <div className={styles.error_message}>エラー: {error}</div>}
+        {/* {error && <div className={styles.error_message}>エラー: {error}</div>} */}
 
         {scanResult && !isExchanging && !exchangeResult && (
           <div className={styles.scan_result_container}>
-            <div className={styles.scan_result_text}>読み取り結果: {scanResult.format}</div>
-            <div className={styles.scan_result_text}>内容：{scanResult.rawValue}</div>
-            <button className={styles.exchange_button} onClick={handleExchange}>ポイント交換を実行</button>
+            {/* <div className={styles.scan_result_text}>読み取り結果: {scanResult.format}</div>
+            <div className={styles.scan_result_text}>内容：{scanResult.rawValue}</div> */}
+            <button className={styles.exchange_button} onClick={handleExchange} disabled={recipient?.name==''}>ポイント交換を実行</button>
           </div>
         )}
 

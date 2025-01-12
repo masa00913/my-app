@@ -28,14 +28,7 @@ export default function QRDisplay({ userName,userId}: Props) {
         const initialCode = generateUniqueCode();
         setQrCodeValue(initialCode);
         initialCodeGenerated.current = true;
-      }
-  
-      // 5分ごとにQRコードとバーコードを更新する処理
-      // intervalRef.current = window.setInterval(() => {
-      //   const newCode = generateUniqueCode();
-      //   setQrCodeValue(newCode);
-      // }, 5 * 60 * 1000); // 5分
-  
+      }  
       const intervalId = intervalRef.current;
       const countdownId = countdownRef.current;
 
@@ -71,18 +64,8 @@ export default function QRDisplay({ userName,userId}: Props) {
             <div className={styles.qr_code}>
               {qrCodeValue && <QRCodeCanvas value={qrCodeValue} size={128} level="H" />}
             </div>
-          {/* <div className={styles.qr_code_placeholder}></div> */}
           <p className={styles.user_name}>{userName}さん</p>
         </div>
-
-        {/* <button className={styles.share_link_button}>
-          LINEの友だちにリンクをシェアする
-        </button>
-
-        <div className={styles.copy_link_container}>
-          <div className={styles.copy_icon}></div>
-          <span className={styles.copy_link_text}>受け取りリンクをコピーする</span>
-        </div> */}
       </div>
     </div>
 

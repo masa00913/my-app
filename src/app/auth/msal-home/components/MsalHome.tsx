@@ -21,17 +21,14 @@ export default function MsalHomeForm() {
   const usernameRef = React.useRef<string>("");
 
   const selectAccount = React.useCallback(() => {
-    console.log("情報");
     const currentAccounts = myMSALObj.getAllAccounts();
 
     if (!currentAccounts) {
-      console.log("情報1");
       return;
     } else if (currentAccounts.length > 1) {
       console.warn("Multiple accounts detected.");
     } else if (currentAccounts.length === 1) {
       usernameRef.current = currentAccounts[0].username;
-      console.log("情報2" + currentAccounts + currentAccounts[0].username);
       welcomeUser(currentAccounts[0].username);
       if (currentAccounts[0].idTokenClaims) {
         const stringIdTokenClaims = Object.fromEntries(
@@ -43,7 +40,6 @@ export default function MsalHomeForm() {
   }, [myMSALObj]);
 
   const handleResponse = React.useCallback((response: msal.AuthenticationResult | null) => {
-    console.log("情報11");
     if (response !== null && response.account !== null) {
       usernameRef.current = response.account.username;
       welcomeUser(usernameRef.current);
@@ -51,7 +47,6 @@ export default function MsalHomeForm() {
         const stringIdTokenClaims = Object.fromEntries(
           Object.entries(response.account.idTokenClaims).map(([key, value]) => [key, String(value)])
         );
-        console.log("情報3" + stringIdTokenClaims);
         updateTable({ idTokenClaims: stringIdTokenClaims });
 
         const preferredUsername = response.account.idTokenClaims.preferred_username;
@@ -71,10 +66,8 @@ export default function MsalHomeForm() {
         })
           .then((res) => res.json())
           .then(async (data) => {
-            console.log('API response register:', data);
             if (preferredUsername && name) {
               const userData = await loginUserMsal(preferredUsername, name);
-              console.log(JSON.stringify(userData));
               localStorage.setItem('user', JSON.stringify(userData)); // localStorageにユーザー情報を保存 
               router.push('/home');
             } else {

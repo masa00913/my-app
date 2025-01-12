@@ -1,5 +1,6 @@
 interface Props{
   userName:string;
+  userId:number;
 }
 
 import { useEffect,useState } from 'react';
@@ -9,8 +10,7 @@ import {getPastSendTransactions,getPastReceiveTransactions } from '@/app/lib/api
 import Image from 'next/image';
 import styles from '../styles.module.css'
 
-export default function SendList({userName} : Props) {
-  const [error, setError] = useState<string | null>(null);
+export default function SendList({userName,userId} : Props) {
   const [recipient, setRecipient] = useState('');
   const [recipientsWithLatest, setRecipientsWithLatest] = useState<{ recipient: string, latestDate: string }[]>([]);
   const router = useRouter();
@@ -19,18 +19,15 @@ export default function SendList({userName} : Props) {
   useEffect(() => {
     // 過去の取引データを取得
     if(userName != ''){
-      console.log(userName + "呼び出し");
       const fetchPastTransactions = async () => {
         try {
-          const sendTransactions = await getPastSendTransactions(userName);
+          const sendTransactions = await getPastSendTransactions(userId);
 
-          const receiveTransactions = await getPastReceiveTransactions(userName);
+          const receiveTransactions = await getPastReceiveTransactions(userId);
           const combinedTransactions = [
             ...sendTransactions.map((transaction: { recipient: string, amount: string, createdAt: string, status: string }) => ({ ...transaction, type: 'send' })),
             ...receiveTransactions.map((transaction: { sender: string, amount: string, createdAt: string, status: string }) => ({ ...transaction, type: 'receive' }))
           ];
-
-          console.log(combinedTransactions);
 
           combinedTransactions.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
@@ -40,12 +37,11 @@ export default function SendList({userName} : Props) {
             recipientTransactions.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
             return { recipient, latestDate: recipientTransactions[0].createdAt };
             });
-          console.log(uniqueRecipients);
-          console.log(latestTransactions);
           setRecipientsWithLatest(latestTransactions);
 
         } catch (err) {
           console.error('Failed to fetch past transactions', err);
+          alert('取引履歴の取得に失敗しました' + err);
         }
       };
 
@@ -55,40 +51,38 @@ export default function SendList({userName} : Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null); // エラーをリセット
     try {
-      const userExists = await checkUserExists(recipient);
-      if (userExists) {
-        localStorage.setItem('recipientName', recipient);
+      const recipientInfo = await checkUserExists(recipient);
+      if (recipientInfo) {
+        localStorage.setItem('recipient', JSON.stringify(recipientInfo));
         router.push('/send/individual_transaction');
       } else {
-        setError('ユーザーが見つかりませんでした。');
+        alert('ユーザーが見つかりませんでした。');
       }
     } catch (err: unknown) {
       let errorMessage = '交換に失敗しました。';
       if (err instanceof Error) {
         errorMessage = err.message;
       }
-      setError(errorMessage);
+      alert(errorMessage);
     }
   };
 
   const ClickRecipient = async (recipient: string) => {
-    setError(null); // エラーをリセット
     try {
-      const userExists = await checkUserExists(recipient);
-      if (userExists) {
-        localStorage.setItem('recipientName', recipient);
+      const recipientInfo = await checkUserExists(recipient);
+      if (recipientInfo) {
+        localStorage.setItem('recipient', JSON.stringify(recipientInfo));
         router.push('/send/individual_transaction');
       } else {
-        setError('ユーザーが見つかりませんでした。');
+        alert('ユーザーが見つかりませんでした。');
       }
     } catch (err: unknown) {
       let errorMessage = '交換に失敗しました。';
       if (err instanceof Error) {
         errorMessage = err.message;
       }
-      setError(errorMessage);
+      alert(errorMessage);
     }
   };
 
@@ -128,7 +122,6 @@ export default function SendList({userName} : Props) {
                 }
               }}
               />
-              {error && <p>{error}</p>}
             </form>
             </div>
         </div>
@@ -149,7 +142,14 @@ export default function SendList({userName} : Props) {
               <div className={styles.item_log}>受け取り依頼を送りました</div>
             </div>
             </div>
-            <div className={styles.individual_right}>{recipientInfo.latestDate}</div>
+            <div className={styles.individual_right}>
+              {new Date(recipientInfo.latestDate).toLocaleString('ja-JP', {
+              month: 'long',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric'
+              })}
+            </div>
             </div>
             ))}
         </div>

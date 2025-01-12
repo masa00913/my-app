@@ -1,32 +1,29 @@
+import { useEffect, useState, useRef } from 'react';
+import { createTransaction } from '@/app/lib/api/transaction';
+import { getClieentIp } from "@/app/lib/api/ipaddress";
+import Image from 'next/image';
+import styles from '../styles.module.css';
+import { registerBoard } from '@/app/lib/api/setBoard';
+import { getBoard } from '@/app/lib/api/getBoardContent';
+import { Board } from '@/types/user';
+
 interface Props {
   name: string;
   balance: number;
   userId: number;
 }
 
-// import { useState } from 'react';
-import { createTransaction } from '@/app/lib/api/transaction';
-import { getClieentIp } from "@/app/lib/api/ipaddress";
-import Image from 'next/image';
-import styles from '../styles.module.css';
-// import { register } from 'module';
-import { registerBoard } from '@/app/lib/api/setBoard';
-import { getBoard } from '@/app/lib/api/getBoardContent';
-import { Board } from '@/types/user';
-import { useEffect, useState, useRef } from 'react';
-// ...existing code...
-
 export default function Home({ userId, name, balance }: Props) {
   const [currentBalance, setCurrentBalance] = useState(balance);
   const [postContent, setPostContent] = useState('');
-  const [posts, setPosts] = useState<string[] | undefined>([]);
+  const [posts, setPosts] = useState<Board[] | undefined>([]);
   const postsContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    getClieentIp(name)
+    getClieentIp(userId)
       .then((data) => {
         if(data.isLoginBonus){
-          createTransaction('MeijiPay', name, 10, "loginBonus")
+          createTransaction(0, userId, 10, "loginBonus")
             .then(() => {
               setCurrentBalance(prev => prev + 10);
               alert('ログインポイントを付与しました');
@@ -36,7 +33,7 @@ export default function Home({ userId, name, balance }: Props) {
           console.log('ログインポイントは付与済みです');
         }
         if(data.isMindBonus){
-          createTransaction('MeijiPay', name, 20, "mindBonus")
+          createTransaction(0, userId, 20, "mindBonus")
             .then(() => {
               setCurrentBalance(prev => prev + 20);
               alert('登校ポイントを付与しました');
@@ -46,16 +43,20 @@ export default function Home({ userId, name, balance }: Props) {
           console.log('登校ポイントは付与済みまたはMIND圏外です');
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        alert('エラーが発生しました: ' + err.message);
+      });
 
-      console.log("ユーザーID" + userId);
       getBoard(userId)
         .then((data) => {
           const boards = data as Board[];
-          console.log("boards", boards);
-            setPosts(boards.map(board => board.content));
+            setPosts(boards.map(boards => boards));
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          console.error(err);
+          alert('掲示板データの取得に失敗しました: ' + err.message);
+        });
   }, [name,userId]);
 
   useEffect(() => {
@@ -64,12 +65,17 @@ export default function Home({ userId, name, balance }: Props) {
     }
   }, [posts]);
 
-  const handlePostSubmit = (e: React.FormEvent) => {
+  const handlePostSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (postContent.trim() === '') return;
-    registerBoard(userId, postContent);
-    setPosts([...(posts || []), postContent]);
-    setPostContent('');
+    try {
+      const board = await registerBoard(userId, postContent);
+      setPosts(prevPosts => [...(prevPosts || []), board]);
+      setPostContent('');
+    } catch (error: any) {
+      console.error(error);
+      alert('投稿に失敗しました: ' + error.message);
+    }
   };
 
   return (
@@ -112,7 +118,13 @@ export default function Home({ userId, name, balance }: Props) {
           <h2 className={styles.card_title}>明治大学掲示板</h2>
           <div className={styles.posts_container} ref={postsContainerRef}>
             {posts && posts.map((post, index) => (
-              <div key={index} className={styles.post_item}>{post}</div>
+              
+              <div key={index} className={styles.post_item}>
+                <div className={styles.post_date}>
+                    {post.createdAt ? new Date(post.createdAt).toLocaleString('ja-JP', { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) : '日付不明'}
+                </div> {/* createdAtを表示 */}
+                <div className={styles.post_content}>{post.content}</div>
+              </div>
             ))}
           </div>
           <form onSubmit={handlePostSubmit} className={styles.post_form}>

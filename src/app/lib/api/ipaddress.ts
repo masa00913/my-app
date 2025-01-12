@@ -1,6 +1,6 @@
 import { handleApiError } from './utils';
 
-export const getClieentIp = async (userName: string) => {
+export const getClieentIp = async (userId: number) => {
   try {
     let isMind = false;
     // IPアドレス取得のAPIリクエストを送信
@@ -23,7 +23,7 @@ export const getClieentIp = async (userName: string) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({userName, isMind}),
+        body: JSON.stringify({userId, isMind}),
       });
     await handleApiError(response2);
     const data2 = await response2.json();

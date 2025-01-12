@@ -1,7 +1,8 @@
 interface Props {
   name: string;
-  balance: number;
   recipientName: string;
+  recipientId: number;
+  userId: number;
 }
 import { useState } from 'react';
 import { createTransaction } from '@/app/lib/api/transaction';
@@ -9,15 +10,13 @@ import styles from '../styles.module.css';
 import { useRouter } from 'next/navigation';
 import { getUserData } from '@/app/lib/api/getUserData';
 
-export default function SendMeijiPoint({ name,recipientName }: Props) {
-  const [error, setError] = useState<string | null>(null);
+export default function SendMeijiPoint({ name,userId ,recipientName,recipientId}: Props) {
   const [amount, setAmount] = useState<number>(0);
   const [isSending, setIsSending] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null); // エラーをリセット
     setIsSending(true); // 送信中に設定
 
     try {
@@ -25,9 +24,8 @@ export default function SendMeijiPoint({ name,recipientName }: Props) {
       console.log(`ユーザー ${name} が ${recipientName} に通貨を送信しようとしています`);
 
       // トランザクション作成のAPIリクエストを送信
-      await createTransaction(name, recipientName, amount, "transaction");
-      console.log(getUserData(name));
-      const userData =  await getUserData(name);
+      await createTransaction(userId, recipientId, amount, "transaction");
+      const userData =  await getUserData(userId);
       localStorage.setItem('user', JSON.stringify(userData));
       alert('交換成功！');
       
@@ -38,7 +36,7 @@ export default function SendMeijiPoint({ name,recipientName }: Props) {
       if (err instanceof Error) {
         errorMessage = err.message;
       }
-      setError(errorMessage);
+      alert(errorMessage);
     }finally{
       setIsSending(false);
     }
@@ -73,7 +71,6 @@ export default function SendMeijiPoint({ name,recipientName }: Props) {
 
   return (
     <div className={styles.comp}>
-      {error && <p>{error}</p>}
 
       <div className={styles.header_container}>
       <button className={styles.back_arrow} onClick={() => window.location.href = '/send/individual_transaction'}>＜</button>

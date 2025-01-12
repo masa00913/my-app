@@ -5,19 +5,19 @@ const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const { fromUser, toUser, amount ,attribute} = req.body;
+    const { fromUserId, toUserId, amount ,attribute} = req.body;
 
-    if (!fromUser || !toUser || !amount) {
+    if (!fromUserId || !toUserId || !amount) {
       return res.status(400).json({ error: 'すべてのフィールドを入力してください。' });
     }
 
     try {
       const sender = await prisma.user.findUnique({
-        where: { username: fromUser },
+        where: { id: parseInt(fromUserId, 10) },
       });
 
       const recipient = await prisma.user.findUnique({
-        where: { username: toUser },
+        where: { id: parseInt(toUserId, 10) },
       });
 
       if (!sender || !recipient) {

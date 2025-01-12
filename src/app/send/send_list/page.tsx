@@ -14,7 +14,6 @@ export default function SendListPage() {
     if (storedUser) {
       try {
         setUserData(JSON.parse(storedUser)); // ユーザー情報を取得
-        console.log(userData?.name + "呼び出しあり");
       } catch (error) {
         console.error('Failed to parse user data:', error);
       }
@@ -23,7 +22,7 @@ export default function SendListPage() {
    
   return (
     <div className={styles.container}>
-      <SendList userName={userData?.name || ''}/>
+      <SendList userName={userData?.name || ''} userId={userData?.id ?? 0}/>
     </div>
   );
 }

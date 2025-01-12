@@ -1,13 +1,15 @@
+import { User } from '@/types/user';
 import { handleApiError } from './utils';
 
-export const checkUserExists = async (recipientName: string): Promise<boolean> => {
+export const checkUserExists = async (recipient: string): Promise<User> => {
     try {
+      console.log(recipient + "を確認します");
       const response = await fetch(`/api/send`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ recipientName }),
+        body: JSON.stringify({ recipientName: recipient }),
       });
   
       if (!response.ok) {
@@ -16,7 +18,8 @@ export const checkUserExists = async (recipientName: string): Promise<boolean> =
   
       await handleApiError(response);
 
-      const data = await response.json();
+      const data = await response.json() as User;
+      console.log("send.tsない" + data);
       return data;
     } catch (error) {
       console.error('ユーザー確認失敗:', error);

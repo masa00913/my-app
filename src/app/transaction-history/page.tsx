@@ -11,7 +11,6 @@ export default function IndividualTransactionHistoryPage() {
   
     useEffect(() => {
       const storedUser = localStorage.getItem('user');
-      console.log("indi" + storedUser);
       // setRecipientName(localStorage.getItem('recipientName'));
       if (storedUser) {
         try {
@@ -28,7 +27,7 @@ export default function IndividualTransactionHistoryPage() {
   }
   return (
     <div className={styles.container}>
-      <TransactionHistory userName={userData.name}/>
+      <TransactionHistory userName={userData.name} userId={userData.id}/>
     </div>
   );
 }

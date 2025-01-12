@@ -37,8 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return res.status(401).json({ error: 'ウォレットが見つかりません。' });
             }
 
-            const userData: User = { id: user.id.toString(), name: user.username, email: user.email, balance: wallet.balance};
-            console.log(userData + "api");
+            const userData: User = { id: user.id, name: user.username, email: user.email, balance: wallet.balance};
             res.status(200).json({ userData }); // トークンを返す
         } catch (error) {
             console.error("ログインエラー:", error);

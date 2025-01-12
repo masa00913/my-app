@@ -1,13 +1,14 @@
 import { handleApiError } from './utils';
 
-export const getPastSendTransactions = async (userName : string) => {
+export const getPastSendTransactions = async (userId : number) => {
     try {
+      console.log(userId);
       const response = await fetch(`/api/sendList`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userName}),
+        body: JSON.stringify({ userId }),
       });
   
       if (!response.ok) {
@@ -17,8 +18,6 @@ export const getPastSendTransactions = async (userName : string) => {
       await handleApiError(response);
 
       const data = await response.json();
-      console.log(data);
-      console.log('データ軍');
       return data.sendTransactionDetails;
     } catch (error) {
       console.error('確認失敗:', error);
@@ -27,14 +26,14 @@ export const getPastSendTransactions = async (userName : string) => {
   };
   
 
-export const getPastReceiveTransactions = async (userName : string) => {
+export const getPastReceiveTransactions = async (userId : number) => {
     try {
       const response = await fetch(`/api/sendList`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userName}),
+        body: JSON.stringify({ userId}),
       });
   
       if (!response.ok) {
@@ -44,8 +43,6 @@ export const getPastReceiveTransactions = async (userName : string) => {
       await handleApiError(response);
 
       const data = await response.json();
-      console.log(data);
-      console.log('データ軍');
       return data.receiveTransactionDetails;
     } catch (error) {
       console.error('確認失敗:', error);

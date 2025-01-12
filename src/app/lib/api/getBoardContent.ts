@@ -3,7 +3,6 @@ import { handleApiError } from "./utils";
 
 export const getBoard = async (userId: number) => {
     try {
-        console.log("ユーザーID" + userId );
         const response = await fetch('/api/getBoard', {
             method: 'POST',
             headers: {

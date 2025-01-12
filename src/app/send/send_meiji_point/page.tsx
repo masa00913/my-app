@@ -7,14 +7,15 @@ import styles from './styles.module.css';
 
 export default function SendMeijiPointPage() {
   const [userData, setUserData] = useState<User | null>(null); // 型を明示的に定義
-  const [recipientName, setRecipientName] = useState<string | null>(null); // 型を明示的に定義
-  
+  // const [recipientName, setRecipientName] = useState<string | null>(null); // 型を明示的に定義
+  const [recipient,setRecipient] = useState<User>();
     useEffect(() => {
       const storedUser = localStorage.getItem('user');
-      setRecipientName(localStorage.getItem('recipientName'));
-      if (storedUser) {
+      const storedRecipient = localStorage.getItem('recipient');
+      if (storedUser && storedRecipient) {
         try {
           setUserData(JSON.parse(storedUser)); // ユーザー情報を取得
+          setRecipient(JSON.parse(storedRecipient));
         } catch (error) {
           console.error('Failed to parse user data:', error);
         }
@@ -27,7 +28,7 @@ export default function SendMeijiPointPage() {
   
     return (
       <div className={styles.container}>
-          <SendMeijiPoint name={userData.name} balance={userData.balance} recipientName={recipientName || ''}/>
+          <SendMeijiPoint name={userData.name} userId={userData.id} recipientName={recipient?.name || ''} recipientId={recipient?.id ?? 0}/>
       </div>
     );
 }

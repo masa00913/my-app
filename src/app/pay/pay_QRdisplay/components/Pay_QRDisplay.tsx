@@ -59,7 +59,6 @@ export default function PayQRDisplay({ userName , userId,balance }: Props) {
   const handleRefresh = () => {
     const newCode = generateUniqueCode();
     setQrCodeValue(newCode);
-    console.log(userName);
     setTimeLeft(5 * 60); // QRコード更新時に残り時間をリセット
   };
 

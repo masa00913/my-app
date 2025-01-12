@@ -1,13 +1,13 @@
 interface Props {
   userName: string;
   recipient: string;
+  userId : number;
 }
 import { useEffect,useState, useRef } from 'react';
 import { getPastSendTransactions,getPastReceiveTransactions } from '@/app/lib/api/sendList';
 import styles from '../styles.module.css';
 
-export default function IndividualTransactionHistory({userName,recipient}: Props) {
-  const [error, setError] = useState<string | null>(null);
+export default function IndividualTransactionHistory({userName,recipient,userId}: Props) {
   // const [sendTransactionInfo, setSendTransactionInfo] = useState<{ recipient: string, amount: string, createdAt: string, status: string }[]>([]);
 
   // const [receiveTransactionInfo, setReceiveTransactionInfo] = useState<{ sender: string, amount: string, createdAt: string, status: string }[]>([]);
@@ -15,16 +15,16 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
   const historyRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    console.log("indi" + userName);
       // 過去の取引データを取得
       if(userName != ''){
         
         const fetchPastTransactions = async () => {
           try {
-            const sendTransactions = await getPastSendTransactions(userName);
+            console.log(recipient + "の取引履歴を取得します");
+            const sendTransactions = await getPastSendTransactions(userId);
             const filteredSendTransactions = sendTransactions.filter((transaction: { recipient: string }) => transaction.recipient === recipient);
 
-            const receiveTransactions = await getPastReceiveTransactions(userName);
+            const receiveTransactions = await getPastReceiveTransactions(userId);
             const filteredReceiveTransactions = receiveTransactions.filter((transaction: { sender: string }) => transaction.sender === recipient);
 
             const combinedTransactions = [
@@ -37,7 +37,7 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
             setCombinedTransactions(combinedTransactions);
           } catch (err) {
             console.error('Failed to fetch past transactions', err);
-            setError('Failed to fetch past transactions');
+            alert('取引履歴の取得に失敗しました' + err);
           }
         };
   
@@ -53,7 +53,6 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
 
   return (
     <div className={styles.body}>
-      {error && <p>{error}</p>}
       
       <div className={styles.container_in}>
         
@@ -66,7 +65,14 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
       <div className={styles.history} ref={historyRef}>
       {combinedTransactions.map((transaction, index) => (
         <div key={index} className={transaction.type === 'send' ? styles.transaction_unit_send : styles.transaction_unit_receive}>
-          <div className={styles.date_label}>{transaction.createdAt}</div>
+          <div className={styles.date_label}>
+            {new Date(transaction.createdAt).toLocaleString('ja-JP', {
+              month: 'long',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric'
+            })}
+          </div>
           <div className={transaction.type === 'send' ? styles.transaction_send : styles.transaction_receive}>
             <div className={styles.amount}>
               <span className={styles.label}>{transaction.type === 'send' ? '送る' : '受け取り'}</span>
@@ -82,8 +88,6 @@ export default function IndividualTransactionHistory({userName,recipient}: Props
       </div>
       <footer className={styles.footer}>
         <button className={styles.send_button} onClick={() => window.location.href = '/send/send_meiji_point'}>送る</button>
-        {/* <button className={styles.request_button}>請求</button> */}
-        {/* <input type="text" placeholder="メッセージを入力" className={styles.message_input}></input> */}
       </footer>
     </div>
     </div>
