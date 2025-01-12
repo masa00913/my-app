@@ -5,3 +5,10 @@ export interface User {
     email: string;
     balance: number;
   }
+
+export interface Board {
+  userId: number;
+  id: number;
+  content: string;
+  date: Date;
+}

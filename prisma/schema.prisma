@@ -17,6 +17,7 @@ model User {
   transactionsSent     Transaction[] @relation("SenderTransactions")
   transactionsReceived Transaction[] @relation("RecipientTransactions")
   qrCodes    QrCode[]
+  boards     Board[]
 }
 
 model Wallet {
@@ -42,6 +43,14 @@ model Transaction {
 model QrCode {
   id        Int      @id @default(autoincrement())
   codeText  String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Board {
+  id        Int      @id @default(autoincrement())
+  content   String
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())

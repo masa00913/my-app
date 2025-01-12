@@ -231,3 +231,52 @@
   .pay_icon {
     filter: invert(1); /* Invert the color to make the text white on purple background */
   }
+
+/* 掲示板のスタイル */
+.board_card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px;
+  height: 300px; /* 掲示板全体の高さを指定 */
+  display: flex;
+  flex-direction: column;
+}
+
+.post_form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.post_input {
+  width: 95%;
+  height: 60px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  resize: none; /* 変形を防ぐ */
+}
+
+.post_button {
+  align-self: flex-end;
+  padding: 5px 10px;
+  background-color: #7e3af2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.posts_container {
+  flex: 1;
+  overflow-y: auto; /* スクロール可能にする */
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.post_item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}

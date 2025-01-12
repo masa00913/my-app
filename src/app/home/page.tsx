@@ -50,5 +50,5 @@ export default function HomePage() {
     return <div>Loading...</div>; // ローディング表示
   }
 
-  return <Home key={userData.balance} name={userData.name} balance={userData.balance} />;
+  return <Home key={userData.balance} userId={Number(userData.id)} name={userData.name} balance={userData.balance} />;
 }
