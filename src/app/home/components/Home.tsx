@@ -51,7 +51,7 @@ export default function Home({ name, balance }: Props) {
         if(data.isLoginBonus){
           createTransaction('MeijiPay', name, 10, "loginBonus")
             .then(() => {
-              setCurrentBalance(currentBalance + 10);
+              setCurrentBalance(prev => prev + 10);
               alert('ログインポイントを付与しました');
             });
         }
@@ -61,7 +61,7 @@ export default function Home({ name, balance }: Props) {
         if(data.isMindBonus){
           createTransaction('MeijiPay', name, 20, "mindBonus")
             .then(() => {
-              setCurrentBalance(currentBalance + 20);
+              setCurrentBalance(prev => prev + 20);
               alert('登校ポイントを付与しました');
             });
         }
