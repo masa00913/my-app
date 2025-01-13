@@ -83,6 +83,8 @@
 
 .header_icon {
   filter: hue-rotate(240deg) saturate(100%) brightness(75%);
+  width: 20px;
+  height: 20px;
 }
 
 /* Search Bar */

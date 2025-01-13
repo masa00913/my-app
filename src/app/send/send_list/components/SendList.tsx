@@ -96,10 +96,10 @@ export default function SendList({userName,userId} : Props) {
             </div>
             <div className={styles.header_right}>
             <button className={styles.header_icon_button} onClick={() => window.location.href = '/my_code/QR_display'}>
-              <Image src="/send/qrcode.png" alt="qrCode" width={20} height={20}className={styles.header_icon}/>
+              <Image src="/send/qrcode.png" alt="qrCode" width={60} height={60}className={styles.header_icon}/>
             </button>
             <button className={styles.header_icon_button} onClick={() => window.location.href = '/my_code/QR_read'}>
-              <Image src="/send/scan.png" alt="qrCode" width={25} height={25} className={styles.header_icon}/>
+              <Image src="/send/scan.png" alt="qrCode" width={60} height={60} className={styles.header_icon}/>
             </button>
             </div>
         </div>

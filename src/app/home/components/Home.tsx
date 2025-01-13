@@ -83,7 +83,7 @@ export default function Home({ userId, name, balance }: Props) {
       <div className={styles.app_container}>
         <header className={styles.app_header}>
           <div className={styles.header_left}>
-            <Image src="https://placehold.jp/30x30/ddd/fff?text=M" alt="MeijiPay Logo" width={30} height={30} className={styles.meijipay_logo} />
+            <Image src="/home/mainIconHigh.jpg" alt="MeijiPay Logo1" width={512} height={512} className={styles.meijipay_logo} />
             <span className={styles.meijipay_text}>MeijiPay</span>
           </div>
           <div className={styles.logout_button}>{name}</div>
@@ -101,15 +101,15 @@ export default function Home({ userId, name, balance }: Props) {
 
         <div className={styles.action_buttons}>
           <div className={styles.action_button} onClick={() => window.location.href = '/pay/pay_QRread'}>
-            <Image src="/home/scan.png" alt="Scan Icon" width={30} height={30} className={styles.action_icon} />
+            <Image src="/home/scan.png" alt="Scan Icon" width={60} height={60} className={styles.action_icon} />
             <span className={styles.action_label}>スキャン</span>
           </div>
           <div className={styles.action_button} onClick={() => window.location.href = '/send/send_list'}>
-            <Image src="/home/send.png" alt="Scan Icon" width={30} height={30} className={styles.action_icon} />
+            <Image src="/home/send.png" alt="Scan Icon" width={60} height={60} className={styles.action_icon} />
             <span className={styles.action_label}>送る</span>
           </div>
           <div className={styles.action_button} onClick={() => window.location.href = '/transaction-history'}>
-            <Image src="/home/transaction-history.png" alt="Scan Icon" width={30} height={30} className={styles.action_icon} />
+            <Image src="/home/transaction-history.png" alt="Scan Icon" width={60} height={60} className={styles.action_icon} />
             <span className={styles.action_label}>取引履歴</span>
           </div>
         </div>
@@ -140,8 +140,10 @@ export default function Home({ userId, name, balance }: Props) {
 
         <nav className={styles.bottom_navigation}>
           <div className={`${styles.nav_item} ${styles.active}`} onClick={() => window.location.href = '/pay/pay_QRdisplay'}>
-            <div className={styles.pay_icon_container}></div>
-            <span className={styles.nav_label}>支払う</span>
+            <div className={styles.pay_icon_container}>
+              <Image src="/home/qrcode.png" alt="QR Code Icon" width={60} height={60} className={styles.pay_icon} />
+              <span className={styles.pay_text}>支払う</span>
+            </div>
           </div>
         </nav>
       </div>
