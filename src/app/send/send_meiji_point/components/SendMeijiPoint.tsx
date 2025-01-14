@@ -27,9 +27,20 @@ export default function SendMeijiPoint({ name,userId ,recipientName,recipientId}
       await createTransaction(userId, recipientId, amount, "transaction");
       const userData =  await getUserData(userId);
       localStorage.setItem('user', JSON.stringify(userData));
+      const audio = new Audio('/pay_music/meijiPay_sound.m4a');
+      await new Promise<void>((resolve) => {
+        audio.onended = () => resolve();
+        audio.play();
+      });
+
       alert('交換成功！');
       
-      
+      const audio_chance = new Audio('/pay_music/chance.m4a');
+      await new Promise<void>((resolve) => {
+        audio_chance.onended = () => resolve();
+        audio_chance.play();
+      });
+
       router.push('/send/individual_transaction');
     } catch (err: unknown) {
       let errorMessage = '交換に失敗しました。';

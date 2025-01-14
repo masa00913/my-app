@@ -26,7 +26,7 @@ export default function SendListPage() {
         console.error('Failed to parse user data:', error);
       }
     }
-  }, [userData?.name]);
+  }, []);
    
   return (
     <div className={styles.container}>

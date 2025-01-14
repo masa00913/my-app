@@ -39,7 +39,7 @@ export default function IndividualTransactionHistoryPage() {
           console.error('Failed to parse recipient data:',error);
         }
       }
-    }, [recipient]);
+    }, []);
   
   
   if (!userData || !recipient) {
