@@ -168,9 +168,9 @@
   }
 
   .point_icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
+    width:30px;
+    height: 30px;
+    /* border-radius: 50%; */
     background-color: #7e3af2; /* アイコンの背景色 */
     margin-right: 8px;
     /* ここにアイコンのスタイルを記述 (例: background-image) */

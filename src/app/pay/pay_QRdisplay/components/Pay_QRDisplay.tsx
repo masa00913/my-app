@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {QRCodeCanvas} from 'qrcode.react';
+import Image from 'next/image';
 import styles from '../styles.module.css';
 import { setQRCode } from '@/app/lib/api/setQRCode';
 
@@ -88,7 +89,7 @@ export default function PayQRDisplay({ userId,balance }: Props) {
           <div className={styles.point_info_area}>
         <div className={styles.meijipay_point}>
           <div className={styles.point_left}>
-            <div className={styles.point_icon} />
+            <Image src="/home/mainIconHigh.jpg" alt="MeijiPay Logo1" width={512} height={512} className={styles.point_icon} />
             <span className={styles.point_name}>MeijiPayポイント</span>
             <span className={styles.point_value}>{balance}pt</span>
           </div>
