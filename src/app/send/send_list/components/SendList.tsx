@@ -47,7 +47,7 @@ export default function SendList({userName,userId} : Props) {
 
       fetchPastTransactions();
     }
-  }, [userId]);
+  }, [userId,userName]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

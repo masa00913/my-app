@@ -83,7 +83,7 @@ export default function PayQRDisplay({ userId,balance }: Props) {
             </div>
           <div className={styles.available_amount_area}>
         <span className={styles.available_text}>利用可能額</span>
-        <span className={styles.amount}>{balance}pt</span>
+        {/* <span className={styles.amount}>{balance}pt</span> */}
           </div>
           <div className={styles.point_info_area}>
         <div className={styles.meijipay_point}>
@@ -92,7 +92,7 @@ export default function PayQRDisplay({ userId,balance }: Props) {
             <span className={styles.point_name}>MeijiPayポイント</span>
             <span className={styles.point_value}>{balance}pt</span>
           </div>
-          <button className={styles.arrow_button} />
+          {/* <button className={styles.arrow_button} /> */}
         </div>
         {/* <div className={styles.use_all_points}>
           <span className={styles.use_text}>すべてのポイントを使う</span>

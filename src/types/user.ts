@@ -9,6 +9,7 @@ export interface User {
 export interface Board {
   userId: number;
   id: number;
+  username: string;
   content: string;
   createdAt: Date;
 }

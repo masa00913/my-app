@@ -3,7 +3,7 @@ import { createTransaction } from '@/app/lib/api/transaction';
 import { getClieentIp } from "@/app/lib/api/ipaddress";
 import Image from 'next/image';
 import styles from '../styles.module.css';
-import { registerBoard } from '@/app/lib/api/setBoard';
+import { registerBoard, deleteBoard } from '@/app/lib/api/setBoard'; // deleteBoardをインポート
 import { getBoard } from '@/app/lib/api/getBoardContent';
 import { Board } from '@/types/user';
 
@@ -18,6 +18,8 @@ export default function Home({ userId, name, balance }: Props) {
   const [postContent, setPostContent] = useState('');
   const [posts, setPosts] = useState<Board[] | undefined>([]);
   const postsContainerRef = useRef<HTMLDivElement>(null);
+
+
 
   useEffect(() => {
     getClieentIp(userId)
@@ -78,6 +80,16 @@ export default function Home({ userId, name, balance }: Props) {
     }
   };
 
+  const handlePostDelete = async (postId: number) => {
+    try {
+      await deleteBoard(postId);
+      setPosts(prevPosts => prevPosts?.filter(post => post.id !== postId));
+    } catch (error) {
+      console.error(error);
+      alert('投稿の削除に失敗しました: ' + error);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('user');
     window.location.href = '/';
@@ -121,17 +133,24 @@ export default function Home({ userId, name, balance }: Props) {
 
         <div className={styles.board_card}>
           <h2 className={styles.card_title}>明治大学掲示板</h2>
-          <div className={styles.posts_container} ref={postsContainerRef}>
+            <div className={styles.posts_container} ref={postsContainerRef}>
             {posts && posts.map((post, index) => (
-              
               <div key={index} className={styles.post_item}>
-                <div className={styles.post_date}>
+              <div className={styles.post_header}>
+                <div>
+                  <div className={styles.post_date}>
                     {post.createdAt ? new Date(post.createdAt).toLocaleString('ja-JP', { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) : '日付不明'}
-                </div> {/* createdAtを表示 */}
-                <div className={styles.post_content}>{post.content}</div>
+                  </div>
+                  <div className={styles.post_name}>{post.username}</div>
+                </div>
+                {post.userId === userId && (
+                  <button onClick={() => handlePostDelete(post.id)} className={styles.delete_button}>削除</button>
+                )}
+              </div>
+              <div className={styles.post_content}>{post.content}</div>
               </div>
             ))}
-          </div>
+            </div>
           <form onSubmit={handlePostSubmit} className={styles.post_form}>
             <textarea
               value={postContent}

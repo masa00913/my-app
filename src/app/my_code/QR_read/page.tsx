@@ -6,6 +6,15 @@ import styles from './styles.module.css';
 
 export default function PayQRReadPage() {
   const [userName, setUserName] = useState<string>(''); // ユーザー名を保持するステート
+  
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    console.log(user);
+    if (!user) {
+      window.location.href = '/';
+    }
+  }, []);
+
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {

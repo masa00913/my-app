@@ -164,6 +164,7 @@
   .point_left {
     display: flex;
     align-items: center;
+    width: 100%;
   }
 
   .point_icon {
@@ -185,6 +186,7 @@
   .point_value {
     font-size: 12px;
     color: #888;
+    margin-left: auto; /* 右寄せにするために追加 */
   }
 
   .arrow_button {

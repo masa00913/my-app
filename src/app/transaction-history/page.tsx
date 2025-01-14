@@ -9,7 +9,15 @@ export default function IndividualTransactionHistoryPage() {
   const [userData, setUserData] = useState<User | null>(null); // 型を明示的に定義
   // const [recipientName, setRecipientName] = useState<string | null>(null); // 型を明示的に定義
   
-    useEffect(() => {
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    console.log(user);
+    if (!user) {
+      window.location.href = '/';
+    }
+  }, []);  
+  
+  useEffect(() => {
       const storedUser = localStorage.getItem('user');
       // setRecipientName(localStorage.getItem('recipientName'));
       if (storedUser) {

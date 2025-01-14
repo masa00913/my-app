@@ -20,3 +20,23 @@ export const registerBoard = async (userId: number, content: string) => {
         throw error;
     }
 };
+
+export const deleteBoard = async (boardId : number) => {
+    try {
+        const response = await fetch('/api/deleteBoard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ boardId  }),
+        });
+
+        await handleApiError(response);
+
+        
+        return await response.json();
+    } catch (error) {
+        console.error('ユーザー作成失敗:', error);
+        throw error;
+    }
+};

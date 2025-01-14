@@ -1,11 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import type { Board } from '../../types/user'; // Board型をインポート
 
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-
-
     if (req.method === 'POST') {
         const { userId } = req.body;
 
@@ -21,7 +20,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             if (!user) {
                 return res.status(408).json({ error: 'ユーザーが存在しません' });
             }
-            const newBoard = await prisma.board.findMany();
+
+            const boards = await prisma.board.findMany();
+            const newBoard: Board[] = await Promise.all(boards.map(async board => {
+                const boardUser = await prisma.user.findUnique({
+                    where: { id: board.userId },
+                });
+                return {
+                    ...board,
+                    username: boardUser ? boardUser.username : 'Unknown' // usernameを追加
+                };
+            }));
+
             res.status(200).json({ boards: newBoard });
         } catch (error) {
             console.error("ユーザー作成エラー:", error);
