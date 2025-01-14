@@ -8,7 +8,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { fromUserId, toUserId, amount ,attribute} = req.body;
 
     if (!fromUserId || !toUserId || !amount) {
-      return res.status(400).json({ error: 'すべてのフィールドを入力してください。' });
+      if (fromUserId === 0) {
+        console.log("fromUserIdが0です。");
+      } else {
+        return res.status(400).json({ error: 'すべてのフィールドを入力してください。' });
+      }
     }
 
     try {
@@ -41,7 +45,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       if(senderWallet){
         if(senderWallet?.id != 0 &&senderWallet?.balance < amount){
+          console.log("残高が不足しています。");
           return res.status(400).json({ error: '残高が不足しています。' });
+         
         }
 
         

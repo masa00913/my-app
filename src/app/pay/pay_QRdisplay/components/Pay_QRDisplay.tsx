@@ -94,10 +94,10 @@ export default function PayQRDisplay({ userId,balance }: Props) {
           </div>
           <button className={styles.arrow_button} />
         </div>
-        <div className={styles.use_all_points}>
+        {/* <div className={styles.use_all_points}>
           <span className={styles.use_text}>すべてのポイントを使う</span>
           <button className={styles.change_button}>変更 ＞</button>
-        </div>
+        </div> */}
           </div>
         </div>
         <button className={styles.scan_button} onClick={() => window.location.href = '/pay/pay_QRread'}>

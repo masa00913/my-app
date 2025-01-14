@@ -78,6 +78,11 @@ export default function Home({ userId, name, balance }: Props) {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem('user');
+    window.location.href = '/';
+  };
+
   return (
     <div>
       <div className={styles.app_container}>
@@ -86,13 +91,13 @@ export default function Home({ userId, name, balance }: Props) {
             <Image src="/home/mainIconHigh.jpg" alt="MeijiPay Logo1" width={512} height={512} className={styles.meijipay_logo} />
             <span className={styles.meijipay_text}>MeijiPay</span>
           </div>
-          <div className={styles.logout_button}>{name}</div>
+          <div className={styles.logout_button} onClick={logout}>ログアウト</div>
         </header>
 
         <div className={styles.balance_card}>
           <div className={styles.balance_header}>
             <span className={styles.balance_title}>MeijiPay残高</span>
-            <span className={styles.rank_text}>シルバーランク</span>
+            <span className={styles.rank_text}>{name}</span>
           </div>
           <div className={styles.balance_amount}>
             {currentBalance}<span className={styles.yen_text}>pt</span>

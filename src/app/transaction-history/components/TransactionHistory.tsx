@@ -10,7 +10,7 @@ export default function TransactionHistory({userName,userId}: Props) {
   // const [sendTransactionInfo, setSendTransactionInfo] = useState<{ recipient: string, amount: string, createdAt: string, status: string }[]>([]);
 
   // const [receiveTransactionInfo, setReceiveTransactionInfo] = useState<{ sender: string, amount: string, createdAt: string, status: string }[]>([]);
-  const [combinedTransactions, setCombinedTransactions] = useState<{ recipient: string, amount: string, createdAt: string, status: string, type: string }[]>([]);
+  const [combinedTransactions, setCombinedTransactions] = useState<{ recipient: string, sender: string,amount: string, createdAt: string, status: string, type: string }[]>([]);
   const historyRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -63,23 +63,30 @@ export default function TransactionHistory({userName,userId}: Props) {
       {combinedTransactions.map((transaction, index) => (
         <div key={index} className={transaction.type === 'send' ? styles.transaction_unit_send : styles.transaction_unit_receive}>
             <div className={styles.date_label}>
-            {new Date(transaction.createdAt).toLocaleString('ja-JP', {
-              month: 'long',
-              day: 'numeric',
-              hour: 'numeric',
-              minute: 'numeric'
-            })}
-            </div>
-          <div className={transaction.type === 'send' ? styles.transaction_send : styles.transaction_receive}>
-            <div className={styles.amount}>
-              <span className={styles.label}>{transaction.type === 'send' ? '送る' : '受け取り'}</span>
-              <span className={styles.value}>{transaction.amount}</span>
-            </div>
-            <a href="#" className={styles.details_link}>詳細を見る</a>
+          {new Date(transaction.createdAt).toLocaleString('ja-JP', {
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric'
+          })}
+        </div>
+        <div className={transaction.type === 'send' ? styles.transaction_send : styles.transaction_receive}>
+          <div className={styles.amount}>
+            <span className={styles.label}>{transaction.type === 'send' ? '送る' : '受け取り'}</span>
+            <span className={styles.value}>{transaction.amount}</span>
           </div>
-          <div className={styles.status}>
-            <span className={styles.status_text}>{transaction.type === 'send' ? '友だちが受け取りました' : '受け取りが完了しました'}</span>
+          <div className={styles.participants}>
+            {transaction.type === 'send' ? (
+              <span className={styles.participant}>受信者: {transaction.recipient}</span>
+            ) : (
+              <span className={styles.participant}>送信者: {transaction.sender}</span>
+            )}
           </div>
+          {/* <a href="#" className={styles.details_link}>詳細を見る</a> */}
+        </div>
+        <div className={styles.status}>
+          <span className={styles.status_text}>{transaction.type === 'send' ? '友だちが受け取りました' : '受け取りが完了しました'}</span>
+        </div>
         </div>
       ))}
       </div>
