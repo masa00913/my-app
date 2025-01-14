@@ -1,6 +1,62 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
+.background {
+  background-color: #a356e2;
+  min-height: 100vh;
+  display: flex;
+  justify-content: top;
+  align-items: center;
+}
+
+.containerBox {
+  background-color: #E6E6FA;
+  width: 95%;
+  border-radius: 16px;
+  text-align: center;
+  /* padding: 20px; */
+  margin: 10px auto;
+}
+
+.meijipay_logo{
+  margin: 10px;
+  margin-top: 5%;
+  border-radius: 10%;
+  max-width: 512px; /* 最大幅 */
+  width: 90%;
+  height: auto;
+}
+
+.buttons {
+  display: flex;
+  flex-flow: column;
+  align-items: center; /* 追加 */
+  justify-content: center; /* 追加 */
+}
+
+.contact_button {
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: #a356e2;
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+  transition: all 0.3s ease;
+  border: none;
+  /* flex-direction: column; */
+  /* padding: 5px; */
+  /* width: 300px; */
+  margin: 5px;
+}
+
+.contact_button:hover {
+  background-color: #8a44c5;
+  transform: translateY(-2px);  
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2); 
+}
+.contact_button_fixed {
+  position: fixed;
+  top: 0px; 
+  right: 50px;  
+  z-index: 1000; 
+}

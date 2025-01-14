@@ -29,25 +29,25 @@ export default function MsalHomeForm() {
       console.warn("Multiple accounts detected.");
     } else if (currentAccounts.length === 1) {
       usernameRef.current = currentAccounts[0].username;
-      welcomeUser(currentAccounts[0].username);
-      if (currentAccounts[0].idTokenClaims) {
-        const stringIdTokenClaims = Object.fromEntries(
-          Object.entries(currentAccounts[0].idTokenClaims).map(([key, value]) => [key, String(value)])
-        );
-        updateTable({ idTokenClaims: stringIdTokenClaims });
-      }
+      // welcomeUser(currentAccounts[0].username);
+      // if (currentAccounts[0].idTokenClaims) {
+      //   const stringIdTokenClaims = Object.fromEntries(
+      //     Object.entries(currentAccounts[0].idTokenClaims).map(([key, value]) => [key, String(value)])
+      //   );
+      //   updateTable({ idTokenClaims: stringIdTokenClaims });
+      // }
     }
   }, [myMSALObj]);
 
   const handleResponse = React.useCallback((response: msal.AuthenticationResult | null) => {
     if (response !== null && response.account !== null) {
       usernameRef.current = response.account.username;
-      welcomeUser(usernameRef.current);
+      // welcomeUser(usernameRef.current);
       if (response.account.idTokenClaims) {
-        const stringIdTokenClaims = Object.fromEntries(
-          Object.entries(response.account.idTokenClaims).map(([key, value]) => [key, String(value)])
-        );
-        updateTable({ idTokenClaims: stringIdTokenClaims });
+        // const stringIdTokenClaims = Object.fromEntries(
+        //   Object.entries(response.account.idTokenClaims).map(([key, value]) => [key, String(value)])
+        // );
+        // updateTable({ idTokenClaims: stringIdTokenClaims });
 
         const preferredUsername = response.account.idTokenClaims.preferred_username;
         const name = response.account.idTokenClaims.name;
@@ -70,7 +70,8 @@ export default function MsalHomeForm() {
               console.log('data:', data);
               const userData = await loginUserMsal(preferredUsername, name);
               localStorage.setItem('user', JSON.stringify(userData)); // localStorageにユーザー情報を保存 
-              router.push('/home');
+              console.log("userData:", userData);
+              // router.push('/auth/msal-home'); // ログイン成功時にトップページに遷移
             } else {
               throw new Error('preferredUsername or name is undefined');
             }
@@ -91,6 +92,21 @@ export default function MsalHomeForm() {
       .catch((error) => {
         console.error(error);
       });
+    const currentAccounts = myMSALObj.getAllAccounts();
+    const localAccounts = localStorage.getItem('user');
+    console.log('localAccounts:', localAccounts);
+
+    // currentAccountsが存在し、localAccountsが存在しない場合、localAccountsにログイン情報を保存
+    if (currentAccounts && currentAccounts.length > 0) {
+      if (!localAccounts) {
+        const account = currentAccounts[0];
+        const preferredUsername = account.idTokenClaims?.preferred_username;
+        const name = account.idTokenClaims?.name;
+        if (preferredUsername && name) {
+          localLogin(preferredUsername, name);
+        }
+      }
+    }
   }, [myMSALObj, handleResponse]);
 
   function signIn() {
@@ -105,6 +121,33 @@ export default function MsalHomeForm() {
 
     myMSALObj.logoutRedirect(logoutRequest);
   }
+
+  function localLogin(preferredUsername: string | undefined, name: string | undefined) {
+      fetch('/api/signinMsal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: name,
+          email: preferredUsername,
+        }),
+      })
+      .then((res) => res.json())
+      .then(async (data) => {
+        if (preferredUsername && name) {
+          console.log('data:', data);
+          const userData = await loginUserMsal(preferredUsername, name);
+          localStorage.setItem('user', JSON.stringify(userData)); // localStorageにユーザー情報を保存 
+          router.push('/home');
+        } else {
+          throw new Error('preferredUsername or name is undefined');
+        }
+      })
+      .catch((error) => {
+        console.error('Error calling API:', error);
+      });
+    }
 
   // const handleSubmit = async (e: React.FormEvent) => {
   //   e.preventDefault();
@@ -129,9 +172,8 @@ export default function MsalHomeForm() {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-sm navbar-dark bg-primary navbarStyle">
+      {/* <nav className="navbar navbar-expand-sm navbar-dark bg-primary navbarStyle">
         <button className="navbar-brand" onClick={() => window.location.href = '/'}>初期画面へ</button>
-        {/* <a className="navbar-brand" href="/">Microsoft identity platform</a> */}
         <div className="navbar-collapse justify-content-end">
           <button type="button" id="signIn" className="btn btn-secondary" onClick={signIn}>Sign-in</button>
           <button type="button" id="signOut" className="btn btn-success d-none" onClick={signOut}>Sign-out</button>
@@ -157,7 +199,7 @@ export default function MsalHomeForm() {
             <tbody id="table-body-div"></tbody>
           </table>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

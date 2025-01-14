@@ -1,4 +1,6 @@
 import { Configuration, LogLevel } from '@azure/msal-browser';
+// import * as dotenv from 'dotenv';
+// dotenv.config();
 
 /**
  * Configuration object to be passed to MSAL instance on creation. 
@@ -7,9 +9,9 @@ import { Configuration, LogLevel } from '@azure/msal-browser';
  */
 const msalConfig: Configuration = {
     auth: {
-        clientId: "32d7b2e1-9e2c-499b-9fe6-ce110a86e9ae", // This is the ONLY mandatory field that you need to supply
-        authority: "https://login.microsoftonline.com/8655b412-ba65-49bc-a4b6-4bdbef99660f", // Replace the placeholder with your tenant info
-        redirectUri: '/auth/msal-home', // You must register this URI on App Registration. Defaults to window.location.href e.g. http://localhost:3000/
+        clientId: `${process.env.NEXT_PUBLIC_CLIENT_ID}`, // This is the ONLY mandatory field that you need to supply
+        authority: `${process.env.NEXT_PUBLIC_CLOUD_INSTANCE}${process.env.NEXT_PUBLIC_TENANT_ID}`, // Replace the placeholder with your tenant info
+        redirectUri: `${process.env.NEXT_PUBLIC_REDIRECT_URI}`, // You must register this URI on App Registration. Defaults to window.location.href e.g. http://localhost:3000/
         navigateToLoginRequestUrl: true, // If "true", will navigate back to the original request location before processing the auth code response.
     },
     cache: {

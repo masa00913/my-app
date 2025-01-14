@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { createTransaction } from '@/app/lib/api/transaction';
 import { getClieentIp } from "@/app/lib/api/ipaddress";
 import Image from 'next/image';
@@ -6,6 +6,8 @@ import styles from '../styles.module.css';
 import { registerBoard, deleteBoard } from '@/app/lib/api/setBoard'; // deleteBoardをインポート
 import { getBoard } from '@/app/lib/api/getBoardContent';
 import { Board } from '@/types/user';
+import * as msal from '@azure/msal-browser';
+import { msalConfig, loginRequest } from '@/app/auth/msal-home/utils/authConfig'; // Adjust the import path as necessary
 
 interface Props {
   name: string;
@@ -14,12 +16,15 @@ interface Props {
 }
 
 export default function Home({ userId, name, balance }: Props) {
+  const myMSALObj = React.useMemo(() => new msal.PublicClientApplication(msalConfig), []);
+  const currentAccounts = myMSALObj.getAllAccounts();
+  const usernameRef = React.useRef<string>("");
+  usernameRef.current = currentAccounts[0].username;
+  
   const [currentBalance, setCurrentBalance] = useState(balance);
   const [postContent, setPostContent] = useState('');
   const [posts, setPosts] = useState<Board[] | undefined>([]);
   const postsContainerRef = useRef<HTMLDivElement>(null);
-
-
 
   useEffect(() => {
     getClieentIp(userId)
@@ -91,6 +96,13 @@ export default function Home({ userId, name, balance }: Props) {
   };
 
   const logout = () => {
+    const logoutRequest = {
+      account: myMSALObj.getAccountByUsername(usernameRef.current),
+      postLogoutRedirectUri: '/auth/msal-logout',
+    };
+
+    myMSALObj.logoutRedirect(logoutRequest);
+
     localStorage.removeItem('user');
     window.location.href = '/';
   };
