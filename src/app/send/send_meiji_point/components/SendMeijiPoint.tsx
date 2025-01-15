@@ -36,8 +36,9 @@ export default function SendMeijiPoint({ name,userId ,recipientName,recipientId}
       alert('交換成功！');
       
       const audio_chance = new Audio('/pay_music/chance.m4a');
-      await new Promise<void>((resolve) => {
+      await new Promise<void>((resolve,reject) => {
         audio_chance.onended = () => resolve();
+        audio_chance.onerror = () => reject(new Error('Audio playback failed'));
         audio_chance.play();
       });
 
