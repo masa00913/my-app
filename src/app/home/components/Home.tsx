@@ -52,7 +52,7 @@ export default function Home({ userId, name, balance }: Props) {
       })
       .catch((err) => {
         console.error(err);
-        alert('エラーが発生しました: ' + err.message);
+        // alert('エラーが発生しました: ' + err.message);
       });
 
       getBoard(userId)
@@ -62,7 +62,7 @@ export default function Home({ userId, name, balance }: Props) {
         })
         .catch((err) => {
           console.error(err);
-          alert('掲示板データの取得に失敗しました: ' + err.message);
+          // alert('掲示板データの取得に失敗しました: ' + err.message);
         });
   }, [name,userId]);
 
@@ -81,7 +81,7 @@ export default function Home({ userId, name, balance }: Props) {
       setPostContent('');
     } catch (error) {
       console.error(error);
-      alert('投稿に失敗しました: ' + error);
+      // alert('投稿に失敗しました: ' + error);
     }
   };
 
@@ -91,7 +91,7 @@ export default function Home({ userId, name, balance }: Props) {
       setPosts(prevPosts => prevPosts?.filter(post => post.id !== postId));
     } catch (error) {
       console.error(error);
-      alert('投稿の削除に失敗しました: ' + error);
+      // alert('投稿の削除に失敗しました: ' + error);
     }
   };
 

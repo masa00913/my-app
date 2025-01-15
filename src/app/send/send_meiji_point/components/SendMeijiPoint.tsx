@@ -27,7 +27,7 @@ export default function SendMeijiPoint({ name,userId ,recipientName,recipientId}
       await createTransaction(userId, recipientId, amount, "transaction");
       const userData =  await getUserData(userId);
       localStorage.setItem('user', JSON.stringify(userData));
-      const audio = new Audio('/pay_music/meijiPay_sound.m4a');
+      const audio = new Audio('/pay_music/meji_all.mp3');
       await new Promise<void>((resolve) => {
         audio.onended = () => resolve();
         audio.play();
@@ -35,12 +35,12 @@ export default function SendMeijiPoint({ name,userId ,recipientName,recipientId}
 
       alert('交換成功！');
       
-      const audio_chance = new Audio('/pay_music/chance.m4a');
-      await new Promise<void>((resolve,reject) => {
-        audio_chance.onended = () => resolve();
-        audio_chance.onerror = () => reject(new Error('Audio playback failed'));
-        audio_chance.play();
-      });
+      // const audio_chance = new Audio('/pay_music/chance.m4a');
+      // await new Promise<void>((resolve,reject) => {
+      //   audio_chance.onended = () => resolve();
+      //   audio_chance.onerror = () => reject(new Error('Audio playback failed'));
+      //   audio_chance.play();
+      // });
 
       router.push('/send/individual_transaction');
     } catch (err: unknown) {

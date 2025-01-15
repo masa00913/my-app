@@ -33,13 +33,13 @@ export default function TransactionHistory({userName,userId}: Props) {
             setCombinedTransactions(combinedTransactions);
           } catch (err) {
             console.error('Failed to fetch past transactions', err);
-            alert('取引履歴の取得に失敗しました' + err);
+            // alert('取引履歴の取得に失敗しました' + err);
           }
         };
   
         fetchPastTransactions();
       }else{
-        alert('ユーザー名が取得できませんでした');
+        // alert('ユーザー名が取得できませんでした');
       }
     }, [userId,userName]);
 

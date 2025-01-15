@@ -41,7 +41,7 @@ export default function SendList({userName,userId} : Props) {
 
         } catch (err) {
           console.error('Failed to fetch past transactions', err);
-          alert('取引履歴の取得に失敗しました' + err);
+          // alert('取引履歴の取得に失敗しました' + err);
         }
       };
 
@@ -64,7 +64,8 @@ export default function SendList({userName,userId} : Props) {
       if (err instanceof Error) {
         errorMessage = err.message;
       }
-      alert(errorMessage);
+      console.log(errorMessage);
+      // alert(errorMessage);
     }
   };
 
@@ -82,7 +83,8 @@ export default function SendList({userName,userId} : Props) {
       if (err instanceof Error) {
         errorMessage = err.message;
       }
-      alert(errorMessage);
+      console.log(errorMessage);
+      // alert(errorMessage);
     }
   };
 
