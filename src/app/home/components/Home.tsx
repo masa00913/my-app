@@ -7,7 +7,7 @@ import { registerBoard, deleteBoard } from '@/app/lib/api/setBoard'; // deleteBo
 import { getBoard } from '@/app/lib/api/getBoardContent';
 import { Board } from '@/types/user';
 import * as msal from '@azure/msal-browser';
-import { msalConfig, loginRequest } from '@/app/auth/msal-home/utils/authConfig'; // Adjust the import path as necessary
+import { msalConfig } from '@/app/auth/msal-home/utils/authConfig'; // Adjust the import path as necessary
 
 interface Props {
   name: string;

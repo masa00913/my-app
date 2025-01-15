@@ -5,7 +5,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import * as msal from '@azure/msal-browser';
 import { msalConfig, loginRequest } from '@/app/auth/msal-home/utils/authConfig'; // Adjust the import path as necessary
-import { welcomeUser, updateTable } from '@/app/auth/msal-home/utils/ui'; // Adjust the import path as necessary
+import { updateTable } from '@/app/auth/msal-home/utils/ui'; // Adjust the import path as necessary
 import { loginUserMsal } from '@/app/lib/api';
 
 const Page = () => {
@@ -52,7 +52,7 @@ const Page = () => {
         updateTable({ idTokenClaims: stringIdTokenClaims });
       }
     }
-  }, [myMSALObj]);
+  }, [myMSALObj,localLogin]);
 
   const handleResponse = React.useCallback((response: msal.AuthenticationResult | null) => {
     if (response !== null && response.account !== null) {
@@ -75,7 +75,7 @@ const Page = () => {
     } else {
       selectAccount();
     }
-  }, [selectAccount, router]);
+  }, [selectAccount,localLogin]);
 
   useEffect(() => {
     myMSALObj.handleRedirectPromise()
@@ -108,14 +108,14 @@ const Page = () => {
     localStorage.setItem('isLogin', 'true');
   }
 
-  function signOut() {
-    const logoutRequest = {
-      account: myMSALObj.getAccountByUsername(usernameRef.current),
-      postLogoutRedirectUri: 'process.env.NEXT_PUBLIC_POST_LOGOUT_REDIRECT_URI',
-    };
+  // function signOut() {
+  //   const logoutRequest = {
+  //     account: myMSALObj.getAccountByUsername(usernameRef.current),
+  //     postLogoutRedirectUri: 'process.env.NEXT_PUBLIC_POST_LOGOUT_REDIRECT_URI',
+  //   };
 
-    myMSALObj.logoutRedirect(logoutRequest);
-  }
+  //   myMSALObj.logoutRedirect(logoutRequest);
+  // }
 
   function localLogin(preferredUsername: string | undefined, name: string | undefined) {
     fetch('/api/signinMsal', {

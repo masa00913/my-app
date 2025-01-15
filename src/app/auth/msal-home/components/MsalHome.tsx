@@ -3,8 +3,8 @@
 import React, {  useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import * as msal from '@azure/msal-browser';
-import { msalConfig, loginRequest } from '@/app/auth/msal-home/utils/authConfig'; // Adjust the import path as necessary
-import { welcomeUser, updateTable } from '@/app/auth/msal-home/utils/ui'; // Adjust the import path as necessary
+import { msalConfig } from '@/app/auth/msal-home/utils/authConfig'; // Adjust the import path as necessary
+// import { welcomeUser, updateTable } from '@/app/auth/msal-home/utils/ui'; // Adjust the import path as necessary
 import { loginUserMsal } from '@/app/lib/api';
 
 export default function MsalHomeForm() {
@@ -84,7 +84,7 @@ export default function MsalHomeForm() {
     } else {
       selectAccount();
     }
-  }, [selectAccount,router]);
+  }, [selectAccount]);
 
   useEffect(() => {
     myMSALObj.handleRedirectPromise()
@@ -107,20 +107,20 @@ export default function MsalHomeForm() {
         }
       }
     }
-  }, [myMSALObj, handleResponse]);
+  }, [myMSALObj, handleResponse,localLogin]);
 
-  function signIn() {
-    myMSALObj.loginRedirect(loginRequest);
-  }
+  // function signIn() {
+  //   myMSALObj.loginRedirect(loginRequest);
+  // }
 
-  function signOut() {
-    const logoutRequest = {
-      account: myMSALObj.getAccountByUsername(usernameRef.current),
-      postLogoutRedirectUri: '/signout',
-    };
+  // function signOut() {
+  //   const logoutRequest = {
+  //     account: myMSALObj.getAccountByUsername(usernameRef.current),
+  //     postLogoutRedirectUri: '/signout',
+  //   };
 
-    myMSALObj.logoutRedirect(logoutRequest);
-  }
+  //   myMSALObj.logoutRedirect(logoutRequest);
+  // }
 
   function localLogin(preferredUsername: string | undefined, name: string | undefined) {
       fetch('/api/signinMsal', {
