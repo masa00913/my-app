@@ -1,26 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Scanner, IDetectedBarcode} from '@yudiel/react-qr-scanner';
 import { useRouter } from 'next/navigation';
 import styles from '../styles.module.css';
 import { getUserDataFromQRCode } from '@/app/lib/api/getUserDataFromQRCode';
 import { User } from '@/types/user';
 
-interface ExchangeResponse {
-  success: boolean;
-  message: string;
-  newBalance?: number;
-}
+// interface ExchangeResponse {
+//   success: boolean;
+//   message: string;
+//   newBalance?: number;
+// }
 
 interface Props{
   userName: string;
 }
 
 export default function PayQRRead({userName}: Props) {
-  const [isExchanging, setIsExchanging] = useState(false);
-  const [exchangeResult, setExchangeResult] = useState<ExchangeResponse | null>(null);
   const [scanResult, setScanResult] = useState({ format: '', rawValue: '' });
   const [recipient, setRecipient] = useState<User>(); // ユーザーIDを保持するステート
   const router = useRouter();
+
+  useEffect(() => {
+      if (recipient) {
+        handleExchange();
+      }
+    }, [recipient]);
   
   const handleScan = (results: IDetectedBarcode[]) => {
     if (results.length > 0) {
@@ -65,9 +69,6 @@ export default function PayQRRead({userName}: Props) {
       return;
     }
 
-    setIsExchanging(true);
-    setExchangeResult(null);
-
     try {
       if(recipient){
         localStorage.setItem('recipient', JSON.stringify(recipient));
@@ -77,8 +78,6 @@ export default function PayQRRead({userName}: Props) {
     } catch (err) {
       console.error(err);
       alert('ポイント交換中にエラーが発生しました。');
-    } finally {
-      setIsExchanging(false);
     }
   };
 
@@ -101,10 +100,10 @@ export default function PayQRRead({userName}: Props) {
           />
         </div>
 
-        {scanResult && !isExchanging && !exchangeResult && (
+        {/* {scanResult && !isExchanging && !exchangeResult && (
           <div className={styles.scan_result_container}>
-            {/* <div className={styles.scan_result_text}>読み取り結果: {scanResult.format}</div>
-            <div className={styles.scan_result_text}>内容：{scanResult.rawValue}</div> */}
+            <div className={styles.scan_result_text}>読み取り結果: {scanResult.format}</div>
+            <div className={styles.scan_result_text}>内容：{scanResult.rawValue}</div>
             <button className={styles.exchange_button} onClick={handleExchange} disabled={recipient?.name==''}>ポイント交換を実行</button>
           </div>
         )}
@@ -119,7 +118,7 @@ export default function PayQRRead({userName}: Props) {
 
         {exchangeResult && !exchangeResult.success && (
           <p className={styles.failure_message}>交換失敗: {exchangeResult.message}</p>
-        )}
+        )} */}
 
           <div className={styles.bottom_bar}>
             <button className={styles.barcode_button} onClick={() =>  window.location.href = '/pay/pay_QRdisplay'}>

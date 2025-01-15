@@ -98,7 +98,9 @@ export default function SendMeijiPoint({ name,userId ,recipientName,recipientId}
 
     
     <form onSubmit={handleSubmit}>
-      <button type="submit" className={styles.next_button} disabled={isSending}>送る</button>
+      <button type="submit" className={styles.next_button} disabled={isSending}>
+        {isSending ? '送信中...' : '送る'}
+      </button>
       </form>
     <div className={styles.keypad}>
       <div className={styles.keypad_grid}>

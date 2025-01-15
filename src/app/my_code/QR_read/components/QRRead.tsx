@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Scanner, IDetectedBarcode} from '@yudiel/react-qr-scanner';
 import { useRouter } from 'next/navigation';
 import styles from '../styles.module.css';
 import { getUserDataFromQRCode } from '@/app/lib/api/getUserDataFromQRCode';
 import { User } from '@/types/user';
 
-interface ExchangeResponse {
-  success: boolean;
-  message: string;
-  newBalance?: number;
-}
+// interface ExchangeResponse {
+//   success: boolean;
+//   message: string;
+//   newBalance?: number;
+// }
 
 interface Props{
   userName: string;
@@ -17,12 +17,16 @@ interface Props{
 
 
 export default function QRRead({userName}: Props) {
-  const [isExchanging, setIsExchanging] = useState(false);
-  const [exchangeResult, setExchangeResult] = useState<ExchangeResponse | null>(null);
   const [scanResult, setScanResult] = useState({ format: '', rawValue: '' });
   // const [recipientName, setRecipientName] = useState<string>(''); // ユーザーIDを保持するステート
   const [recipient,setRecipient] = useState<User>();
   const router = useRouter();  
+
+  useEffect(() => {
+    if (recipient) {
+      handleExchange();
+    }
+  }, [recipient]);
 
   const handleScan = (results: IDetectedBarcode[]) => {
     if (results.length > 0) {
@@ -41,9 +45,9 @@ export default function QRRead({userName}: Props) {
           if(userData.name == userName){
             throw new Error('自分自身には送信できません。');
           }else{
-            setRecipient(userData); // Assuming you want to set the recipient's name
+            setRecipient(userData);
+            
           }
-          console.log("QRCodeで読み取った名前"+userName);
         }).catch((error) => {
           alert('ユーザーデータの取得に失敗しました。' + error);
         });
@@ -59,9 +63,7 @@ export default function QRRead({userName}: Props) {
       return;
     }
   
-    setIsExchanging(true);
-    setExchangeResult(null);
-  
+    console.log("QRCodeで読み取った名前"+recipient?.name);
     try {
       if(recipient){
         if(recipient.name == userName){
@@ -76,8 +78,6 @@ export default function QRRead({userName}: Props) {
     } catch (err) {
       console.error(err);
       alert('ポイント交換中にエラーが発生しました。');
-    } finally {
-      setIsExchanging(false);
     }
   };
   return (
@@ -101,15 +101,15 @@ export default function QRRead({userName}: Props) {
 
         {/* {error && <div className={styles.error_message}>エラー: {error}</div>} */}
 
-        {scanResult && !isExchanging && !exchangeResult && (
+        {/* {scanResult && !isExchanging && !exchangeResult && (
           <div className={styles.scan_result_container}>
-            {/* <div className={styles.scan_result_text}>読み取り結果: {scanResult.format}</div>
-            <div className={styles.scan_result_text}>内容：{scanResult.rawValue}</div> */}
+            <div className={styles.scan_result_text}>読み取り結果: {scanResult.format}</div>
+            <div className={styles.scan_result_text}>内容：{scanResult.rawValue}</div>
             <button className={styles.exchange_button} onClick={handleExchange} disabled={recipient?.name==''}>ポイント交換を実行</button>
           </div>
-        )}
+        )} */}
 
-        {isExchanging && <div className={styles.exchanging_message}>ポイント交換処理中...</div>}
+        {/* {isExchanging && <div className={styles.exchanging_message}>ポイント交換処理中...</div>}
 
         {exchangeResult && exchangeResult.success && (
           <div className={styles.success_message}>
@@ -119,7 +119,7 @@ export default function QRRead({userName}: Props) {
 
         {exchangeResult && !exchangeResult.success && (
           <p className={styles.failure_message}>交換失敗: {exchangeResult.message}</p>
-        )}
+        )} */}
 
           <div className={styles.bottom_bar}>
             <button className={styles.barcode_button} onClick={() =>  window.location.href = '/my_code/QR_display'}>
