@@ -7,11 +7,13 @@ import * as msal from '@azure/msal-browser';
 import { msalConfig, loginRequest } from '@/app/auth/msal-home/utils/authConfig'; // Adjust the import path as necessary
 import { updateTable } from '@/app/auth/msal-home/utils/ui'; // Adjust the import path as necessary
 import { loginUserMsal } from '@/app/lib/api';
+import { useAuthContext } from '@/app/context/AuthContext';
 
 const Page = () => {
   const router = useRouter();
+  const { isLogin, setLoginTrue } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
   const [hasAccount, setHasAccount] = useState(false);
-  const [isLogin, setIsLogin] = useState<boolean | null>(null);
 
   const myMSALObj = React.useMemo(() => new msal.PublicClientApplication(msalConfig), []);
 
@@ -87,7 +89,9 @@ const Page = () => {
 
   useEffect(() => {
     const loginStatus = localStorage.getItem('isLogin');
-    setIsLogin(loginStatus === 'true');
+    if (loginStatus === 'true') {
+      setLoginTrue();
+    }
   }, []);
 
   if (isLogin === null) {
@@ -104,20 +108,13 @@ const Page = () => {
   }
 
   function signIn() {
+    setIsLoading(true);
     myMSALObj.loginRedirect(loginRequest);
-    localStorage.setItem('isLogin', 'true');
+    setLoginTrue();
   }
 
-  // function signOut() {
-  //   const logoutRequest = {
-  //     account: myMSALObj.getAccountByUsername(usernameRef.current),
-  //     postLogoutRedirectUri: `${process.env.NEXT_PUBLIC_POST_LOGOUT_REDIRECT_URI}`,
-  //   };
-
-  //   myMSALObj.logoutRedirect(logoutRequest);
-  // }
-
   function localLogin(preferredUsername: string | undefined, name: string | undefined) {
+    setIsLoading(true);
     fetch('/api/signinMsal', {
       method: 'POST',
       headers: {
@@ -136,6 +133,7 @@ const Page = () => {
         localStorage.setItem('user', JSON.stringify(userData)); // localStorageにユーザー情報を保存 
         localStorage.removeItem('isLogin');
         router.push('/home');
+        setIsLoading(false);
       } else {
         throw new Error('preferredUsername or name is undefined');
       }
@@ -143,6 +141,7 @@ const Page = () => {
     
     .catch((error) => {
       console.error('Error calling API:', error);
+      setIsLoading(false);
     });
   }
 
@@ -152,6 +151,10 @@ const Page = () => {
   };
 
   console.log('hasAccount:', hasAccount);
+
+  if (isLoading) {
+    return <div>ログインしています...</div>;
+  }
 
   return (
     <div className={styles.background}>
