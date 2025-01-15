@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Board } from '@/types/user';
+import React, { useEffect } from 'react';
 import * as msal from '@azure/msal-browser';
 import { msalConfig } from '@/app/auth/msal-home/utils/authConfig'; // Adjust the import path as necessary
 
