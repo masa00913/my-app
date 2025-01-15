@@ -98,7 +98,7 @@ export default function Home({ userId, name, balance }: Props) {
   const logout = () => {
     const logoutRequest = {
       account: myMSALObj.getAccountByUsername(usernameRef.current),
-      postLogoutRedirectUri: '/auth/msal-logout',
+      postLogoutRedirectUri: `${process.env.NEXT_PUBLIC_POST_LOGOUT_REDIRECT_URI}`,
     };
 
     myMSALObj.logoutRedirect(logoutRequest);

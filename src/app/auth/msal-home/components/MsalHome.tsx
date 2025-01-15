@@ -116,7 +116,7 @@ export default function MsalHomeForm() {
   // function signOut() {
   //   const logoutRequest = {
   //     account: myMSALObj.getAccountByUsername(usernameRef.current),
-  //     postLogoutRedirectUri: '/signout',
+  //     postLogoutRedirectUri: `${process.env.NEXT_PUBLIC_POST_LOGOUT_REDIRECT_URI}`,
   //   };
 
   //   myMSALObj.logoutRedirect(logoutRequest);

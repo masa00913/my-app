@@ -111,7 +111,7 @@ const Page = () => {
   // function signOut() {
   //   const logoutRequest = {
   //     account: myMSALObj.getAccountByUsername(usernameRef.current),
-  //     postLogoutRedirectUri: 'process.env.NEXT_PUBLIC_POST_LOGOUT_REDIRECT_URI',
+  //     postLogoutRedirectUri: `${process.env.NEXT_PUBLIC_POST_LOGOUT_REDIRECT_URI}`,
   //   };
 
   //   myMSALObj.logoutRedirect(logoutRequest);

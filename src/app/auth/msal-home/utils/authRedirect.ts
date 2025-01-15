@@ -97,7 +97,7 @@ function signOut() {
     // Choose which account to logout from by passing a username.
     const logoutRequest = {
         account: myMSALObj.getAccountByUsername(username),
-        postLogoutRedirectUri: '/auth/msal-logout', // remove this line if you would like navigate to index page after logout.
+        postLogoutRedirectUri: `${process.env.NEXT_PUBLIC_POST_LOGOUT_REDIRECT_URI}`, // remove this line if you would like navigate to index page after logout.
 
     };
 
