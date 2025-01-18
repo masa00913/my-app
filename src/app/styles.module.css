@@ -67,3 +67,14 @@
   right: 50px;  
   z-index: 1000; 
 }
+
+.emailForm {
+  margin-top: 20px;
+}
+
+.emailInput {
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}

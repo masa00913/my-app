@@ -14,6 +14,9 @@ const Page = () => {
   const { isLogin, setLoginTrue } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
   const [hasAccount, setHasAccount] = useState(false);
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [email, setEmail] = useState('');
+  // const [recipientName, setRecipientName] = useState('');
 
   const myMSALObj = React.useMemo(() => new msal.PublicClientApplication(msalConfig), []);
 
@@ -113,8 +116,13 @@ const Page = () => {
     setLoginTrue();
   }
 
+  function showForm() {
+    setShowEmailForm(true);
+  }
+
   function localLogin(preferredUsername: string | undefined, name: string | undefined) {
     setIsLoading(true);
+
     fetch('/api/signinMsal', {
       method: 'POST',
       headers: {
@@ -150,6 +158,36 @@ const Page = () => {
     router.push('/home');
   };
 
+  const handleEmailSubmit = async () => {
+    // setIsLoading(true);
+    console.log('email:', email);
+    try {
+      const response = await fetch('/api/registerEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 'method': 'registerEmail', 'email': email}),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log('GASからの返信:', data);
+        alert(data.message);
+        // alert('メールアドレスが送信されました');
+      } else {
+        console.error('Error:', data);
+        alert('メールアドレスの送信に失敗しました');
+      }
+    } catch (error) {
+      console.error('Error calling API:', error);
+      alert('メールアドレスの送信に失敗しました');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   console.log('hasAccount:', hasAccount);
 
   if (isLoading) {
@@ -165,7 +203,28 @@ const Page = () => {
         <div className={styles.buttons}>
           <button className={styles.contact_button} onClick={hasAccount ? handleClick : signIn}>{hasAccount ? "ホーム画面へ" : "認証画面へ"}</button>
           <button className={styles.contact_button} onClick={() => window.location.href='https://www.isc.meiji.ac.jp/~ev230543/Meijipay'}>MeijiPayとは</button>
+          <button className={styles.contact_button} onClick={showForm}>アカウント登録</button>
         </div>
+        {showEmailForm && (
+          <div className={styles.emailForm}>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="メールアドレスを入力"
+              className={styles.emailInput}
+            />
+            {/* <input
+              type="text"
+              value={recipientName}
+              onChange={(e) => setRecipientName(e.target.value)}
+              placeholder="Recipient Name"
+            /> */}
+            <button className={styles.contact_button} onClick={handleEmailSubmit} disabled={isLoading}>
+              {isLoading ? '送信中...' : '送信'}
+            </button>
+          </div>
+        )}
         <p>© 2025 MeijiPay All Rights Reserved.</p>
       </div>
     </div>
